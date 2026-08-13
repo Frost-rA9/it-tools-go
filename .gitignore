@@ -1,0 +1,9 @@
+build/bin
+node_modules
+frontend/dist
+
+# Go build artifacts
+it-tools-go.exe
+
+# Wails dependency cache
+frontend/package.json.md5
