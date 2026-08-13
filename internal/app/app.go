@@ -14,6 +14,7 @@ import (
 	"it-tools-go/internal/tools/text-to-binary"
 	"it-tools-go/internal/tools/text-to-unicode"
 	"it-tools-go/internal/tools/yaml-to-json-converter"
+	"it-tools-go/internal/tools/yaml-to-toml"
 )
 
 // App 是绑定到前端的应用结构体（类比传统 web 应用的 controller）。
@@ -102,6 +103,15 @@ func registerTools(reg *registry.Registry) {
 		Keywords:    []string{"yaml", "json", "转换", "convert"},
 		Icon:        "AlignJustified",
 	}, yamljson.Executor{})
+
+	reg.Register(registry.Tool{
+		ID:          yamltoml.ID,
+		Name:        yamltoml.Name,
+		Description: "将 YAML 转换为 TOML",
+		Category:    yamltoml.Category,
+		Keywords:    []string{"yaml", "toml", "转换", "convert"},
+		Icon:        "AlignJustified",
+	}, yamltoml.Executor{})
 }
 
 // Startup 在应用启动时调用，保存 context 以便调用 runtime 方法。
