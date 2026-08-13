@@ -7,6 +7,7 @@ import (
 
 	"it-tools-go/internal/registry"
 	"it-tools-go/internal/tools/base64"
+	"it-tools-go/internal/tools/baseconv"
 	"it-tools-go/internal/tools/caseconv"
 	"it-tools-go/internal/tools/datetime"
 	"it-tools-go/internal/tools/roman"
@@ -62,6 +63,15 @@ func registerTools(reg *registry.Registry) {
 		Keywords:    []string{"date", "time", "日期", "时间", "时间戳", "timestamp", "unix", "iso8601", "excel"},
 		Icon:        "Calendar",
 	}, datetime.Executor{})
+
+	reg.Register(registry.Tool{
+		ID:          baseconv.ID,
+		Name:        baseconv.Name,
+		Description: "在不同进制之间转换整数（二进制、八进制、十进制、十六进制、Base64 等）",
+		Category:    baseconv.Category,
+		Keywords:    []string{"integer", "base", "进制", "转换", "binary", "decimal", "hex", "octal", "radix"},
+		Icon:        "ArrowsLeftRight",
+	}, baseconv.Executor{})
 }
 
 // Startup 在应用启动时调用，保存 context 以便调用 runtime 方法。

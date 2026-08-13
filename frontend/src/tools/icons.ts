@@ -1,5 +1,12 @@
 import type { Component } from 'vue'
-import { FileDigit, LetterX, LetterCaseToggle, Calendar, Tools } from '@vicons/tabler'
+import {
+  FileDigit,
+  LetterX,
+  LetterCaseToggle,
+  Calendar,
+  ArrowsLeftRight,
+  Tools,
+} from '@vicons/tabler'
 
 // 图标名（Go 端 registry.Tool.Icon）→ 组件映射。
 const toolIcons: Record<string, Component> = {
@@ -7,6 +14,7 @@ const toolIcons: Record<string, Component> = {
   LetterX,
   LetterCaseToggle,
   Calendar,
+  ArrowsLeftRight,
 }
 
 // getToolIcon 返回图标名对应的组件，未找到时返回兜底图标。
