@@ -27,7 +27,7 @@ go test ./...  # Go 测试
 
 ## 致谢
 
-本项目灵感来源于 [IT-Tools](https://it-tools.tech/)（https://github.com/CorentinTh/it-tools），感谢原作者的杰出工作。
+本项目灵感来源于 [IT-Tools](https://it-tools.tech/)，其仓库地址为 [github.com/CorentinTh/it-tools](https://github.com/CorentinTh/it-tools)。感谢原作者的杰出工作。
 
 ## License
 
