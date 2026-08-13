@@ -1,5 +1,5 @@
-// Package baseconv 实现整数在不同进制（2~64）之间的转换。
-package baseconv
+// Package radix 实现整数在不同进制（2~64）之间的转换。
+package radix
 
 import (
 	"context"

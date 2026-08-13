@@ -1,5 +1,5 @@
-// Package roman 实现阿拉伯数字与罗马数字之间的转换。
-package roman
+// Package romannumeral 实现阿拉伯数字与罗马数字之间的转换。
+package romannumeral
 
 import (
 	"context"

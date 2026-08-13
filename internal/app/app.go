@@ -6,13 +6,13 @@ import (
 	"fmt"
 
 	"it-tools-go/internal/registry"
-	"it-tools-go/internal/tools/base64"
-	"it-tools-go/internal/tools/baseconv"
-	"it-tools-go/internal/tools/caseconv"
-	"it-tools-go/internal/tools/datetime"
-	"it-tools-go/internal/tools/roman"
-	"it-tools-go/internal/tools/textbinary"
-	"it-tools-go/internal/tools/textunicode"
+	"it-tools-go/internal/tools/base64-string-converter"
+	"it-tools-go/internal/tools/case-converter"
+	"it-tools-go/internal/tools/date-time-converter"
+	"it-tools-go/internal/tools/integer-base-converter"
+	"it-tools-go/internal/tools/roman-numeral-converter"
+	"it-tools-go/internal/tools/text-to-binary"
+	"it-tools-go/internal/tools/text-to-unicode"
 )
 
 // App 是绑定到前端的应用结构体（类比传统 web 应用的 controller）。
@@ -31,22 +31,22 @@ func NewApp() *App {
 // registerTools 集中注册所有工具。
 func registerTools(reg *registry.Registry) {
 	reg.Register(registry.Tool{
-		ID:          base64.ID,
-		Name:        base64.Name,
+		ID:          base64string.ID,
+		Name:        base64string.Name,
 		Description: "在普通文本与其 Base64 编码形式之间进行转换",
-		Category:    base64.Category,
+		Category:    base64string.Category,
 		Keywords:    []string{"base64", "编码", "解码", "encode", "decode"},
 		Icon:        "FileDigit",
-	}, base64.Executor{})
+	}, base64string.Executor{})
 
 	reg.Register(registry.Tool{
-		ID:          roman.ID,
-		Name:        roman.Name,
+		ID:          romannumeral.ID,
+		Name:        romannumeral.Name,
 		Description: "在阿拉伯数字与罗马数字之间进行转换",
-		Category:    roman.Category,
+		Category:    romannumeral.Category,
 		Keywords:    []string{"roman", "罗马", "数字", "numeral", "阿拉伯"},
 		Icon:        "LetterX",
-	}, roman.Executor{})
+	}, romannumeral.Executor{})
 
 	reg.Register(registry.Tool{
 		ID:          caseconv.ID,
@@ -67,13 +67,13 @@ func registerTools(reg *registry.Registry) {
 	}, datetime.Executor{})
 
 	reg.Register(registry.Tool{
-		ID:          baseconv.ID,
-		Name:        baseconv.Name,
+		ID:          radix.ID,
+		Name:        radix.Name,
 		Description: "在不同进制之间转换整数（二进制、八进制、十进制、十六进制、Base64 等）",
-		Category:    baseconv.Category,
+		Category:    radix.Category,
 		Keywords:    []string{"integer", "base", "进制", "转换", "binary", "decimal", "hex", "octal", "radix"},
 		Icon:        "ArrowsLeftRight",
-	}, baseconv.Executor{})
+	}, radix.Executor{})
 
 	reg.Register(registry.Tool{
 		ID:          textbinary.ID,

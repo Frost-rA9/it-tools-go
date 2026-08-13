@@ -1,5 +1,5 @@
-// Package base64 实现 Base64 字符串编码/解码工具。
-package base64
+// Package base64string 实现 Base64 字符串编码/解码工具。
+package base64string
 
 import (
 	"context"

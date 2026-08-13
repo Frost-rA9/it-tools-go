@@ -1,4 +1,4 @@
-package baseconv
+package radix
 
 import (
 	"context"
