@@ -8,6 +8,7 @@ import (
 	"it-tools-go/internal/registry"
 	"it-tools-go/internal/tools/base64"
 	"it-tools-go/internal/tools/caseconv"
+	"it-tools-go/internal/tools/datetime"
 	"it-tools-go/internal/tools/roman"
 )
 
@@ -49,6 +50,14 @@ func registerTools(reg *registry.Registry) {
 		Category:    caseconv.Category,
 		Keywords:    []string{"case", "大小写", "驼峰", "camel", "snake", "upper", "lower"},
 	}, caseconv.Executor{})
+
+	reg.Register(registry.Tool{
+		ID:          datetime.ID,
+		Name:        datetime.Name,
+		Description: "在不同日期时间格式之间进行转换（时间戳、ISO 8601、RFC 系列、Excel 等）",
+		Category:    datetime.Category,
+		Keywords:    []string{"date", "time", "日期", "时间", "时间戳", "timestamp", "unix", "iso8601", "excel"},
+	}, datetime.Executor{})
 }
 
 // Startup 在应用启动时调用，保存 context 以便调用 runtime 方法。
