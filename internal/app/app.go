@@ -13,6 +13,7 @@ import (
 	"it-tools-go/internal/tools/roman-numeral-converter"
 	"it-tools-go/internal/tools/text-to-binary"
 	"it-tools-go/internal/tools/text-to-unicode"
+	"it-tools-go/internal/tools/yaml-to-json-converter"
 )
 
 // App 是绑定到前端的应用结构体（类比传统 web 应用的 controller）。
@@ -92,6 +93,15 @@ func registerTools(reg *registry.Registry) {
 		Keywords:    []string{"text", "unicode", "文本", "转义", "编码"},
 		Icon:        "TextWrap",
 	}, textunicode.Executor{})
+
+	reg.Register(registry.Tool{
+		ID:          yamljson.ID,
+		Name:        yamljson.Name,
+		Description: "将 YAML 转换为 JSON",
+		Category:    yamljson.Category,
+		Keywords:    []string{"yaml", "json", "转换", "convert"},
+		Icon:        "AlignJustified",
+	}, yamljson.Executor{})
 }
 
 // Startup 在应用启动时调用，保存 context 以便调用 runtime 方法。
