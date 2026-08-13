@@ -1,11 +1,10 @@
 # AGENTS.md
 
-## 当前状态
+## 项目介绍
 
-- 已搭建 Wails v2 桌面应用骨架（Vue 3 + TypeScript 前端，Go 后端）。
-- 存在 `go.mod`（模块 `it-tools-go`，go 1.25.0，wails v2.14.0）。
-- 后端采用 `internal/` 目录结构，`App` 结构体在 `internal/app`（绑定路径 `wailsjs/go/app/App`）。
-- 已验证可构建：`go build ./...`、`go vet ./...`、`npm run build`、`wails build` 均通过。
+it-tools-go 是一个跨平台桌面 IT 工具集，参考 [it-tools.tech](https://it-tools.tech/)，使用
+Wails v2（Go 后端）+ Vue 3 + Naive UI 实现。工具业务逻辑全部在 Go 侧（`internal/`），
+前端只负责渲染与调用绑定。设计规格见 SPEC.md。
 
 ## 项目结构
 
@@ -15,9 +14,10 @@ it-tools-go/
 ├── main.go                      # Wails 入口（wails.Run + embed frontend/dist，package main）
 ├── wails.json                   # Wails 构建配置（frontend:install/build 命令）
 ├── internal/
-│   ├── app/                     # App 结构体 + 生命周期 + 绑定
-│   ├── registry/                # Tool 接口 + 注册表
-│   └── tools/                   # 各工具实现（每工具一个包，M2 填充）
+│   ├── app/                     # App 结构体 + 生命周期 + 绑定（ListTools/RunTool）
+│   ├── registry/                # Tool 接口 + 注册表 + 分类常量
+│   └── tools/                   # 各工具实现（每工具一个包）
+│       └── base64/              # Base64 工具 + 单测
 ├── build/                       # 构建资源（图标、Windows 清单、NSIS 安装器）
 │   └── bin/                     # wails build 产物（it-tools-go.exe）
 ├── frontend/
@@ -26,14 +26,24 @@ it-tools-go/
 │   ├── tsconfig.json / tsconfig.node.json
 │   └── src/
 │       ├── main.ts / App.vue / style.css
-│       ├── components/HelloWorld.vue
+│       ├── theme.ts             # Naive UI 主题覆盖（亮/暗）
+│       ├── components/          # Toolbar、ToolMenu、ToolCard、CommandPalette
+│       ├── router/              # vue-router 配置
+│       ├── layouts/             # BaseLayout（侧边栏+顶栏）、ToolLayout（工具页）
+│       ├── views/               # HomeView、ToolView、tools/（按 toolId 命名）
+│       ├── stores/              # Pinia（tools、ui）
+│       ├── composables/         # useToolComponent（glob 动态加载）
 │       ├── assets/              # 字体、图片
 │       └── wailsjs/             # Wails 自动生成的绑定（切勿手动编辑）
 └── SPEC.md                      # 工程规格书（权威）
 ```
 
-注：`frontend/src` 下的 `router/`、`layouts/`、`views/`、`composables/` 尚未创建 —— 属于 M2 里程碑。
-`internal/tools/` 目前仅占位，具体工具待 M2 加入。
+## 工具开发约定
+
+- 新增一个工具 = Go 包（`internal/tools/<name>/`）+ 前端组件（`frontend/src/views/tools/<toolId>.vue`）。
+- 前端组件文件名必须等于 toolId（如 `base64-string-converter.vue`），`import.meta.glob` 据此自动匹配。
+- 工具在 `internal/app/app.go` 的 `registerTools` 中集中注册。
+- 传输协议为 JSON string（前端 `JSON.stringify/parse`，Go `encoding/json`）。
 
 ## 命令
 
@@ -43,6 +53,7 @@ it-tools-go/
 - Go 测试：`go test ./...`
 - 前端类型检查 + 构建：`npm run build`（执行 `vue-tsc --noEmit && vite build`）
 - 前端开发服务器：`npm run dev`（在 `frontend/` 目录运行）
+- 重新生成 Wails 绑定：`wails generate module`（后端绑定方法变更后需执行）
 
 ## 环境要求
 

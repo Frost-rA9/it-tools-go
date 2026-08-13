@@ -97,28 +97,33 @@ RunTool(id, input)  ──Wails Binding──▶  Go 后端 registry 查找工�
 
 ```go
 type Tool struct {
-    ID          string   // 唯一标识，如 "uuid-generator"
-    Name        string   // 展示名称
-    Description string   // 一句话描述
-    Category    string   // 所属分类（见 §6）
-    Keywords    []string // 搜索关键词
+    ID          string   `json:"id"`          // 唯一标识，如 "base64-string-converter"
+    Name        string   `json:"name"`        // 展示名称
+    Description string   `json:"description"` // 一句话描述
+    Category    string   `json:"category"`    // 所属分类（见 §6）
+    Keywords    []string `json:"keywords"`    // 搜索关键词
 }
 
 type Executor interface {
-    Execute(ctx context.Context, input any) (output any, err error)
+    Execute(ctx context.Context, input string) (output string, err error)
 }
 ```
 
+> 传输协议：`Execute` 的 input/output 均为 **JSON 字符串**。前端用原生
+> `JSON.stringify`/`JSON.parse`，Go 用标准库 `encoding/json`，前后端零序列化依赖，
+> 且 Wails 生成 `string → string` 的类型安全绑定。每个工具自行约定 input/output 的 JSON 结构。
+
 ### 4.2 注册表（registry）
 
-- `registry` 聚合所有工具，提供 `List()`（返回全部工具元数据，供前端渲染侧边栏）与 `Get(id)`（按 ID 查找）。
-- 新工具通过在 `init()` 或集中注册函数中调用 `registry.Register(tool, executor)` 加入。
+- `registry` 聚合所有工具，提供 `List()`（返回全部工具元数据，供前端渲染侧边栏）与 `Get(id)`（按 ID 查找）、`Execute(id, input)`。
+- 新工具通过集中注册函数 `registerTools`（`internal/app/app.go`）调用 `registry.Register(tool, executor)` 加入。
 - 单一 Wails Binding `RunTool(id, input)` 暴露执行入口，前端无需为每个工具单独绑定。
 
 ### 4.3 前端动态渲染
 
-- 前端启动时调用 `List()` 获取工具元数据，按分类渲染侧边栏。
-- 路由 `/tool/:id` 动态加载对应工具组件（`views/tools/<id>.vue`），表单提交后调用 `RunTool`。
+- 前端启动时调用 `ListTools()` 获取工具元数据，按分类渲染侧边栏与首页。
+- 路由 `/tool/:id` 通过 Vite `import.meta.glob('./tools/*.vue')` 自动按 toolId 匹配组件
+  （文件名即 toolId，如 `base64-string-converter.vue`），表单提交后调用 `RunTool`。
 
 ---
 
@@ -132,19 +137,22 @@ it-tools-go/
 ├── internal/
 │   ├── app/                     # App 结构体 + 生命周期 + 绑定（package app）
 │   ├── registry/                # Tool 接口 + 注册表实现
-│   └── tools/                   # 各工具实现（每工具一个包，M2 填充）
+│   └── tools/                   # 各工具实现（每工具一个包）
+│       └── base64/              # Base64 工具 + 单测
 ├── frontend/
 │   ├── package.json
 │   ├── vite.config.ts
 │   ├── index.html
 │   └── src/
 │       ├── main.ts
-│       ├── App.vue
-│       ├── components/          # 通用组件
-│       ├── router/              # vue-router 配置（M2）
-│       ├── layouts/             # 侧边栏分类 + 工具列表布局（M2）
-│       ├── views/               # 工具详情页（动态渲染，M2）
-│       ├── composables/         # 调用 Go Binding 的封装（M2）
+│       ├── App.vue              # n-config-provider（暗色主题）
+│       ├── theme.ts             # Naive UI 主题覆盖（it-tools 风格）
+│       ├── components/          # 通用组件（ToolCard、ToolMenu）
+│       ├── router/              # vue-router 配置
+│       ├── layouts/             # BaseLayout（侧边栏）+ ToolLayout（工具页）
+│       ├── views/               # HomeView + ToolView + tools/（按 toolId 命名）
+│       ├── stores/              # Pinia（tools store）
+│       ├── composables/         # useToolComponent（glob 动态加载）
 │       └── wailsjs/             # Wails 自动生成的绑定代码（勿手改）
 ├── build/                       # 构建产物（图标、打包配置）
 │   └── bin/                     # wails build 输出（it-tools-go.exe）
@@ -158,22 +166,23 @@ it-tools-go/
 
 ## 6. 工具分类
 
-对齐参考项目的分类体系（后续工具扩展据此归类）：
+对齐参考项目的分类体系（中文展示，后续工具扩展据此归类）：
 
 | 分类 | 示例工具 |
 |---|---|
-| Crypto | UUID 生成、哈希计算、Token 生成、Base64 |
-| Converter | 时间戳转换、颜色转换、大小写转换、日期转换 |
+| 加密 | UUID 生成、哈希计算、Token 生成 |
+| 转换器 | Base64 编解码、时间戳转换、颜色转换、大小写转换、日期转换 |
 | Web | URL 编解码、HTML 实体、User-Agent 解析 |
-| Image / PDF | 二维码生成、SVG 占位图 |
-| Development | JSON 格式化、Cron 解析、正则测试 |
-| Network | IPv4 子网计算、MAC 地址查询 |
-| Math | 进制转换、ETA 计算 |
-| Measurement | 计时器、温度/单位换算 |
-| Text | Slugify、词频统计、字符统计 |
-| Data | YAML↔JSON、XML 格式化、Phone 解析 |
+| 图片和视频 | 二维码生成、SVG 占位图 |
+| 开发 | JSON 格式化、Cron 解析、正则测试 |
+| 网络 | IPv4 子网计算、MAC 地址查询 |
+| 数学 | 进制转换、ETA 计算 |
+| 测量 | 计时器、温度/单位换算 |
+| 文本 | Slugify、词频统计、字符统计 |
+| 数据 | YAML↔JSON、XML 格式化、Phone 解析 |
 
-> MVP 阶段仅实现注册框架 + 1 个示例工具（`internal/tools/sample`）以打通「注册 → 渲染 → 执行 → 展示」完整链路，工具清单后续按里程碑补充。
+> 分类名当前仅实现中文（不引入 i18n 框架），常量定义于 `internal/registry/registry.go`。
+> 若后续有开发者贡献多语言 PR，再评估引入 i18n。
 
 ---
 
@@ -231,15 +240,33 @@ pnpm lint
 |---|---|---|
 | **M0 环境准备** | 安装 Go/gcc/Wails/pnpm | ✅ 已完成（见 §7.1） |
 | **M1 骨架搭建** | `wails init` 生成项目，配置 `internal/` 目录结构 | ✅ 已完成（`wails build` 产出 exe） |
-| **M2 注册机制** | 实现 `Tool` 接口 + `registry` + `RunTool` Binding + 前端动态渲染 + 示例工具 | 侧边栏展示示例工具，可执行并返回结果 |
+| **M2 注册机制** | 实现 `Tool` 接口 + `registry` + `RunTool` Binding + 前端动态渲染 + Base64 示例工具 | ✅ 已完成（Base64 工具可执行并返回结果） |
 | **M3 首批工具** | 实现 15-20 个高频工具（UUID、哈希、Base64、URL、JSON、时间戳、颜色、二维码等） | 各工具均有单测并通过 |
 | **M4 打包发布** | 三平台交叉编译、图标/签名、发布产物 | 产出 Windows/macOS/Linux 单二进制 |
 
 ---
 
-## 10. 变更记录
+## 10. 当前状态
+
+- 已搭建 Wails v2 桌面应用（Vue 3 + TypeScript 前端，Go 后端）。
+- 存在 `go.mod`（模块 `it-tools-go`，go 1.25.0，wails v2.14.0）。
+- 后端采用 `internal/` 目录结构，`App` 结构体在 `internal/app`（绑定路径 `wailsjs/go/app/App`）。
+- 已实现工具注册机制（`registry` + JSON string 协议 + `ListTools`/`RunTool` 绑定）与首个工具 Base64。
+- Base64 工具为双卡片布局（文本↔Base64 双向），支持 URL-safe 编解码与复制，输入实时调用 Go 后端转换。
+- 前端已还原 it-tools 风格：Naive UI 主题（默认亮色 + 可切换暗色）+ 侧边栏分类菜单（中文分类）+ 顶栏（侧边栏/主页/GitHub/主题切换按钮 + Command Palette 搜索）+ 首页卡片网格 + `import.meta.glob` 动态加载工具组件。
+- 主色采用 Go 官方蓝 `#00ADD8`；侧边栏顶部为 Go 蓝渐变色块。
+- 引入 `@vueuse/core`（`useDark`/`useToggle`/`useStorage`/`useMediaQuery`/`useMagicKeys`）实现主题切换、侧边栏折叠持久化、搜索快捷键。
+- it-tools 参考仓库已 clone 到 `D:\Code\it-tools`（非本项目目录，仅作设计参考）。
+- 已验证可构建：`go build ./...`、`go vet ./...`、`go test ./...`、`npm run build`、`wails build` 均通过。
+
+---
+
+## 11. 变更记录
 
 | 日期 | 变更 | 说明 |
 |---|---|---|
 | 2026-08-14 | 初版 | 确定技术选型、架构、目录结构、里程碑 |
 | 2026-08-14 | M1 骨架 + 目录重构 | 搭建 Wails 骨架；后端采用 `internal/` 目录（app/registry/tools），App 结构体迁入 `internal/app`，绑定路径改为 `wailsjs/go/app/App` |
+| 2026-08-14 | M2 注册机制 | 完成 Tool 接口/registry/JSON string 协议/ListTools+RunTool 绑定；Base64 工具；前端还原 it-tools 暗色主题 + 侧边栏 + 卡片网格 + glob 动态加载 |
+| 2026-08-14 | 亮色主题 + 顶栏 + 品牌色 | 默认亮色 + 可切换暗色；新增顶栏（侧边栏/主页/GitHub/主题切换 + Command Palette 搜索）；主色改为 Go 蓝 `#00ADD8`，侧边栏顶部加渐变色块 |
+| 2026-08-14 | 分类中文化 + Base64 双卡片 | 分类常量改为中文（含「图片和视频」）；Base64 归类「转换器」并改造为双卡片（URL-safe + 复制 + 实时调用 Go）；修复侧边栏分类折叠 bug |

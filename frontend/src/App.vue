@@ -1,22 +1,20 @@
-<script lang="ts" setup>
-import HelloWorld from './components/HelloWorld.vue'
+<script setup lang="ts">
+import { computed } from 'vue'
+import { NConfigProvider, NGlobalStyle, NMessageProvider, darkTheme } from 'naive-ui'
+import { darkThemeOverrides, lightThemeOverrides } from './theme'
+import { useUiStore } from './stores/ui'
+
+const ui = useUiStore()
+
+const theme = computed(() => (ui.isDarkTheme ? darkTheme : null))
+const themeOverrides = computed(() => (ui.isDarkTheme ? darkThemeOverrides : lightThemeOverrides))
 </script>
 
 <template>
-  <img id="logo" alt="Wails logo" src="./assets/images/logo-universal.png"/>
-  <HelloWorld/>
+  <n-config-provider :theme="theme" :theme-overrides="themeOverrides">
+    <n-global-style />
+    <n-message-provider>
+      <router-view />
+    </n-message-provider>
+  </n-config-provider>
 </template>
-
-<style>
-#logo {
-  display: block;
-  width: 50%;
-  height: 50%;
-  margin: auto;
-  padding: 10% 0 0;
-  background-position: center;
-  background-repeat: no-repeat;
-  background-size: 100% 100%;
-  background-origin: content-box;
-}
-</style>
