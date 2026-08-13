@@ -5,6 +5,7 @@ import {
   LetterCaseToggle,
   Calendar,
   ArrowsLeftRight,
+  Binary,
   Tools,
 } from '@vicons/tabler'
 
@@ -15,6 +16,7 @@ const toolIcons: Record<string, Component> = {
   LetterCaseToggle,
   Calendar,
   ArrowsLeftRight,
+  Binary,
 }
 
 // getToolIcon 返回图标名对应的组件，未找到时返回兜底图标。

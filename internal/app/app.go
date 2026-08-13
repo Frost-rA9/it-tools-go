@@ -11,6 +11,7 @@ import (
 	"it-tools-go/internal/tools/caseconv"
 	"it-tools-go/internal/tools/datetime"
 	"it-tools-go/internal/tools/roman"
+	"it-tools-go/internal/tools/textbinary"
 )
 
 // App 是绑定到前端的应用结构体（类比传统 web 应用的 controller）。
@@ -72,6 +73,15 @@ func registerTools(reg *registry.Registry) {
 		Keywords:    []string{"integer", "base", "进制", "转换", "binary", "decimal", "hex", "octal", "radix"},
 		Icon:        "ArrowsLeftRight",
 	}, baseconv.Executor{})
+
+	reg.Register(registry.Tool{
+		ID:          textbinary.ID,
+		Name:        textbinary.Name,
+		Description: "在文本与 ASCII 二进制表示之间进行转换",
+		Category:    textbinary.Category,
+		Keywords:    []string{"text", "binary", "文本", "二进制", "ascii", "encode", "decode"},
+		Icon:        "Binary",
+	}, textbinary.Executor{})
 }
 
 // Startup 在应用启动时调用，保存 context 以便调用 runtime 方法。
