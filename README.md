@@ -1,19 +1,34 @@
-# README
+# IT Tools Go
 
-## About
+跨平台桌面 IT 工具集，使用 [Wails v2](https://wails.io/)（Go 后端）+ Vue 3 + Naive UI 实现，参考 [it-tools.tech](https://it-tools.tech/)。
 
-This is the official Wails Vue-TS template.
+## 特性
 
-You can configure the project by editing `wails.json`. More information about the project settings can be found
-here: https://wails.io/docs/reference/project-config
+- 工具业务逻辑全部由 Go 实现（`internal/`），前端仅负责渲染与调用
+- 单一可执行文件，跨平台（Windows / macOS / Linux）
 
-## Live Development
+## 开发
 
-To run in live development mode, run `wails dev` in the project directory. This will run a Vite development
-server that will provide very fast hot reload of your frontend changes. If you want to develop in a browser
-and have access to your Go methods, there is also a dev server that runs on http://localhost:34115. Connect
-to this in your browser, and you can call your Go code from devtools.
+环境要求：Go、gcc（Windows 下为 mingw）、Node.js 与 Wails CLI。
 
-## Building
+```sh
+wails dev      # 热重载开发
+wails build    # 构建桌面二进制
+go test ./...  # Go 测试
+```
 
-To build a redistributable, production mode package, use `wails build`.
+## 新增工具
+
+1. 新建 Go 包 `internal/tools/<name>/`
+2. 新建前端组件 `frontend/src/views/tools/<toolId>.vue`（文件名必须等于 toolId）
+3. 在 `internal/app/app.go` 的 `registerTools` 中注册
+
+详见 [SPEC.md](SPEC.md)。
+
+## 致谢
+
+本项目灵感来源于 [IT-Tools](https://it-tools.tech/)（https://github.com/CorentinTh/it-tools），感谢原作者的杰出工作。
+
+## License
+
+[GNU GPLv3](LICENSE)
