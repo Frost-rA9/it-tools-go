@@ -1,8 +1,9 @@
 <script setup lang="ts">
 import { ref, watch } from 'vue'
 import { useRouter } from 'vue-router'
-import { NCollapse, NCollapseItem, useThemeVars } from 'naive-ui'
+import { NCollapse, NCollapseItem, NIcon, useThemeVars } from 'naive-ui'
 import { useToolsStore } from '../stores/tools'
+import { getToolIcon } from '../tools/icons'
 
 const store = useToolsStore()
 const router = useRouter()
@@ -38,7 +39,8 @@ function go(id: string) {
           class="tool-item"
           @click="go(tool.id)"
         >
-          {{ tool.name }}
+          <n-icon :component="getToolIcon(tool.icon)" size="18" class="tool-item-icon" />
+          <span>{{ tool.name }}</span>
         </div>
       </div>
     </n-collapse-item>
@@ -73,6 +75,9 @@ function go(id: string) {
 }
 
 .tool-item {
+  display: flex;
+  align-items: center;
+  gap: 8px;
   padding: 6px 12px;
   font-size: 14px;
   opacity: 0.85;
@@ -80,6 +85,10 @@ function go(id: string) {
   border-radius: 4px;
   transition: background-color 0.15s;
   color: v-bind('themeVars.textColor2');
+}
+
+.tool-item-icon {
+  opacity: 0.7;
 }
 
 .tool-item:hover {

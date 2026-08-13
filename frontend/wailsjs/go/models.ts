@@ -6,6 +6,7 @@ export namespace registry {
 	    description: string;
 	    category: string;
 	    keywords: string[];
+	    icon: string;
 	
 	    static createFrom(source: any = {}) {
 	        return new Tool(source);
@@ -18,6 +19,7 @@ export namespace registry {
 	        this.description = source["description"];
 	        this.category = source["category"];
 	        this.keywords = source["keywords"];
+	        this.icon = source["icon"];
 	    }
 	}
 

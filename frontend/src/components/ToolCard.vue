@@ -1,7 +1,8 @@
 <script setup lang="ts">
 import { useRouter } from 'vue-router'
-import { useThemeVars } from 'naive-ui'
+import { NIcon, useThemeVars } from 'naive-ui'
 import type { Tool } from '../stores/tools'
+import { getToolIcon } from '../tools/icons'
 
 const props = defineProps<{ tool: Tool }>()
 const router = useRouter()
@@ -14,6 +15,7 @@ function go() {
 
 <template>
   <div class="tool-card" @click="go">
+    <n-icon :component="getToolIcon(tool.icon)" size="40" class="tool-card-icon" />
     <div class="tool-card-name">{{ tool.name }}</div>
     <div class="tool-card-desc">{{ tool.description }}</div>
   </div>
@@ -21,6 +23,8 @@ function go() {
 
 <style scoped>
 .tool-card {
+  display: flex;
+  flex-direction: column;
   background: v-bind('themeVars.cardColor');
   border: 2px solid v-bind('themeVars.borderColor');
   border-radius: 4px;
@@ -35,10 +39,17 @@ function go() {
   border-color: v-bind('themeVars.primaryColor');
 }
 
+.tool-card-icon {
+  color: v-bind('themeVars.textColor3');
+}
+
 .tool-card-name {
   font-size: 18px;
-  margin-bottom: 6px;
+  margin: 5px 0 6px;
   color: v-bind('themeVars.textColor1');
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
 }
 
 .tool-card-desc {

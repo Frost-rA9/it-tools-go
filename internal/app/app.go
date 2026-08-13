@@ -33,6 +33,7 @@ func registerTools(reg *registry.Registry) {
 		Description: "在普通文本与其 Base64 编码形式之间进行转换",
 		Category:    base64.Category,
 		Keywords:    []string{"base64", "编码", "解码", "encode", "decode"},
+		Icon:        "FileDigit",
 	}, base64.Executor{})
 
 	reg.Register(registry.Tool{
@@ -41,6 +42,7 @@ func registerTools(reg *registry.Registry) {
 		Description: "在阿拉伯数字与罗马数字之间进行转换",
 		Category:    roman.Category,
 		Keywords:    []string{"roman", "罗马", "数字", "numeral", "阿拉伯"},
+		Icon:        "LetterX",
 	}, roman.Executor{})
 
 	reg.Register(registry.Tool{
@@ -49,6 +51,7 @@ func registerTools(reg *registry.Registry) {
 		Description: "在多种大小写格式之间转换字符串（驼峰、蛇形、常量等）",
 		Category:    caseconv.Category,
 		Keywords:    []string{"case", "大小写", "驼峰", "camel", "snake", "upper", "lower"},
+		Icon:        "LetterCaseToggle",
 	}, caseconv.Executor{})
 
 	reg.Register(registry.Tool{
@@ -57,6 +60,7 @@ func registerTools(reg *registry.Registry) {
 		Description: "在不同日期时间格式之间进行转换（时间戳、ISO 8601、RFC 系列、Excel 等）",
 		Category:    datetime.Category,
 		Keywords:    []string{"date", "time", "日期", "时间", "时间戳", "timestamp", "unix", "iso8601", "excel"},
+		Icon:        "Calendar",
 	}, datetime.Executor{})
 }
 

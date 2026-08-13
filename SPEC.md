@@ -102,6 +102,7 @@ type Tool struct {
     Description string   `json:"description"` // 一句话描述
     Category    string   `json:"category"`    // 所属分类（见 §6）
     Keywords    []string `json:"keywords"`    // 搜索关键词
+    Icon        string   `json:"icon"`        // 图标名（对应前端 @vicons/tabler 组件，如 "FileDigit"）
 }
 
 type Executor interface {
@@ -255,6 +256,7 @@ pnpm lint
 - Base64 工具为双卡片布局（文本↔Base64 双向），支持 URL-safe 编解码与复制，输入实时调用 Go 后端转换。
 - 新增 3 个转换器工具：罗马数字（1–3999 双向转换 + 合法性校验）、大小写（14 种格式：驼峰/蛇形/常量/mocking 等）、日期时间（10 种格式：时间戳/ISO 8601/ISO 9075/RFC 3339/RFC 7231/UTC/Mongo ObjectID/Excel 等，含格式自动识别与下拉回退）。
 - 前端已还原 it-tools 风格：Naive UI 主题（默认亮色 + 可切换暗色）+ 侧边栏分类菜单（中文分类）+ 顶栏（侧边栏/主页/GitHub/主题切换按钮 + Command Palette 搜索）+ 首页卡片网格 + `import.meta.glob` 动态加载工具组件。
+- 工具元数据新增 `Icon` 字段（Go 端存 `@vicons/tabler` 图标名，前端 `src/tools/icons.ts` 映射为组件）；侧边栏与首页卡片均显示工具图标；首页改为扁平网格（不分分类），卡片等宽等高（响应式 1/2/3/4 列）。
 - 主色采用 Go 官方蓝 `#00ADD8`；侧边栏顶部为 Go 蓝渐变色块。
 - 引入 `@vueuse/core`（`useDark`/`useToggle`/`useStorage`/`useMediaQuery`/`useMagicKeys`）实现主题切换、侧边栏折叠持久化、搜索快捷键。
 - it-tools 参考仓库已 clone 到 `D:\Code\it-tools`（非本项目目录，仅作设计参考）。
@@ -272,3 +274,4 @@ pnpm lint
 | 2026-08-14 | 亮色主题 + 顶栏 + 品牌色 | 默认亮色 + 可切换暗色；新增顶栏（侧边栏/主页/GitHub/主题切换 + Command Palette 搜索）；主色改为 Go 蓝 `#00ADD8`，侧边栏顶部加渐变色块 |
 | 2026-08-14 | 分类中文化 + Base64 双卡片 | 分类常量改为中文（含「图片和视频」）；Base64 归类「转换器」并改造为双卡片（URL-safe + 复制 + 实时调用 Go）；修复侧边栏分类折叠 bug |
 | 2026-08-14 | 新增 3 个转换器 | 罗马数字（1–3999 双向+校验）、大小写（14 种格式）、日期时间（10 种格式+自动识别） |
+| 2026-08-14 | 工具图标 + 首页扁平化 | Tool 元数据新增 Icon 字段（tabler 图标名）；侧边栏与首页卡片加图标；首页去分类标题、卡片等宽等高（响应式列） |

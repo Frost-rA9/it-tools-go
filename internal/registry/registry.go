@@ -24,6 +24,7 @@ type Tool struct {
 	Description string   `json:"description"` // 一句话描述
 	Category    string   `json:"category"`    // 所属分类
 	Keywords    []string `json:"keywords"`    // 搜索关键词
+	Icon        string   `json:"icon"`        // 图标名（对应前端 @vicons/tabler 组件，如 "FileDigit"）
 }
 
 // Executor 定义工具的执行逻辑。input 与 output 均为 JSON 字符串，结构由各工具自行约定。
