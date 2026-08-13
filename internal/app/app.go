@@ -7,6 +7,7 @@ import (
 
 	"it-tools-go/internal/registry"
 	"it-tools-go/internal/tools/base64"
+	"it-tools-go/internal/tools/roman"
 )
 
 // App 是绑定到前端的应用结构体（类比传统 web 应用的 controller）。
@@ -31,6 +32,14 @@ func registerTools(reg *registry.Registry) {
 		Category:    base64.Category,
 		Keywords:    []string{"base64", "编码", "解码", "encode", "decode"},
 	}, base64.Executor{})
+
+	reg.Register(registry.Tool{
+		ID:          roman.ID,
+		Name:        roman.Name,
+		Description: "在阿拉伯数字与罗马数字之间进行转换",
+		Category:    roman.Category,
+		Keywords:    []string{"roman", "罗马", "数字", "numeral", "阿拉伯"},
+	}, roman.Executor{})
 }
 
 // Startup 在应用启动时调用，保存 context 以便调用 runtime 方法。
