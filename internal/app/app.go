@@ -12,6 +12,7 @@ import (
 	"it-tools-go/internal/tools/datetime"
 	"it-tools-go/internal/tools/roman"
 	"it-tools-go/internal/tools/textbinary"
+	"it-tools-go/internal/tools/textunicode"
 )
 
 // App 是绑定到前端的应用结构体（类比传统 web 应用的 controller）。
@@ -82,6 +83,15 @@ func registerTools(reg *registry.Registry) {
 		Keywords:    []string{"text", "binary", "文本", "二进制", "ascii", "encode", "decode"},
 		Icon:        "Binary",
 	}, textbinary.Executor{})
+
+	reg.Register(registry.Tool{
+		ID:          textunicode.ID,
+		Name:        textunicode.Name,
+		Description: "在文本与 Unicode 转义表示之间进行转换",
+		Category:    textunicode.Category,
+		Keywords:    []string{"text", "unicode", "文本", "转义", "编码"},
+		Icon:        "TextWrap",
+	}, textunicode.Executor{})
 }
 
 // Startup 在应用启动时调用，保存 context 以便调用 runtime 方法。

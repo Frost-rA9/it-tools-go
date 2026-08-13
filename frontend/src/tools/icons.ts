@@ -6,6 +6,7 @@ import {
   Calendar,
   ArrowsLeftRight,
   Binary,
+  TextWrap,
   Tools,
 } from '@vicons/tabler'
 
@@ -17,6 +18,7 @@ const toolIcons: Record<string, Component> = {
   Calendar,
   ArrowsLeftRight,
   Binary,
+  TextWrap,
 }
 
 // getToolIcon 返回图标名对应的组件，未找到时返回兜底图标。
