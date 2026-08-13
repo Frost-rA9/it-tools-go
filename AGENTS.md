@@ -17,7 +17,7 @@ it-tools-go/
 │   ├── app/                     # App 结构体 + 生命周期 + 绑定（ListTools/RunTool）
 │   ├── registry/                # Tool 接口 + 注册表 + 分类常量
 │   └── tools/                   # 各工具实现（每工具一个包）
-│       └── base64/              # Base64 工具 + 单测
+│       └── base64-string-converter/  # Base64 工具 + 单测（目录用短杠 toolId）
 ├── build/                       # 构建资源（图标、Windows 清单、NSIS 安装器）
 │   └── bin/                     # wails build 产物（it-tools-go.exe）
 ├── frontend/
@@ -42,6 +42,7 @@ it-tools-go/
 
 - 新增一个工具 = Go 包（`internal/tools/<name>/`）+ 前端组件（`frontend/src/views/tools/<toolId>.vue`）。
 - 前端组件文件名必须等于 toolId（如 `base64-string-converter.vue`），`import.meta.glob` 据此自动匹配。
+- 命名规范：目录名用短杠 `-` 连接的完整 toolId（如 `base64-string-converter/`）；`.go` 文件名用下划线 `_`（如 `base64_string_converter.go`）；`package` 名用去短杠拼接、去掉冗余 `-converter` 后缀的小写单字（如 `base64string`、`romannumeral`、`caseconv`、`radix`，因 Go 包名不能含短杠/下划线，且 `case` 为关键字）。
 - 工具在 `internal/app/app.go` 的 `registerTools` 中集中注册。
 - 传输协议为 JSON string（前端 `JSON.stringify/parse`，Go `encoding/json`）。
 
@@ -64,6 +65,6 @@ it-tools-go/
 
 - 工具逻辑属于 Go（遵循 SPEC.md §2.1）；前端只负责渲染和调用绑定。
 - `frontend/wailsjs/` 由 Wails 生成 —— 切勿手动编辑。
-- 新增工具或改动功能后，须同步更新 `SPEC.md`（当前状态 §10 与变更记录 §11）。
+- 新增工具或改动功能后，须同步更新 `SPEC.md`（§10 当前状态保持为最新快照、不堆叠历史；§11 变更记录追加或精简）。
 - 完成改动后先构建（含 `wails build` 出 exe）并停下，等用户查看效果并确认后再执行 `git commit`/`git push`。
 - 提交信息遵循 Conventional Commits（见全局 AGENTS.md）。

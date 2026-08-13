@@ -139,7 +139,7 @@ it-tools-go/
 │   ├── app/                     # App 结构体 + 生命周期 + 绑定（package app）
 │   ├── registry/                # Tool 接口 + 注册表实现
 │   └── tools/                   # 各工具实现（每工具一个包）
-│       └── base64/              # Base64 工具 + 单测
+│       └── base64-string-converter/  # Base64 工具 + 单测（目录短杠，文件下划线）
 ├── frontend/
 │   ├── package.json
 │   ├── vite.config.ts
@@ -200,7 +200,7 @@ it-tools-go/
 | Wails CLI | 2.14.0 | `go install github.com/wailsapp/wails/v2/cmd/wails@latest` |
 | WebView2 Runtime | — | Win10/11 通常内置，Wails 依赖 |
 
-> 注：Go 模块代理已配置为 `GOPROXY=https://goproxy.cn,direct`（本机需此代理才能拉取模块）。
+> 注：Go 模块代理为官方源 `GOPROXY=https://proxy.golang.org,direct`，访问需本地代理（见全局 AGENTS.md）。
 
 ### 7.2 常用命令
 
@@ -249,19 +249,15 @@ pnpm lint
 
 ## 10. 当前状态
 
-- 已搭建 Wails v2 桌面应用（Vue 3 + TypeScript 前端，Go 后端）。
-- 存在 `go.mod`（模块 `it-tools-go`，go 1.25.0，wails v2.14.0）。
-- 后端采用 `internal/` 目录结构，`App` 结构体在 `internal/app`（绑定路径 `wailsjs/go/app/App`）。
-- 已实现工具注册机制（`registry` + JSON string 协议 + `ListTools`/`RunTool` 绑定）与首个工具 Base64。
-- Base64 工具为双卡片布局（文本↔Base64 双向），支持 URL-safe 编解码与复制，输入实时调用 Go 后端转换。
-- 新增 3 个转换器工具：罗马数字（1–3999 双向转换 + 合法性校验）、大小写（14 种格式：驼峰/蛇形/常量/mocking 等）、日期时间（10 种格式：时间戳/ISO 8601/ISO 9075/RFC 3339/RFC 7231/UTC/Mongo ObjectID/Excel 等，含格式自动识别与下拉回退）。
-- 新增 3 个转换器工具：整数基转换（2~64 进制任意精度，`math/big`）、文本↔ASCII 二进制、文本↔Unicode 转义。
-- 前端已还原 it-tools 风格：Naive UI 主题（默认亮色 + 可切换暗色）+ 侧边栏分类菜单（中文分类）+ 顶栏（侧边栏/主页/GitHub/主题切换按钮 + Command Palette 搜索）+ 首页卡片网格 + `import.meta.glob` 动态加载工具组件。
-- 工具元数据新增 `Icon` 字段（Go 端存 `@vicons/tabler` 图标名，前端 `src/tools/icons.ts` 映射为组件）；侧边栏与首页卡片均显示工具图标；首页改为扁平网格（不分分类），卡片等宽等高（响应式 1/2/3/4 列）。
-- 主色采用 Go 官方蓝 `#00ADD8`；侧边栏顶部为 Go 蓝渐变色块。
-- 引入 `@vueuse/core`（`useDark`/`useToggle`/`useStorage`/`useMediaQuery`/`useMagicKeys`）实现主题切换、侧边栏折叠持久化、搜索快捷键。
-- it-tools 参考仓库已 clone 到 `D:\Code\it-tools`（非本项目目录，仅作设计参考）。
-- 已验证可构建：`go build ./...`、`go vet ./...`、`go test ./...`、`npm run build`、`wails build` 均通过。
+- 应用形态：Wails v2 桌面应用（Go 后端 + Vue 3 + TypeScript + Naive UI 前端），Go 模块 `it-tools-go`（go 1.25.0，wails v2.14.0）。
+- 后端目录：`internal/`（`app` / `registry` / `tools`），App 绑定路径 `wailsjs/go/app/App`。
+- 工具注册机制：`registry`（Tool 接口 + 注册表）+ JSON string 协议 + `ListTools`/`RunTool` 绑定；前端 `import.meta.glob` 按 toolId 动态加载组件。
+- 已实现 9 个「转换器」工具：Base64、罗马数字、大小写、日期时间、整数基（radix）、文本↔ASCII 二进制、文本↔Unicode、YAML 转 JSON、YAML 转 TOML。
+- 工具元数据含 `Icon` 字段（tabler 图标名）；侧边栏与首页卡片显示图标；首页为扁平网格（响应式 1/2/3/4 列、等宽等高）。
+- 前端 it-tools 风格：Naive UI 亮/暗主题、侧边栏分类菜单、顶栏 + Command Palette 搜索。
+- 依赖：前端 `@vueuse/core`；后端 `gopkg.in/yaml.v3` + `github.com/pelletier/go-toml/v2`（首批第三方非 Wails 依赖）。
+- 命名规范：目录短杠（toolId）、文件下划线、包名去 `-converter` 后缀拼接。
+- 已验证可构建：`go build/vet/test ./...`、`npm run build`、`wails build` 均通过。
 
 ---
 
@@ -269,11 +265,8 @@ pnpm lint
 
 | 日期 | 变更 | 说明 |
 |---|---|---|
-| 2026-08-14 | 初版 | 确定技术选型、架构、目录结构、里程碑 |
-| 2026-08-14 | M1 骨架 + 目录重构 | 搭建 Wails 骨架；后端采用 `internal/` 目录（app/registry/tools），App 结构体迁入 `internal/app`，绑定路径改为 `wailsjs/go/app/App` |
-| 2026-08-14 | M2 注册机制 | 完成 Tool 接口/registry/JSON string 协议/ListTools+RunTool 绑定；Base64 工具；前端还原 it-tools 暗色主题 + 侧边栏 + 卡片网格 + glob 动态加载 |
-| 2026-08-14 | 亮色主题 + 顶栏 + 品牌色 | 默认亮色 + 可切换暗色；新增顶栏（侧边栏/主页/GitHub/主题切换 + Command Palette 搜索）；主色改为 Go 蓝 `#00ADD8`，侧边栏顶部加渐变色块 |
-| 2026-08-14 | 分类中文化 + Base64 双卡片 | 分类常量改为中文（含「图片和视频」）；Base64 归类「转换器」并改造为双卡片（URL-safe + 复制 + 实时调用 Go）；修复侧边栏分类折叠 bug |
-| 2026-08-14 | 新增 3 个转换器 | 罗马数字（1–3999 双向+校验）、大小写（14 种格式）、日期时间（10 种格式+自动识别） |
-| 2026-08-14 | 工具图标 + 首页扁平化 | Tool 元数据新增 Icon 字段（tabler 图标名）；侧边栏与首页卡片加图标；首页去分类标题、卡片等宽等高（响应式列） |
-| 2026-08-14 | 新增 3 个转换器 | 整数基转换（2~64 进制）、文本↔ASCII 二进制、文本↔Unicode |
+| 2026-08-14 | 初版 + M1 | 技术选型、架构、目录结构；Wails 骨架，后端采用 `internal/` 目录 |
+| 2026-08-14 | M2 注册机制 | Tool 接口 / registry / JSON string 协议 / `ListTools`+`RunTool` 绑定 + Base64 工具 |
+| 2026-08-14 | 前端 it-tools 风格 | 亮/暗主题、顶栏 + Command Palette、分类中文化、工具图标、首页扁平网格 |
+| 2026-08-14 | 转换器工具扩展 | 分批实现 8 个转换器（罗马/大小写/日期时间/整数基/文本二进制/文本Unicode/YAML→JSON/YAML→TOML），引入 yaml.v3 + go-toml/v2 |
+| 2026-08-14 | 命名规范 | 目录短杠、文件下划线、包名去 `-converter` 后缀拼接 |
