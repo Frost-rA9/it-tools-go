@@ -64,4 +64,5 @@ it-tools-go/
 
 - 工具逻辑属于 Go（遵循 SPEC.md §2.1）；前端只负责渲染和调用绑定。
 - `frontend/wailsjs/` 由 Wails 生成 —— 切勿手动编辑。
+- 新增工具或改动功能后，须同步更新 `SPEC.md`（当前状态 §10 与变更记录 §11）。
 - 提交信息遵循 Conventional Commits（见全局 AGENTS.md）。
