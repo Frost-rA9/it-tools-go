@@ -7,6 +7,7 @@ import (
 
 	"it-tools-go/internal/registry"
 	"it-tools-go/internal/tools/base64"
+	"it-tools-go/internal/tools/caseconv"
 	"it-tools-go/internal/tools/roman"
 )
 
@@ -40,6 +41,14 @@ func registerTools(reg *registry.Registry) {
 		Category:    roman.Category,
 		Keywords:    []string{"roman", "罗马", "数字", "numeral", "阿拉伯"},
 	}, roman.Executor{})
+
+	reg.Register(registry.Tool{
+		ID:          caseconv.ID,
+		Name:        caseconv.Name,
+		Description: "在多种大小写格式之间转换字符串（驼峰、蛇形、常量等）",
+		Category:    caseconv.Category,
+		Keywords:    []string{"case", "大小写", "驼峰", "camel", "snake", "upper", "lower"},
+	}, caseconv.Executor{})
 }
 
 // Startup 在应用启动时调用，保存 context 以便调用 runtime 方法。
