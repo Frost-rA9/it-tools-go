@@ -24,37 +24,65 @@ jobs:
             artifact: it-tools-go-windows-amd64.exe
           - platform: darwin/amd64
             os: macos-13
-            artifact: it-tools-go-darwin-amd64
+            artifact: it-tools-go-darwin-amd64.zip
+            mac: true
           - platform: darwin/arm64
             os: macos-14
-            artifact: it-tools-go-darwin-arm64
+            artifact: it-tools-go-darwin-arm64.zip
+            mac: true
           - platform: linux/amd64
-            os: ubuntu-latest
+            os: ubuntu-22.04
             artifact: it-tools-go-linux-amd64
 
     steps:
       - name: Checkout
         uses: actions/checkout@v4
 
-      - name: Build with Wails
-        uses: wailsapp/wails-build-action@v2
+      - name: Setup Go
+        uses: actions/setup-go@v5
         with:
-          build-name: it-tools-go
-          build-platform: ${{ matrix.platform }}
           go-version: '1.26'
+
+      - name: Setup Node
+        uses: actions/setup-node@v4
+        with:
           node-version: '24'
+
+      - name: Install MinGW (Windows)
+        if: startsWith(matrix.platform, 'windows')
+        uses: egor-tensin/setup-mingw@v2
+
+      - name: Install Linux dependencies
+        if: startsWith(matrix.platform, 'linux')
+        run: |
+          sudo apt-get update
+          sudo apt-get install -y \
+            libgtk-3-dev \
+            libwebkit2gtk-4.0-dev \
+            libayatana-appindicator3-dev \
+            librsvg2-dev
+
+      - name: Install Wails CLI
+        run: go install github.com/wailsapp/wails/v2/cmd/wails@v2.14.0
+
+      - name: Build
+        run: wails build
 
       - name: Collect artifact
         shell: bash
         run: |
           cd build/bin
           shopt -s nullglob
-          files=(*)
-          if [ ${#files[@]} -eq 0 ]; then
-            echo "::error::no build output found in build/bin" >&2
-            exit 1
+          if [ "${{ matrix.mac }}" = "true" ]; then
+            ditto -c -k --keepParent it-tools-go.app "${{ matrix.artifact }}"
+          else
+            files=(*)
+            if [ ${#files[@]} -eq 0 ]; then
+              echo "::error::no build output found in build/bin" >&2
+              exit 1
+            fi
+            mv "${files[0]}" "${{ matrix.artifact }}"
           fi
-          mv "${files[0]}" "${{ matrix.artifact }}"
 
       - name: Upload artifact
         uses: actions/upload-artifact@v4
@@ -81,7 +109,7 @@ jobs:
             ## ${{ env.RELEASE_NAME }} — ${{ github.ref_name }}
 
             - Windows (amd64): `it-tools-go-windows-amd64.exe`
-            - macOS (Intel): `it-tools-go-darwin-amd64`
-            - macOS (Apple Silicon): `it-tools-go-darwin-arm64`
+            - macOS (Intel): `it-tools-go-darwin-amd64.zip`
+            - macOS (Apple Silicon): `it-tools-go-darwin-arm64.zip`
             - Linux (amd64): `it-tools-go-linux-amd64`
           files: artifacts/**/*
