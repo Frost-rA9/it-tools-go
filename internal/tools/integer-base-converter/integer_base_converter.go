@@ -7,17 +7,29 @@ import (
 	"fmt"
 	"math/big"
 	"strings"
+
+	"it-tools-go/internal/registry"
 )
 
 // 工具元数据。
 const (
-	ID       = "integer-base-converter"
-	Name     = "整数基转换器"
-	Category = "转换器"
+	ID          = "integer-base-converter"
+	Name        = "整数基转换器"
+	Description = "在不同进制之间转换整数（二进制、八进制、十进制、十六进制、Base64 等）"
+	Category    = "转换器"
+	Icon        = "ArrowsLeftRight"
 
 	minBase = 2
 	maxBase = 64
 )
+
+// Keywords 为搜索关键词（Go 常量不能是 slice，故用 var）。
+var Keywords = []string{"integer", "base", "进制", "转换", "binary", "decimal", "hex", "octal", "radix"}
+
+// Tool 返回工具的完整注册元数据。
+func Tool() registry.Tool {
+	return registry.Tool{ID: ID, Name: Name, Description: Description, Category: Category, Keywords: Keywords, Icon: Icon}
+}
 
 // alphabet 为进制数字字母表（与参考项目一致：0-9 a-z A-Z + /）。
 const alphabet = "0123456789abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ+/"

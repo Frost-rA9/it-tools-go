@@ -9,14 +9,26 @@ import (
 	"strconv"
 	"strings"
 	"time"
+
+	"it-tools-go/internal/registry"
 )
 
 // 工具元数据。
 const (
-	ID       = "date-time-converter"
-	Name     = "日期时间转换器"
-	Category = "转换器"
+	ID          = "date-time-converter"
+	Name        = "日期时间转换器"
+	Description = "在不同日期时间格式之间进行转换（时间戳、ISO 8601、RFC 系列、Excel 等）"
+	Category    = "转换器"
+	Icon        = "Calendar"
 )
+
+// Keywords 为搜索关键词（Go 常量不能是 slice，故用 var）。
+var Keywords = []string{"date", "time", "日期", "时间", "时间戳", "timestamp", "unix", "iso8601", "excel"}
+
+// Tool 返回工具的完整注册元数据。
+func Tool() registry.Tool {
+	return registry.Tool{ID: ID, Name: Name, Description: Description, Category: Category, Keywords: Keywords, Icon: Icon}
+}
 
 // input 是工具的输入结构。
 type input struct {

@@ -7,14 +7,26 @@ import (
 	"fmt"
 	"strings"
 	"unicode"
+
+	"it-tools-go/internal/registry"
 )
 
 // 工具元数据。
 const (
-	ID       = "case-converter"
-	Name     = "大小写转换"
-	Category = "转换器"
+	ID          = "case-converter"
+	Name        = "大小写转换"
+	Description = "在多种大小写格式之间转换字符串（驼峰、蛇形、常量等）"
+	Category    = "转换器"
+	Icon        = "LetterCaseToggle"
 )
+
+// Keywords 为搜索关键词（Go 常量不能是 slice，故用 var）。
+var Keywords = []string{"case", "大小写", "驼峰", "camel", "snake", "upper", "lower"}
+
+// Tool 返回工具的完整注册元数据。
+func Tool() registry.Tool {
+	return registry.Tool{ID: ID, Name: Name, Description: Description, Category: Category, Keywords: Keywords, Icon: Icon}
+}
 
 // input 是工具的输入结构。
 type input struct {

@@ -7,14 +7,26 @@ import (
 	"fmt"
 	"strconv"
 	"strings"
+
+	"it-tools-go/internal/registry"
 )
 
 // 工具元数据。
 const (
-	ID       = "text-to-binary"
-	Name     = "文本转 ASCII 二进制"
-	Category = "转换器"
+	ID          = "text-to-binary"
+	Name        = "文本转 ASCII 二进制"
+	Description = "在文本与 ASCII 二进制表示之间进行转换"
+	Category    = "转换器"
+	Icon        = "Binary"
 )
+
+// Keywords 为搜索关键词（Go 常量不能是 slice，故用 var）。
+var Keywords = []string{"text", "binary", "文本", "二进制", "ascii", "encode", "decode"}
+
+// Tool 返回工具的完整注册元数据。
+func Tool() registry.Tool {
+	return registry.Tool{ID: ID, Name: Name, Description: Description, Category: Category, Keywords: Keywords, Icon: Icon}
+}
 
 // 转换模式。
 const (

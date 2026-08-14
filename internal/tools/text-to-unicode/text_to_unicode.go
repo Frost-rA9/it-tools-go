@@ -7,14 +7,26 @@ import (
 	"fmt"
 	"regexp"
 	"strconv"
+
+	"it-tools-go/internal/registry"
 )
 
 // 工具元数据。
 const (
-	ID       = "text-to-unicode"
-	Name     = "文本转 Unicode"
-	Category = "转换器"
+	ID          = "text-to-unicode"
+	Name        = "文本转 Unicode"
+	Description = "在文本与 Unicode 转义表示之间进行转换"
+	Category    = "转换器"
+	Icon        = "TextWrap"
 )
+
+// Keywords 为搜索关键词（Go 常量不能是 slice，故用 var）。
+var Keywords = []string{"text", "unicode", "文本", "转义", "编码"}
+
+// Tool 返回工具的完整注册元数据。
+func Tool() registry.Tool {
+	return registry.Tool{ID: ID, Name: Name, Description: Description, Category: Category, Keywords: Keywords, Icon: Icon}
+}
 
 // 转换模式。
 const (
