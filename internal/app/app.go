@@ -10,6 +10,7 @@ import (
 	"it-tools-go/internal/tools/case-converter"
 	"it-tools-go/internal/tools/date-time-converter"
 	"it-tools-go/internal/tools/integer-base-converter"
+	"it-tools-go/internal/tools/list-converter"
 	"it-tools-go/internal/tools/roman-numeral-converter"
 	"it-tools-go/internal/tools/text-to-binary"
 	"it-tools-go/internal/tools/text-to-unicode"
@@ -41,6 +42,7 @@ func registerTools(reg *registry.Registry) {
 	reg.Register(textunicode.Tool(), textunicode.Executor{})
 	reg.Register(yamljson.Tool(), yamljson.Executor{})
 	reg.Register(yamltoml.Tool(), yamltoml.Executor{})
+	reg.Register(listconv.Tool(), listconv.Executor{})
 }
 
 // Startup 在应用启动时调用，保存 context 以便调用 runtime 方法。

@@ -8,6 +8,7 @@ import {
   Binary,
   TextWrap,
   AlignJustified,
+  List,
   Tools,
 } from '@vicons/tabler'
 
@@ -21,6 +22,7 @@ const toolIcons: Record<string, Component> = {
   Binary,
   TextWrap,
   AlignJustified,
+  List,
 }
 
 // getToolIcon 返回图标名对应的组件，未找到时返回兜底图标。
