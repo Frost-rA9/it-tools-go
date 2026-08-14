@@ -17,6 +17,7 @@ import (
 	"it-tools-go/internal/tools/text-to-unicode"
 	"it-tools-go/internal/tools/toml-to-json"
 	"it-tools-go/internal/tools/toml-to-yaml"
+	"it-tools-go/internal/tools/xml-to-json"
 	"it-tools-go/internal/tools/yaml-to-json-converter"
 	"it-tools-go/internal/tools/yaml-to-toml"
 )
@@ -49,6 +50,7 @@ func registerTools(reg *registry.Registry) {
 	reg.Register(markdownhtml.Tool(), markdownhtml.Executor{})
 	reg.Register(tomljson.Tool(), tomljson.Executor{})
 	reg.Register(tomlyaml.Tool(), tomlyaml.Executor{})
+	reg.Register(xmljson.Tool(), xmljson.Executor{})
 }
 
 // Startup 在应用启动时调用，保存 context 以便调用 runtime 方法。
