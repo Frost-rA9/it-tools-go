@@ -1,7 +1,8 @@
 <script setup lang="ts">
 import { ref, watch } from 'vue'
 import { useRouter } from 'vue-router'
-import { NCollapse, NCollapseItem, NIcon, useThemeVars } from 'naive-ui'
+import { NCollapseTransition, NIcon, useThemeVars } from 'naive-ui'
+import { ChevronRight } from '@vicons/tabler'
 import { useToolsStore } from '../stores/tools'
 import { getToolIcon } from '../tools/icons'
 
@@ -9,15 +10,29 @@ const store = useToolsStore()
 const router = useRouter()
 const themeVars = useThemeVars()
 
-const expandedNames = ref<string[]>([])
+const collapsedNames = ref<string[]>([])
 
 watch(
   () => store.categories,
   (categories) => {
-    expandedNames.value = categories.map((c) => c.name)
+    const names = categories.map((c) => c.name)
+    collapsedNames.value = collapsedNames.value.filter((n) => names.includes(n))
   },
   { immediate: true },
 )
+
+function isCollapsed(name: string) {
+  return collapsedNames.value.includes(name)
+}
+
+function toggle(name: string) {
+  const i = collapsedNames.value.indexOf(name)
+  if (i >= 0) {
+    collapsedNames.value.splice(i, 1)
+  } else {
+    collapsedNames.value.push(name)
+  }
+}
 
 function go(id: string) {
   router.push({ name: 'tool', params: { id } })
@@ -25,26 +40,33 @@ function go(id: string) {
 </script>
 
 <template>
-  <n-collapse v-model:expanded-names="expandedNames" class="tool-menu">
-    <n-collapse-item
-      v-for="cat in store.categories"
-      :key="cat.name"
-      :title="cat.name"
-      :name="cat.name"
-    >
-      <div class="menu-wrapper">
-        <div
-          v-for="tool in cat.tools"
-          :key="tool.id"
-          class="tool-item"
-          @click="go(tool.id)"
-        >
-          <n-icon :component="getToolIcon(tool.icon)" size="18" class="tool-item-icon" />
-          <span>{{ tool.name }}</span>
-        </div>
+  <div class="tool-menu">
+    <div v-for="cat in store.categories" :key="cat.name" class="menu-category">
+      <div class="category-header" @click="toggle(cat.name)">
+        <span class="chevron" :class="{ expanded: !isCollapsed(cat.name) }">
+          <n-icon :component="ChevronRight" size="16" />
+        </span>
+        <span class="category-name">{{ cat.name }}</span>
       </div>
-    </n-collapse-item>
-  </n-collapse>
+
+      <n-collapse-transition :show="!isCollapsed(cat.name)">
+        <div class="menu-wrapper">
+          <div class="toggle-bar" @click="toggle(cat.name)" />
+          <div class="menu-items">
+            <div
+              v-for="tool in cat.tools"
+              :key="tool.id"
+              class="tool-item"
+              @click="go(tool.id)"
+            >
+              <n-icon :component="getToolIcon(tool.icon)" size="18" class="tool-item-icon" />
+              <span>{{ tool.name }}</span>
+            </div>
+          </div>
+        </div>
+      </n-collapse-transition>
+    </div>
+  </div>
 </template>
 
 <style scoped>
@@ -52,25 +74,63 @@ function go(id: string) {
   padding: 0 12px;
 }
 
-.menu-wrapper {
-  position: relative;
-  padding-left: 12px;
+.menu-category {
+  margin-bottom: 5px;
 }
 
-.menu-wrapper::before {
+.category-header {
+  display: flex;
+  align-items: center;
+  margin: 12px 0 0 6px;
+  cursor: pointer;
+  opacity: 0.6;
+}
+
+.chevron {
+  display: inline-flex;
+  align-items: center;
+  transition: transform 0.2s;
+}
+
+.chevron.expanded {
+  transform: rotate(90deg);
+}
+
+.category-name {
+  margin-left: 8px;
+  font-size: 13px;
+}
+
+.menu-wrapper {
+  display: flex;
+  flex-direction: row;
+}
+
+.menu-items {
+  flex: 1;
+  margin-bottom: 5px;
+}
+
+.toggle-bar {
+  width: 24px;
+  position: relative;
+  cursor: pointer;
+  opacity: 0.1;
+  transition: opacity ease 0.2s;
+}
+
+.toggle-bar::before {
   content: '';
-  position: absolute;
-  left: 0;
-  top: 0;
-  bottom: 0;
   width: 2px;
+  height: 100%;
   border-radius: 2px;
   background-color: v-bind('themeVars.textColor3');
-  opacity: 0.2;
-  transition: opacity 0.2s;
+  position: absolute;
+  top: 0;
+  left: 14px;
 }
 
-.menu-wrapper:hover::before {
+.toggle-bar:hover {
   opacity: 0.5;
 }
 
