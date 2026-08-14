@@ -10,6 +10,7 @@ import (
 	"it-tools-go/internal/tools/case-converter"
 	"it-tools-go/internal/tools/date-time-converter"
 	"it-tools-go/internal/tools/integer-base-converter"
+	"it-tools-go/internal/tools/json-to-xml"
 	"it-tools-go/internal/tools/list-converter"
 	"it-tools-go/internal/tools/markdown-to-html"
 	"it-tools-go/internal/tools/roman-numeral-converter"
@@ -51,6 +52,7 @@ func registerTools(reg *registry.Registry) {
 	reg.Register(tomljson.Tool(), tomljson.Executor{})
 	reg.Register(tomlyaml.Tool(), tomlyaml.Executor{})
 	reg.Register(xmljson.Tool(), xmljson.Executor{})
+	reg.Register(jsonxml.Tool(), jsonxml.Executor{})
 }
 
 // Startup 在应用启动时调用，保存 context 以便调用 runtime 方法。
