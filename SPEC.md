@@ -135,6 +135,8 @@ it-tools-go/
 ├── go.mod / go.sum              # Go 模块
 ├── main.go                      # Wails 入口（wails.Run + embed frontend/dist）
 ├── wails.json                   # Wails 构建配置
+├── assets/
+│   └── logo.svg                 # 品牌 logo 设计源（唯一源，脚本派生各尺寸资产）
 ├── internal/
 │   ├── app/                     # App 结构体 + 生命周期 + 绑定（package app）
 │   ├── registry/                # Tool 接口 + 注册表实现
@@ -144,6 +146,10 @@ it-tools-go/
 │   ├── package.json
 │   ├── vite.config.ts
 │   ├── index.html
+│   ├── scripts/
+│   │   └── gen-brand.mjs        # 品牌资产生成（SVG→PNG，拷贝 favicon/侧边栏 logo）
+│   ├── public/
+│   │   └── favicon.svg          # 生成物（源为 assets/logo.svg）
 │   └── src/
 │       ├── main.ts
 │       ├── App.vue              # n-config-provider（暗色主题）
@@ -154,6 +160,7 @@ it-tools-go/
 │       ├── views/               # HomeView + ToolView + tools/（按 toolId 命名）
 │       ├── stores/              # Pinia（tools store）
 │       ├── composables/         # useToolComponent（glob 动态加载）
+│       ├── assets/              # 主题资源（hero-gradient.svg、logo.svg 等）
 │       └── wailsjs/             # Wails 自动生成的绑定代码（勿手改）
 ├── build/                       # 构建产物（图标、打包配置）
 │   └── bin/                     # wails build 输出（it-tools-go.exe）
@@ -258,6 +265,7 @@ pnpm lint
 - 依赖：前端 `@vueuse/core`；后端 `gopkg.in/yaml.v3` + `github.com/pelletier/go-toml/v2` + `github.com/yuin/goldmark` + `github.com/clbanning/mxj/v2`。
 - XML↔JSON 转换对齐 it-tools 的 `_attributes`/`_text` 约定。
 - 命名规范：目录短杠（toolId）、文件下划线、包名去 `-converter` 后缀拼接。
+- 品牌标识：`assets/logo.svg` 为唯一设计源（深色圆角底 + 青色开口扳手剪影，主色对齐主题 `#00ADD8`）；`frontend/scripts/gen-brand.mjs`（@resvg/resvg-js 渲染多尺寸 PNG，PIL 打 ICO）派生 `build/appicon.png`、`build/windows/icon.ico`、`frontend/public/favicon.svg`、`frontend/src/assets/logo.svg`；favicon 已接入。
 - 已验证可构建：`go build/vet/test ./...`、`npm run build`、`wails build` 均通过。
 
 ---
@@ -274,3 +282,4 @@ pnpm lint
 | 2026-08-14 | 注册重构 | 工具包自持完整元数据（导出 `Tool()` + `Executor`），`registerTools` 精简为一行注册 |
 | 2026-08-14 | 新增 2 个转换器 | 列表转换（listconv）、Markdown 转 HTML（引入 goldmark） |
 | 2026-08-14 | 新增 4 个转换器 | TOML→JSON、TOML→YAML、XML→JSON、JSON→XML（引入 mxj，XML↔JSON 对齐 `_attributes`/`_text` 约定），转换器分类基本完成 |
+| 2026-08-14 | 品牌 logo | `assets/logo.svg` 设计源 + `gen-brand.mjs` 生成链路；接入 appicon/ico/favicon/侧边栏 hero 品牌位 |

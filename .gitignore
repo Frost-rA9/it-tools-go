@@ -7,3 +7,6 @@ it-tools-go.exe
 
 # Wails dependency cache
 frontend/package.json.md5
+
+# Agent session handoff（不入库）
+HANDOFF.md
