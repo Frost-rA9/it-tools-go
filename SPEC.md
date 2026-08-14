@@ -117,7 +117,7 @@ type Executor interface {
 ### 4.2 注册表（registry）
 
 - `registry` 聚合所有工具，提供 `List()`（返回全部工具元数据，供前端渲染侧边栏）与 `Get(id)`（按 ID 查找）、`Execute(id, input)`。
-- 新工具通过集中注册函数 `registerTools`（`internal/app/app.go`）调用 `registry.Register(tool, executor)` 加入。
+- 工具包自持完整元数据：每个工具导出 `Tool()`（返回 `registry.Tool`）与 `Executor`；集中注册函数 `registerTools`（`internal/app/app.go`）用 `reg.Register(xxx.Tool(), xxx.Executor{})` 一行注册一个工具。
 - 单一 Wails Binding `RunTool(id, input)` 暴露执行入口，前端无需为每个工具单独绑定。
 
 ### 4.3 前端动态渲染
@@ -251,7 +251,7 @@ pnpm lint
 
 - 应用形态：Wails v2 桌面应用（Go 后端 + Vue 3 + TypeScript + Naive UI 前端），Go 模块 `it-tools-go`（go 1.25.0，wails v2.14.0）。
 - 后端目录：`internal/`（`app` / `registry` / `tools`），App 绑定路径 `wailsjs/go/app/App`。
-- 工具注册机制：`registry`（Tool 接口 + 注册表）+ JSON string 协议 + `ListTools`/`RunTool` 绑定；前端 `import.meta.glob` 按 toolId 动态加载组件。
+- 工具注册机制：`registry`（Tool 接口 + 注册表）+ JSON string 协议 + `ListTools`/`RunTool` 绑定；工具包自持元数据（导出 `Tool()` 与 `Executor`），`registerTools` 一行注册一个；前端 `import.meta.glob` 按 toolId 动态加载组件。
 - 已实现 9 个「转换器」工具：Base64、罗马数字、大小写、日期时间、整数基（radix）、文本↔ASCII 二进制、文本↔Unicode、YAML 转 JSON、YAML 转 TOML。
 - 工具元数据含 `Icon` 字段（tabler 图标名）；侧边栏与首页卡片显示图标；首页为扁平网格（响应式 1/2/3/4 列、等宽等高）。
 - 前端 it-tools 风格：Naive UI 亮/暗主题、侧边栏分类菜单、顶栏 + Command Palette 搜索。
@@ -270,3 +270,4 @@ pnpm lint
 | 2026-08-14 | 前端 it-tools 风格 | 亮/暗主题、顶栏 + Command Palette、分类中文化、工具图标、首页扁平网格 |
 | 2026-08-14 | 转换器工具扩展 | 分批实现 8 个转换器（罗马/大小写/日期时间/整数基/文本二进制/文本Unicode/YAML→JSON/YAML→TOML），引入 yaml.v3 + go-toml/v2 |
 | 2026-08-14 | 命名规范 | 目录短杠、文件下划线、包名去 `-converter` 后缀拼接 |
+| 2026-08-14 | 注册重构 | 工具包自持完整元数据（导出 `Tool()` + `Executor`），`registerTools` 精简为一行注册 |
