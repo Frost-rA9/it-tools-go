@@ -68,6 +68,18 @@ func TestDecryptCryptoJSVectors(t *testing.T) {
 	}
 }
 
+// TestDecryptItToolsDefault 校验 it-tools 预置的默认密文可被正确解密（跨实现互通）。
+func TestDecryptItToolsDefault(t *testing.T) {
+	const ct = "U2FsdGVkX1/EC3+6P5dbbkZ3e1kQ5o2yzuU0NHTjmrKnLBEwreV489Kr0DIB+uBs"
+	got, err := decrypt(ct, "my secret key", "AES", algos["AES"])
+	if err != nil {
+		t.Fatalf("解密 it-tools 默认密文失败: %v", err)
+	}
+	if got != "Lorem ipsum dolor sit amet" {
+		t.Errorf("解密结果: %q", got)
+	}
+}
+
 // TestRoundTrip 校验各算法加密→解密回环，覆盖边界长度与多字节文本。
 func TestRoundTrip(t *testing.T) {
 	messages := []string{

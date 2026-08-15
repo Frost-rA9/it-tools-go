@@ -15,13 +15,13 @@ const algoOptions = [
   { label: 'RC4', value: 'RC4' },
 ]
 
-const encryptText = ref('')
-const encryptSecret = ref('')
+const encryptText = ref('Lorem ipsum dolor sit amet')
+const encryptSecret = ref('my secret key')
 const encryptAlgo = ref('AES')
 const encryptOutput = ref('')
 
-const decryptText = ref('')
-const decryptSecret = ref('')
+const decryptText = ref('U2FsdGVkX1/EC3+6P5dbbkZ3e1kQ5o2yzuU0NHTjmrKnLBEwreV489Kr0DIB+uBs')
+const decryptSecret = ref('my secret key')
 const decryptAlgo = ref('AES')
 const decryptOutput = ref('')
 const decryptError = ref('')
