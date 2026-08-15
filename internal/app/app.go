@@ -9,6 +9,8 @@ import (
 	"it-tools-go/internal/tools/base64-string-converter"
 	"it-tools-go/internal/tools/case-converter"
 	"it-tools-go/internal/tools/date-time-converter"
+	"it-tools-go/internal/tools/encryption"
+	"it-tools-go/internal/tools/hash-text"
 	"it-tools-go/internal/tools/integer-base-converter"
 	"it-tools-go/internal/tools/json-to-xml"
 	"it-tools-go/internal/tools/list-converter"
@@ -55,6 +57,8 @@ func registerTools(reg *registry.Registry) {
 	reg.Register(xmljson.Tool(), xmljson.Executor{})
 	reg.Register(jsonxml.Tool(), jsonxml.Executor{})
 	reg.Register(tokengen.Tool(), tokengen.Executor{})
+	reg.Register(hashtext.Tool(), hashtext.Executor{})
+	reg.Register(encryption.Tool(), encryption.Executor{})
 }
 
 // Startup 在应用启动时调用，保存 context 以便调用 runtime 方法。
