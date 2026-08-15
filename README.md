@@ -1,7 +1,5 @@
 # IT Tools Go
 
-![logo](assets/logo.svg)
-
 跨平台桌面 IT 工具集，使用 [Wails v2](https://wails.io/)（Go 后端）+ Vue 3 + Naive UI 实现，参考 [it-tools.tech](https://it-tools.tech/)。工具业务逻辑全部由 Go 实现（`internal/`），前端仅负责渲染与调用。
 
 ## 特性
