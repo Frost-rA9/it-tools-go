@@ -43,7 +43,10 @@ it-tools-go/
 - 新增一个工具 = Go 包（`internal/tools/<name>/`）+ 前端组件（`frontend/src/views/tools/<toolId>.vue`）。
 - 前端组件文件名必须等于 toolId（如 `base64-string-converter.vue`），`import.meta.glob` 据此自动匹配。
 - 命名规范：目录名用短杠 `-` 连接的完整 toolId（如 `base64-string-converter/`）；`.go` 文件名用下划线 `_`（如 `base64_string_converter.go`）；`package` 名用去短杠拼接、去掉冗余 `-converter` 后缀的小写单字（如 `base64string`、`romannumeral`、`caseconv`、`radix`，因 Go 包名不能含短杠/下划线，且 `case` 为关键字）。
-- 工具在 `internal/app/app.go` 的 `registerTools` 中集中注册。每个工具包须导出 `Tool()`（返回 `registry.Tool` 元数据：ID/Name/Description/Category/Keywords/Icon）与 `Executor`，`registerTools` 中 `reg.Register(xxx.Tool(), xxx.Executor{})` 一行注册即可。
+- 工具注册：由代码生成器 `internal/toolsgen` 扫描 `internal/tools/` 自动生成
+  `internal/app/tools_gen.go`（按目录名排序，勿手改）。新增工具后执行
+  `go generate ./internal/app` 刷新。每个工具包须导出 `Tool()`（返回 `registry.Tool`
+  元数据）与 `Executor`。
 - 传输协议为 JSON string（前端 `JSON.stringify/parse`，Go `encoding/json`）。
 
 ## 命令
@@ -55,6 +58,7 @@ it-tools-go/
 - 前端类型检查 + 构建：`npm run build`（执行 `vue-tsc --noEmit && vite build`）
 - 前端开发服务器：`npm run dev`（在 `frontend/` 目录运行）
 - 重新生成 Wails 绑定：`wails generate module`（后端绑定方法变更后需执行）
+- 重新生成工具注册：`go generate ./internal/app`（新增工具后执行）
 
 ## 环境要求
 

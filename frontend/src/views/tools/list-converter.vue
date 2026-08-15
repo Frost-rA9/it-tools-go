@@ -55,7 +55,7 @@ async function copyResult() {
 </script>
 
 <template>
-  <div class="listconv-tool">
+  
     <n-card title="转换选项" class="card">
       <div class="options-grid">
         <div class="option-row">
@@ -115,19 +115,11 @@ async function copyResult() {
         <n-button type="primary" @click="copyResult">复制结果</n-button>
       </div>
     </n-card>
-  </div>
 </template>
 
 <style scoped>
-.listconv-tool {
-  display: flex;
-  flex-direction: column;
-  gap: 16px;
-  width: 100%;
-}
-
 .card {
-  width: 100%;
+  min-width: 400px;
 }
 
 .options-grid {

@@ -139,7 +139,9 @@ it-tools-go/
 │   └── logo.svg                 # 品牌 logo 设计源（唯一源，脚本派生各尺寸资产）
 ├── internal/
 │   ├── app/                     # App 结构体 + 生命周期 + 绑定（package app）
+│   │   └── tools_gen.go         # 工具注册（internal/toolsgen 生成，勿手改）
 │   ├── registry/                # Tool 接口 + 注册表实现
+│   ├── toolsgen/                # 工具注册代码生成器（go generate ./internal/app）
 │   └── tools/                   # 各工具实现（每工具一个包）
 │       └── base64-string-converter/  # Base64 工具 + 单测（目录短杠，文件下划线）
 ├── frontend/
@@ -257,8 +259,8 @@ pnpm lint
 ## 10. 当前状态
 
 - 应用形态：Wails v2 桌面应用（Go 后端 + Vue 3 + TypeScript + Naive UI 前端），Go 模块 `it-tools-go`。
-- 注册机制：`registry`（Tool 接口 + 注册表）+ JSON string 协议 + `ListTools`/`RunTool` 绑定；工具包导出 `Tool()` 与 `Executor`，`registerTools` 一行注册一个；前端 `import.meta.glob` 按 toolId 动态加载组件。
-- 已实现工具：「转换器」15 个（Base64、罗马数字、大小写、日期时间、整数基、文本↔ASCII 二进制、文本↔Unicode、列表、Markdown→HTML、TOML↔JSON/YAML、XML↔JSON、YAML→JSON/TOML）；「加密」6 个（Token 生成器、Hash 文本、加密/解密、BCrypt、UUID 生成器、ULID 生成器）。
+- 注册机制：`registry`（Tool 接口 + 注册表）+ JSON string 协议 + `ListTools`/`RunTool` 绑定；工具包导出 `Tool()` 与 `Executor`；注册由 `internal/toolsgen` 代码生成器扫描 `internal/tools/` 生成 `internal/app/tools_gen.go`（按目录名排序，`go generate ./internal/app` 刷新）；前端 `import.meta.glob` 按 toolId 动态加载组件。
+- 已实现工具：「转换器」15 个（Base64、罗马数字、大小写、日期时间、整数基、文本↔ASCII 二进制、文本↔Unicode、列表、Markdown→HTML、TOML↔JSON/YAML、XML↔JSON、YAML→JSON/TOML）；「加密」10 个（Token 生成器、Hash 文本、加密/解密、BCrypt、UUID 生成器、ULID 生成器、BIP39 密码生成器、HMAC 生成器、RSA 密钥对生成器、密码强度分析仪）。
 - 前端 it-tools 风格：亮/暗主题、侧边栏分类菜单、Command Palette、首页扁平网格；通用组件 `ToolTextarea`（可选 label + 可拉伸 + `monospace`）、`ToolCodeBlock`（只读等宽块展示，支持逐行对齐，用于生成结果列表），等宽字体 Cascadia Code 随包分发。
 - 品牌标识：`assets/logo.svg` 唯一设计源，脚本派生 `build/appicon.png`、`build/windows/icon.ico`、favicon。
 - 命名规范：目录短杠（toolId）、文件下划线、包名去 `-converter` 后缀拼接。
@@ -289,3 +291,8 @@ pnpm lint
 | 2026-08-15 | UUID 生成器 | NIL/v1/v3/v4/v5 五版本 + 数量；引入 `github.com/google/uuid` 直接依赖 |
 | 2026-08-15 | ULID 生成器 | 数量 + Raw/JSON 格式；自实现（48 位毫秒时间戳 + 80 位随机，编码对齐 oklog/ulid 参考实现） |
 | 2026-08-15 | ToolCodeBlock 组件 | 只读等宽块展示（逐行对齐）；ULID 生成器 JSON 输出用结构化渲染（括号左对齐、ULID 行居中） |
+| 2026-08-15 | BIP39 密码生成器 | 10 种语言字词表（9 个来自 go-bip39 wordlists，葡萄牙语自行嵌入官方表）；自实现 entropy↔mnemonic，双向转换 |
+| 2026-08-15 | HMAC 生成器 | 8 种哈希函数（SHA3 用 legacy Keccak）× 4 编码；crypto-js 向量校验 |
+| 2026-08-15 | RSA 密钥对生成器 | bits 256–16384；PKCS#1 PEM（对齐 node-forge 格式） |
+| 2026-08-15 | 密码强度分析仪 | 暴力破解时长估算；时长文本对齐 JS 格式化（千分位/指数/Infinity） |
+| 2026-08-15 | 注册生成器 | `internal/toolsgen` 扫描 `internal/tools/` 自动生成 `tools_gen.go`（目录名排序）；`app.go` 精简 |

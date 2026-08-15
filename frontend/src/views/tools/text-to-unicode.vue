@@ -59,7 +59,7 @@ async function copyTextResult() {
 </script>
 
 <template>
-  <div class="textunicode-tool">
+  
     <n-card title="文本转 Unicode" class="card">
       <ToolTextarea v-model:value="textInput" label="输入文本" :rows="4" placeholder="在此输入文本，如 Hello…" />
 
@@ -79,19 +79,11 @@ async function copyTextResult() {
         <n-button type="primary" @click="copyTextResult">复制文本</n-button>
       </div>
     </n-card>
-  </div>
 </template>
 
 <style scoped>
-.textunicode-tool {
-  display: flex;
-  flex-direction: column;
-  gap: 16px;
-  width: 100%;
-}
-
 .card {
-  width: 100%;
+  min-width: 400px;
 }
 
 .copy-row {

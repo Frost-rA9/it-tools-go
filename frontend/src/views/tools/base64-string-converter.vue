@@ -62,7 +62,7 @@ async function copyTextResult() {
 </script>
 
 <template>
-  <div class="base64-tool">
+  
     <n-card title="文本转 Base64" class="card">
       <div class="switch-row">
         <span class="switch-label">URL 安全编码</span>
@@ -92,19 +92,11 @@ async function copyTextResult() {
         <n-button type="primary" @click="copyTextResult">复制文本</n-button>
       </div>
     </n-card>
-  </div>
 </template>
 
 <style scoped>
-.base64-tool {
-  display: flex;
-  flex-direction: column;
-  gap: 16px;
-  width: 100%;
-}
-
 .card {
-  width: 100%;
+  min-width: 400px;
 }
 
 .switch-row {

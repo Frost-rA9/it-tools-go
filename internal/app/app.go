@@ -1,4 +1,7 @@
 // Package app 承载绑定到前端的 App 结构体，负责组装工具注册表并暴露调用入口。
+// 注册函数由 internal/toolsgen 生成（tools_gen.go），按 internal/tools 目录名排序。
+// 新增工具后执行：go generate ./internal/app
+//go:generate go run ../../internal/toolsgen
 package app
 
 import (
@@ -6,27 +9,6 @@ import (
 	"fmt"
 
 	"it-tools-go/internal/registry"
-	"it-tools-go/internal/tools/base64-string-converter"
-	"it-tools-go/internal/tools/bcrypt"
-	"it-tools-go/internal/tools/case-converter"
-	"it-tools-go/internal/tools/date-time-converter"
-	"it-tools-go/internal/tools/encryption"
-	"it-tools-go/internal/tools/hash-text"
-	"it-tools-go/internal/tools/integer-base-converter"
-	"it-tools-go/internal/tools/json-to-xml"
-	"it-tools-go/internal/tools/list-converter"
-	"it-tools-go/internal/tools/markdown-to-html"
-	"it-tools-go/internal/tools/roman-numeral-converter"
-	"it-tools-go/internal/tools/text-to-binary"
-	"it-tools-go/internal/tools/text-to-unicode"
-	"it-tools-go/internal/tools/token-generator"
-	"it-tools-go/internal/tools/toml-to-json"
-	"it-tools-go/internal/tools/toml-to-yaml"
-	"it-tools-go/internal/tools/ulid-generator"
-	"it-tools-go/internal/tools/uuid-generator"
-	"it-tools-go/internal/tools/xml-to-json"
-	"it-tools-go/internal/tools/yaml-to-json"
-	"it-tools-go/internal/tools/yaml-to-toml"
 )
 
 // App 是绑定到前端的应用结构体（类比传统 web 应用的 controller）。
@@ -38,33 +20,8 @@ type App struct {
 // NewApp 创建 App 实例并注册全部工具。
 func NewApp() *App {
 	reg := registry.New()
-	registerTools(reg)
+	registerAllTools(reg)
 	return &App{registry: reg}
-}
-
-// registerTools 集中注册所有工具。
-func registerTools(reg *registry.Registry) {
-	reg.Register(base64string.Tool(), base64string.Executor{})
-	reg.Register(romannumeral.Tool(), romannumeral.Executor{})
-	reg.Register(caseconv.Tool(), caseconv.Executor{})
-	reg.Register(datetime.Tool(), datetime.Executor{})
-	reg.Register(radix.Tool(), radix.Executor{})
-	reg.Register(textbinary.Tool(), textbinary.Executor{})
-	reg.Register(textunicode.Tool(), textunicode.Executor{})
-	reg.Register(yamljson.Tool(), yamljson.Executor{})
-	reg.Register(yamltoml.Tool(), yamltoml.Executor{})
-	reg.Register(listconv.Tool(), listconv.Executor{})
-	reg.Register(markdownhtml.Tool(), markdownhtml.Executor{})
-	reg.Register(tomljson.Tool(), tomljson.Executor{})
-	reg.Register(tomlyaml.Tool(), tomlyaml.Executor{})
-	reg.Register(xmljson.Tool(), xmljson.Executor{})
-	reg.Register(jsonxml.Tool(), jsonxml.Executor{})
-	reg.Register(tokengen.Tool(), tokengen.Executor{})
-	reg.Register(hashtext.Tool(), hashtext.Executor{})
-	reg.Register(encryption.Tool(), encryption.Executor{})
-	reg.Register(bcrypt.Tool(), bcrypt.Executor{})
-	reg.Register(uuidgen.Tool(), uuidgen.Executor{})
-	reg.Register(ulidgen.Tool(), ulidgen.Executor{})
 }
 
 // Startup 在应用启动时调用，保存 context 以便调用 runtime 方法。

@@ -59,7 +59,7 @@ async function copyArabicResult() {
 </script>
 
 <template>
-  <div class="roman-tool">
+  
     <n-card title="阿拉伯数字转罗马数字" class="card">
       <div class="field">
         <div class="field-label">阿拉伯数字（1 - 3999）</div>
@@ -91,19 +91,11 @@ async function copyArabicResult() {
         <n-button type="primary" @click="copyArabicResult">复制阿拉伯数字</n-button>
       </div>
     </n-card>
-  </div>
 </template>
 
 <style scoped>
-.roman-tool {
-  display: flex;
-  flex-direction: column;
-  gap: 16px;
-  width: 100%;
-}
-
 .card {
-  width: 100%;
+  min-width: 360px;
 }
 
 .field {

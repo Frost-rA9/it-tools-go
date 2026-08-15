@@ -11,11 +11,13 @@ const tool = computed(() => store.getById(route.params.id as string))
 </script>
 
 <template>
-  <div class="tool-layout">
-    <div class="tool-header">
-      <h1 class="tool-title">{{ tool?.name ?? '加载中…' }}</h1>
-      <div class="separator" />
-      <p class="tool-description">{{ tool?.description ?? '' }}</p>
+  <div>
+    <div class="tool-layout">
+      <div class="tool-header">
+        <h1 class="tool-title">{{ tool?.name ?? '加载中…' }}</h1>
+        <div class="separator" />
+        <p class="tool-description">{{ tool?.description ?? '' }}</p>
+      </div>
     </div>
     <div class="tool-content">
       <router-view />
@@ -62,10 +64,15 @@ const tool = computed(() => store.getById(route.params.id as string))
 .tool-content {
   display: flex;
   flex-direction: row;
+  flex-wrap: wrap;
   justify-content: center;
   align-items: flex-start;
-  flex-wrap: wrap;
   gap: 16px;
-  padding-bottom: 60px;
+  padding: 0 16px 24px;
+  box-sizing: border-box;
+}
+
+.tool-content :deep(> *) {
+  flex: 0 1 600px;
 }
 </style>

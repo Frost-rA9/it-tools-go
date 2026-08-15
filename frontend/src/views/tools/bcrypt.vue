@@ -49,7 +49,7 @@ async function copyHash() {
 </script>
 
 <template>
-  <div class="bcrypt-tool">
+  
     <n-card title="BCrypt 加密" class="card">
       <div class="field">
         <div class="field-label">待加密字符串</div>
@@ -89,19 +89,11 @@ async function copyHash() {
         </span>
       </div>
     </n-card>
-  </div>
 </template>
 
 <style scoped>
-.bcrypt-tool {
-  display: flex;
-  flex-direction: column;
-  gap: 16px;
-  width: 100%;
-}
-
 .card {
-  width: 100%;
+  min-width: 360px;
 }
 
 .field {

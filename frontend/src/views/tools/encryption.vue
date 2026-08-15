@@ -62,7 +62,7 @@ watch([decryptText, decryptSecret, decryptAlgo], () => debouncedDecrypt(), { imm
 </script>
 
 <template>
-  <div class="encryption-tool">
+  
     <n-card title="加密" class="card">
       <div class="side-grid">
         <ToolTextarea
@@ -126,19 +126,11 @@ watch([decryptText, decryptSecret, decryptAlgo], () => debouncedDecrypt(), { imm
         monospace
       />
     </n-card>
-  </div>
 </template>
 
 <style scoped>
-.encryption-tool {
-  display: flex;
-  flex-direction: column;
-  gap: 16px;
-  width: 100%;
-}
-
 .card {
-  width: 100%;
+  min-width: 520px;
 }
 
 .side-grid {
