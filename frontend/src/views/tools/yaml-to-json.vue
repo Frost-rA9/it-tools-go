@@ -13,7 +13,7 @@ const errorMessage = ref('')
 
 async function run() {
   try {
-    const output = await RunTool('yaml-to-json-converter', JSON.stringify({ yaml: inputYaml.value }))
+    const output = await RunTool('yaml-to-json', JSON.stringify({ yaml: inputYaml.value }))
     outputText.value = JSON.parse(output).result
     errorMessage.value = ''
   } catch (e) {

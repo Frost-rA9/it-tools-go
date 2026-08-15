@@ -12,7 +12,7 @@ import (
 
 // 工具元数据。
 const (
-	ID          = "yaml-to-json-converter"
+	ID          = "yaml-to-json"
 	Name        = "YAML 转 JSON"
 	Description = "将 YAML 转换为 JSON"
 	Category    = "转换器"

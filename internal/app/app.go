@@ -22,7 +22,7 @@ import (
 	"it-tools-go/internal/tools/toml-to-json"
 	"it-tools-go/internal/tools/toml-to-yaml"
 	"it-tools-go/internal/tools/xml-to-json"
-	"it-tools-go/internal/tools/yaml-to-json-converter"
+	"it-tools-go/internal/tools/yaml-to-json"
 	"it-tools-go/internal/tools/yaml-to-toml"
 )
 
