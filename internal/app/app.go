@@ -7,6 +7,7 @@ import (
 
 	"it-tools-go/internal/registry"
 	"it-tools-go/internal/tools/base64-string-converter"
+	"it-tools-go/internal/tools/bcrypt"
 	"it-tools-go/internal/tools/case-converter"
 	"it-tools-go/internal/tools/date-time-converter"
 	"it-tools-go/internal/tools/encryption"
@@ -21,6 +22,8 @@ import (
 	"it-tools-go/internal/tools/token-generator"
 	"it-tools-go/internal/tools/toml-to-json"
 	"it-tools-go/internal/tools/toml-to-yaml"
+	"it-tools-go/internal/tools/ulid-generator"
+	"it-tools-go/internal/tools/uuid-generator"
 	"it-tools-go/internal/tools/xml-to-json"
 	"it-tools-go/internal/tools/yaml-to-json"
 	"it-tools-go/internal/tools/yaml-to-toml"
@@ -59,6 +62,9 @@ func registerTools(reg *registry.Registry) {
 	reg.Register(tokengen.Tool(), tokengen.Executor{})
 	reg.Register(hashtext.Tool(), hashtext.Executor{})
 	reg.Register(encryption.Tool(), encryption.Executor{})
+	reg.Register(bcrypt.Tool(), bcrypt.Executor{})
+	reg.Register(uuidgen.Tool(), uuidgen.Executor{})
+	reg.Register(ulidgen.Tool(), ulidgen.Executor{})
 }
 
 // Startup 在应用启动时调用，保存 context 以便调用 runtime 方法。
