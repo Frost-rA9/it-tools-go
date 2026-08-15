@@ -1,11 +1,11 @@
 <script setup lang="ts">
 import { ref, watch } from 'vue'
-import { NCard, NInput, NButton, useMessage, useThemeVars } from 'naive-ui'
+import { NCard, NButton, useMessage } from 'naive-ui'
 import { useDebounceFn, useClipboard } from '@vueuse/core'
+import ToolTextarea from '../../components/ToolTextarea.vue'
 import { RunTool } from '../../../wailsjs/go/app/App'
 
 const message = useMessage()
-const themeVars = useThemeVars()
 
 const textInput = ref('')
 const binaryOutput = ref('')
@@ -61,26 +61,9 @@ async function copyTextResult() {
 <template>
   <div class="textbinary-tool">
     <n-card title="文本转 ASCII 二进制" class="card">
-      <div class="field">
-        <div class="field-label">输入文本</div>
-        <n-input
-          v-model:value="textInput"
-          type="textarea"
-          :rows="4"
-          placeholder="在此输入文本，如 Hello world…"
-        />
-      </div>
+      <ToolTextarea v-model:value="textInput" label="输入文本" :rows="4" placeholder="在此输入文本，如 Hello world…" />
 
-      <div class="field">
-        <div class="field-label">二进制结果</div>
-        <n-input
-          :value="binaryOutput"
-          type="textarea"
-          :rows="4"
-          readonly
-          placeholder="文本的二进制表示将显示在这里"
-        />
-      </div>
+      <ToolTextarea v-model:value="binaryOutput" label="二进制结果" :rows="4" readonly placeholder="文本的二进制表示将显示在这里" />
 
       <div class="copy-row">
         <n-button type="primary" @click="copyBinaryResult">复制二进制</n-button>
@@ -88,26 +71,9 @@ async function copyTextResult() {
     </n-card>
 
     <n-card title="ASCII 二进制转文本" class="card">
-      <div class="field">
-        <div class="field-label">输入二进制</div>
-        <n-input
-          v-model:value="binaryInput"
-          type="textarea"
-          :rows="4"
-          placeholder="在此输入二进制，如 01001000 01101001…"
-        />
-      </div>
+      <ToolTextarea v-model:value="binaryInput" label="输入二进制" :rows="4" placeholder="在此输入二进制，如 01001000 01101001…" />
 
-      <div class="field">
-        <div class="field-label">文本结果</div>
-        <n-input
-          :value="textOutput"
-          type="textarea"
-          :rows="4"
-          readonly
-          placeholder="二进制对应的文本将显示在这里"
-        />
-      </div>
+      <ToolTextarea v-model:value="textOutput" label="文本结果" :rows="4" readonly placeholder="二进制对应的文本将显示在这里" />
 
       <div class="copy-row">
         <n-button type="primary" @click="copyTextResult">复制文本</n-button>
@@ -126,16 +92,6 @@ async function copyTextResult() {
 
 .card {
   width: 100%;
-}
-
-.field {
-  margin-bottom: 16px;
-}
-
-.field-label {
-  font-size: 14px;
-  margin-bottom: 6px;
-  color: v-bind('themeVars.textColor2');
 }
 
 .copy-row {

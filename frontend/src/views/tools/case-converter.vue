@@ -2,6 +2,7 @@
 import { ref, watch } from 'vue'
 import { NCard, NInput, NButton, useMessage, useThemeVars } from 'naive-ui'
 import { useDebounceFn, useClipboard } from '@vueuse/core'
+import ToolTextarea from '../../components/ToolTextarea.vue'
 import { RunTool } from '../../../wailsjs/go/app/App'
 
 const message = useMessage()
@@ -41,15 +42,7 @@ async function copyValue(value: string) {
 <template>
   <div class="case-tool">
     <n-card title="大小写转换" class="card">
-      <div class="field">
-        <div class="field-label">输入字符串</div>
-        <n-input
-          v-model:value="input"
-          type="textarea"
-          :rows="3"
-          placeholder="在此输入字符串…"
-        />
-      </div>
+      <ToolTextarea v-model:value="input" label="输入字符串" :rows="3" placeholder="在此输入字符串…" />
 
       <div class="result-list">
         <div v-for="r in results" :key="r.label" class="result-row">
@@ -69,16 +62,6 @@ async function copyValue(value: string) {
 
 .card {
   width: 100%;
-}
-
-.field {
-  margin-bottom: 16px;
-}
-
-.field-label {
-  font-size: 14px;
-  margin-bottom: 6px;
-  color: v-bind('themeVars.textColor2');
 }
 
 .result-list {

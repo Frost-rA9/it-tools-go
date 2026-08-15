@@ -2,6 +2,7 @@
 import { ref, reactive, watch } from 'vue'
 import { NCard, NInput, NSwitch, NSelect, NButton, useMessage, useThemeVars } from 'naive-ui'
 import { useDebounceFn, useClipboard } from '@vueuse/core'
+import ToolTextarea from '../../components/ToolTextarea.vue'
 import { RunTool } from '../../../wailsjs/go/app/App'
 
 const message = useMessage()
@@ -106,26 +107,9 @@ async function copyResult() {
     </n-card>
 
     <n-card title="列表转换器" class="card">
-      <div class="field">
-        <div class="field-label">输入数据</div>
-        <n-input
-          v-model:value="inputText"
-          type="textarea"
-          :rows="6"
-          placeholder="每行一个条目，在此粘贴数据…"
-        />
-      </div>
+      <ToolTextarea v-model:value="inputText" label="输入数据" :rows="6" placeholder="每行一个条目，在此粘贴数据…" />
 
-      <div class="field">
-        <div class="field-label">转换结果</div>
-        <n-input
-          :value="outputText"
-          type="textarea"
-          :rows="6"
-          readonly
-          placeholder="转换结果将显示在这里"
-        />
-      </div>
+      <ToolTextarea v-model:value="outputText" label="转换结果" :rows="6" readonly placeholder="转换结果将显示在这里" />
 
       <div class="copy-row">
         <n-button type="primary" @click="copyResult">复制结果</n-button>

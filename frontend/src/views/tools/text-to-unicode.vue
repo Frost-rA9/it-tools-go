@@ -1,11 +1,11 @@
 <script setup lang="ts">
 import { ref, watch } from 'vue'
-import { NCard, NInput, NButton, useMessage, useThemeVars } from 'naive-ui'
+import { NCard, NButton, useMessage } from 'naive-ui'
 import { useDebounceFn, useClipboard } from '@vueuse/core'
+import ToolTextarea from '../../components/ToolTextarea.vue'
 import { RunTool } from '../../../wailsjs/go/app/App'
 
 const message = useMessage()
-const themeVars = useThemeVars()
 
 const textInput = ref('')
 const unicodeOutput = ref('')
@@ -61,26 +61,9 @@ async function copyTextResult() {
 <template>
   <div class="textunicode-tool">
     <n-card title="文本转 Unicode" class="card">
-      <div class="field">
-        <div class="field-label">输入文本</div>
-        <n-input
-          v-model:value="textInput"
-          type="textarea"
-          :rows="4"
-          placeholder="在此输入文本，如 Hello…"
-        />
-      </div>
+      <ToolTextarea v-model:value="textInput" label="输入文本" :rows="4" placeholder="在此输入文本，如 Hello…" />
 
-      <div class="field">
-        <div class="field-label">Unicode 结果</div>
-        <n-input
-          :value="unicodeOutput"
-          type="textarea"
-          :rows="4"
-          readonly
-          placeholder="文本的 Unicode 表示将显示在这里"
-        />
-      </div>
+      <ToolTextarea v-model:value="unicodeOutput" label="Unicode 结果" :rows="4" readonly placeholder="文本的 Unicode 表示将显示在这里" />
 
       <div class="copy-row">
         <n-button type="primary" @click="copyUnicodeResult">复制 Unicode</n-button>
@@ -88,26 +71,9 @@ async function copyTextResult() {
     </n-card>
 
     <n-card title="Unicode 转文本" class="card">
-      <div class="field">
-        <div class="field-label">输入 Unicode</div>
-        <n-input
-          v-model:value="unicodeInput"
-          type="textarea"
-          :rows="4"
-          placeholder="在此输入 Unicode，如 &#72;&#105;…"
-        />
-      </div>
+      <ToolTextarea v-model:value="unicodeInput" label="输入 Unicode" :rows="4" placeholder="在此输入 Unicode，如 &amp;#72;&amp;#105;…" />
 
-      <div class="field">
-        <div class="field-label">文本结果</div>
-        <n-input
-          :value="textOutput"
-          type="textarea"
-          :rows="4"
-          readonly
-          placeholder="Unicode 对应的文本将显示在这里"
-        />
-      </div>
+      <ToolTextarea v-model:value="textOutput" label="文本结果" :rows="4" readonly placeholder="Unicode 对应的文本将显示在这里" />
 
       <div class="copy-row">
         <n-button type="primary" @click="copyTextResult">复制文本</n-button>
@@ -126,16 +92,6 @@ async function copyTextResult() {
 
 .card {
   width: 100%;
-}
-
-.field {
-  margin-bottom: 16px;
-}
-
-.field-label {
-  font-size: 14px;
-  margin-bottom: 6px;
-  color: v-bind('themeVars.textColor2');
 }
 
 .copy-row {

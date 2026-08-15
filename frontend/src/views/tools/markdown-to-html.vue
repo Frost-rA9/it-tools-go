@@ -1,11 +1,11 @@
 <script setup lang="ts">
 import { ref, watch } from 'vue'
-import { NCard, NInput, NButton, useMessage, useThemeVars } from 'naive-ui'
+import { NCard, NButton, useMessage } from 'naive-ui'
 import { useDebounceFn, useClipboard } from '@vueuse/core'
+import ToolTextarea from '../../components/ToolTextarea.vue'
 import { RunTool } from '../../../wailsjs/go/app/App'
 
 const message = useMessage()
-const themeVars = useThemeVars()
 
 const inputMarkdown = ref('')
 const outputHtml = ref('')
@@ -34,26 +34,9 @@ async function copyResult() {
 <template>
   <div class="markdownhtml-tool">
     <n-card title="Markdown 转 HTML" class="card">
-      <div class="field">
-        <div class="field-label">输入 Markdown</div>
-        <n-input
-          v-model:value="inputMarkdown"
-          type="textarea"
-          :rows="10"
-          placeholder="在此粘贴 Markdown 内容…"
-        />
-      </div>
+      <ToolTextarea v-model:value="inputMarkdown" label="输入 Markdown" :rows="10" placeholder="在此粘贴 Markdown 内容…" />
 
-      <div class="field">
-        <div class="field-label">输出 HTML</div>
-        <n-input
-          :value="outputHtml"
-          type="textarea"
-          :rows="10"
-          readonly
-          placeholder="转换得到的 HTML 将显示在这里"
-        />
-      </div>
+      <ToolTextarea v-model:value="outputHtml" label="输出 HTML" :rows="10" readonly placeholder="转换得到的 HTML 将显示在这里" />
 
       <div class="copy-row">
         <n-button type="primary" @click="copyResult">复制 HTML</n-button>
@@ -69,16 +52,6 @@ async function copyResult() {
 
 .card {
   width: 100%;
-}
-
-.field {
-  margin-bottom: 16px;
-}
-
-.field-label {
-  font-size: 14px;
-  margin-bottom: 6px;
-  color: v-bind('themeVars.textColor2');
 }
 
 .copy-row {

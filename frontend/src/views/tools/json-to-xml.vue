@@ -1,11 +1,11 @@
 <script setup lang="ts">
 import { ref, watch } from 'vue'
-import { NCard, NInput, NButton, NAlert, useMessage, useThemeVars } from 'naive-ui'
+import { NCard, NButton, NAlert, useMessage } from 'naive-ui'
 import { useDebounceFn, useClipboard } from '@vueuse/core'
+import ToolTextarea from '../../components/ToolTextarea.vue'
 import { RunTool } from '../../../wailsjs/go/app/App'
 
 const message = useMessage()
-const themeVars = useThemeVars()
 
 const inputText = ref('')
 const outputText = ref('')
@@ -36,30 +36,13 @@ async function copyResult() {
 <template>
   <div class="jsonxml-tool">
     <n-card title="JSON 转 XML" class="card">
-      <div class="field">
-        <div class="field-label">输入 JSON</div>
-        <n-input
-          v-model:value="inputText"
-          type="textarea"
-          :rows="10"
-          placeholder="在此粘贴 JSON…"
-        />
-      </div>
+      <ToolTextarea v-model:value="inputText" label="输入 JSON" :rows="10" placeholder="在此粘贴 JSON…" />
 
       <n-alert v-if="errorMessage" type="error" class="error-alert">
         {{ errorMessage }}
       </n-alert>
 
-      <div class="field">
-        <div class="field-label">XML 输出</div>
-        <n-input
-          :value="outputText"
-          type="textarea"
-          :rows="10"
-          readonly
-          placeholder="转换得到的 XML 将显示在这里"
-        />
-      </div>
+      <ToolTextarea v-model:value="outputText" label="XML 输出" :rows="10" readonly placeholder="转换得到的 XML 将显示在这里" />
 
       <div class="copy-row">
         <n-button type="primary" @click="copyResult">复制 XML</n-button>
@@ -75,16 +58,6 @@ async function copyResult() {
 
 .card {
   width: 100%;
-}
-
-.field {
-  margin-bottom: 16px;
-}
-
-.field-label {
-  font-size: 14px;
-  margin-bottom: 6px;
-  color: v-bind('themeVars.textColor2');
 }
 
 .error-alert {

@@ -1,7 +1,8 @@
 <script setup lang="ts">
 import { ref, watch } from 'vue'
-import { NCard, NInput, NSwitch, NButton, useMessage, useThemeVars } from 'naive-ui'
+import { NCard, NSwitch, NButton, useMessage, useThemeVars } from 'naive-ui'
 import { useDebounceFn, useClipboard } from '@vueuse/core'
+import ToolTextarea from '../../components/ToolTextarea.vue'
 import { RunTool } from '../../../wailsjs/go/app/App'
 
 const message = useMessage()
@@ -68,26 +69,9 @@ async function copyTextResult() {
         <n-switch v-model:value="encodeUrlSafe" />
       </div>
 
-      <div class="field">
-        <div class="field-label">待编码文本</div>
-        <n-input
-          v-model:value="textInput"
-          type="textarea"
-          :rows="5"
-          placeholder="在此输入文本…"
-        />
-      </div>
+      <ToolTextarea v-model:value="textInput" label="待编码文本" :rows="5" placeholder="在此输入文本…" />
 
-      <div class="field">
-        <div class="field-label">Base64 编码结果</div>
-        <n-input
-          :value="base64Output"
-          type="textarea"
-          :rows="5"
-          readonly
-          placeholder="文本的 Base64 编码将显示在这里"
-        />
-      </div>
+      <ToolTextarea v-model:value="base64Output" label="Base64 编码结果" :rows="5" readonly placeholder="文本的 Base64 编码将显示在这里" />
 
       <div class="copy-row">
         <n-button type="primary" @click="copyBase64Result">复制 Base64</n-button>
@@ -100,26 +84,9 @@ async function copyTextResult() {
         <n-switch v-model:value="decodeUrlSafe" />
       </div>
 
-      <div class="field">
-        <div class="field-label">待解码 Base64</div>
-        <n-input
-          v-model:value="base64Input"
-          type="textarea"
-          :rows="5"
-          placeholder="在此输入 Base64 字符串…"
-        />
-      </div>
+      <ToolTextarea v-model:value="base64Input" label="待解码 Base64" :rows="5" placeholder="在此输入 Base64 字符串…" />
 
-      <div class="field">
-        <div class="field-label">解码结果</div>
-        <n-input
-          :value="textOutput"
-          type="textarea"
-          :rows="5"
-          readonly
-          placeholder="解码后的文本将显示在这里"
-        />
-      </div>
+      <ToolTextarea v-model:value="textOutput" label="解码结果" :rows="5" readonly placeholder="解码后的文本将显示在这里" />
 
       <div class="copy-row">
         <n-button type="primary" @click="copyTextResult">复制文本</n-button>
@@ -149,16 +116,6 @@ async function copyTextResult() {
 
 .switch-label {
   font-size: 14px;
-  color: v-bind('themeVars.textColor2');
-}
-
-.field {
-  margin-bottom: 16px;
-}
-
-.field-label {
-  font-size: 14px;
-  margin-bottom: 6px;
   color: v-bind('themeVars.textColor2');
 }
 

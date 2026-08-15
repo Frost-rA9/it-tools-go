@@ -1,11 +1,11 @@
 <script setup lang="ts">
 import { ref, watch } from 'vue'
-import { NCard, NInput, NButton, NAlert, useMessage, useThemeVars } from 'naive-ui'
+import { NCard, NButton, NAlert, useMessage } from 'naive-ui'
 import { useDebounceFn, useClipboard } from '@vueuse/core'
+import ToolTextarea from '../../components/ToolTextarea.vue'
 import { RunTool } from '../../../wailsjs/go/app/App'
 
 const message = useMessage()
-const themeVars = useThemeVars()
 
 const inputYaml = ref('')
 const outputText = ref('')
@@ -36,30 +36,13 @@ async function copyResult() {
 <template>
   <div class="yamltoml-tool">
     <n-card title="YAML 转 TOML" class="card">
-      <div class="field">
-        <div class="field-label">输入 YAML</div>
-        <n-input
-          v-model:value="inputYaml"
-          type="textarea"
-          :rows="10"
-          placeholder="在此粘贴 YAML…"
-        />
-      </div>
+      <ToolTextarea v-model:value="inputYaml" label="输入 YAML" :rows="10" placeholder="在此粘贴 YAML…" />
 
       <n-alert v-if="errorMessage" type="error" class="error-alert">
         {{ errorMessage }}
       </n-alert>
 
-      <div class="field">
-        <div class="field-label">TOML 输出</div>
-        <n-input
-          :value="outputText"
-          type="textarea"
-          :rows="10"
-          readonly
-          placeholder="转换得到的 TOML 将显示在这里"
-        />
-      </div>
+      <ToolTextarea v-model:value="outputText" label="TOML 输出" :rows="10" readonly placeholder="转换得到的 TOML 将显示在这里" />
 
       <div class="copy-row">
         <n-button type="primary" @click="copyResult">复制 TOML</n-button>
@@ -75,16 +58,6 @@ async function copyResult() {
 
 .card {
   width: 100%;
-}
-
-.field {
-  margin-bottom: 16px;
-}
-
-.field-label {
-  font-size: 14px;
-  margin-bottom: 6px;
-  color: v-bind('themeVars.textColor2');
 }
 
 .error-alert {
