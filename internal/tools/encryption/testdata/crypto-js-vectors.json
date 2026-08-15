@@ -1,0 +1,11 @@
+{
+  "msg": "Hello, 世界!",
+  "pass": "my secret key",
+  "saltHex": "0001020304050607",
+  "vectors": {
+    "AES": "U2FsdGVkX18AAQIDBAUGB8Ihmr4htDVn241k0PSNMh0=",
+    "TripleDES": "U2FsdGVkX18AAQIDBAUGByxTz+dumMgXnvEph1t8QZ0=",
+    "Rabbit": "U2FsdGVkX18AAQIDBAUGBzDcKswKx+Raxie+7pvS",
+    "RC4": "U2FsdGVkX18AAQIDBAUGB1o07d2Bs5VyFgrKzMJ9"
+  }
+}

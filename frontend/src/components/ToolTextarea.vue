@@ -12,6 +12,7 @@ withDefaults(
     readonly?: boolean
     resizable?: boolean
     autosize?: boolean
+    monospace?: boolean
   }>(),
   {
     label: undefined,
@@ -20,6 +21,7 @@ withDefaults(
     readonly: false,
     resizable: true,
     autosize: false,
+    monospace: false,
   },
 )
 </script>
@@ -35,6 +37,7 @@ withDefaults(
       :readonly="readonly"
       :resizable="resizable"
       :autosize="autosize"
+      :class="{ monospace }"
     />
   </div>
 </template>
@@ -49,5 +52,9 @@ withDefaults(
   font-size: 14px;
   margin-bottom: 6px;
   color: v-bind('themeVars.textColor2');
+}
+
+.monospace :deep(textarea) {
+  font-family: 'Cascadia Code', Consolas, 'Courier New', monospace;
 }
 </style>
