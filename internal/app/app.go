@@ -16,6 +16,7 @@ import (
 	"it-tools-go/internal/tools/roman-numeral-converter"
 	"it-tools-go/internal/tools/text-to-binary"
 	"it-tools-go/internal/tools/text-to-unicode"
+	"it-tools-go/internal/tools/token-generator"
 	"it-tools-go/internal/tools/toml-to-json"
 	"it-tools-go/internal/tools/toml-to-yaml"
 	"it-tools-go/internal/tools/xml-to-json"
@@ -53,6 +54,7 @@ func registerTools(reg *registry.Registry) {
 	reg.Register(tomlyaml.Tool(), tomlyaml.Executor{})
 	reg.Register(xmljson.Tool(), xmljson.Executor{})
 	reg.Register(jsonxml.Tool(), jsonxml.Executor{})
+	reg.Register(tokengen.Tool(), tokengen.Executor{})
 }
 
 // Startup 在应用启动时调用，保存 context 以便调用 runtime 方法。
