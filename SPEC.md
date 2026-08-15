@@ -256,21 +256,13 @@ pnpm lint
 
 ## 10. 当前状态
 
-- 应用形态：Wails v2 桌面应用（Go 后端 + Vue 3 + TypeScript + Naive UI 前端），Go 模块 `it-tools-go`（go 1.25.0，wails v2.14.0）。
-- 后端目录：`internal/`（`app` / `registry` / `tools`），App 绑定路径 `wailsjs/go/app/App`。
-- 工具注册机制：`registry`（Tool 接口 + 注册表）+ JSON string 协议 + `ListTools`/`RunTool` 绑定；工具包自持元数据（导出 `Tool()` 与 `Executor`），`registerTools` 一行注册一个；前端 `import.meta.glob` 按 toolId 动态加载组件。
-- 已实现 15 个「转换器」工具：Base64、罗马数字、大小写、日期时间、整数基（radix）、文本↔ASCII 二进制、文本↔Unicode、YAML 转 JSON、YAML 转 TOML、列表（listconv）、Markdown 转 HTML（goldmark）、TOML 转 JSON、TOML 转 YAML、XML 转 JSON、JSON 转 XML（mxj）。
-- 加密分类首个工具：Token 生成器（token-generator，包 `tokengen`），用 `crypto/rand` 均匀采样生成（大写/小写/数字/符号可开关，长度 1–512，支持自定义字符集），前端 2×2 开关 + 长度滑块 + 复制/重新生成。
-- 加密分类：哈希文本（hash-text，包 `hashtext`）——8 算法（MD5/SHA1/SHA224/SHA256/SHA384/SHA512/SHA3/RIPEMD160，SHA3 为 legacy Keccak 对齐 crypto-js）× 4 编码（Hex/Base64/Base64url/Bin）；加密/解密（encryption，包 `encryption`）——AES/TripleDES/Rabbit/RC4，passphrase 走 EVP_BytesToKey（MD5、1 迭代）+ OpenSSL 格式（`Salted__`+盐），流密码无填充，Rabbit 为 crypto-js 移植；测试用 crypto-js 生成向量保证字节级一致（testdata/crypto-js-vectors.json）。
-- 等宽字体：`@fontsource/cascadia-code`（latin 子集）打包，`ToolTextarea` 新增 `monospace` prop（默认 false），加密工具密文用 Cascadia Code 展示。
-- 通用组件 `ToolTextarea`：封装"可选 label + 可拉伸多行输入框"（`defineModel`，`resizable` 默认开启）；已全量迁移所有工具的 textarea 输入框（12 文件 29 处），case-converter 结果行的单行只读输入与 list-converter 的配置输入框（非 textarea）不使用该组件。
-- 工具元数据含 `Icon` 字段（tabler 图标名）；侧边栏与首页卡片显示图标；首页为扁平网格（响应式 1/2/3/4 列、等宽等高）。
-- 前端 it-tools 风格：Naive UI 亮/暗主题、侧边栏分类菜单、顶栏 + Command Palette 搜索。
-- 依赖：前端 `@vueuse/core`；后端 `gopkg.in/yaml.v3` + `github.com/pelletier/go-toml/v2` + `github.com/yuin/goldmark` + `github.com/clbanning/mxj/v2`。
-- XML↔JSON 转换对齐 it-tools 的 `_attributes`/`_text` 约定。
+- 应用形态：Wails v2 桌面应用（Go 后端 + Vue 3 + TypeScript + Naive UI 前端），Go 模块 `it-tools-go`。
+- 注册机制：`registry`（Tool 接口 + 注册表）+ JSON string 协议 + `ListTools`/`RunTool` 绑定；工具包导出 `Tool()` 与 `Executor`，`registerTools` 一行注册一个；前端 `import.meta.glob` 按 toolId 动态加载组件。
+- 已实现工具：「转换器」15 个（Base64、罗马数字、大小写、日期时间、整数基、文本↔ASCII 二进制、文本↔Unicode、列表、Markdown→HTML、TOML↔JSON/YAML、XML↔JSON、YAML→JSON/TOML）；「加密」6 个（Token 生成器、Hash 文本、加密/解密、BCrypt、UUID 生成器、ULID 生成器）。
+- 前端 it-tools 风格：亮/暗主题、侧边栏分类菜单、Command Palette、首页扁平网格；通用组件 `ToolTextarea`（可选 label + 可拉伸 + `monospace`）、`ToolCodeBlock`（只读等宽块展示，支持逐行对齐，用于生成结果列表），等宽字体 Cascadia Code 随包分发。
+- 品牌标识：`assets/logo.svg` 唯一设计源，脚本派生 `build/appicon.png`、`build/windows/icon.ico`、favicon。
 - 命名规范：目录短杠（toolId）、文件下划线、包名去 `-converter` 后缀拼接。
-- 品牌标识：`assets/logo.svg` 为唯一设计源（深色圆角底 + 青色开口扳手剪影，主色对齐主题 `#00ADD8`）；`frontend/scripts/gen-brand.mjs`（@resvg/resvg-js 渲染多尺寸 PNG，PIL 打 ICO）派生 `build/appicon.png`、`build/windows/icon.ico`、`frontend/public/favicon.svg`、`frontend/src/assets/logo.svg`；favicon 已接入。
-- 已验证可构建：`go build/vet/test ./...`、`npm run build`、`wails build` 均通过。
+- 已验证：`go build/vet/test ./...`、`npm run build`、`wails build` 均通过。
 
 ---
 
@@ -293,3 +285,7 @@ pnpm lint
 | 2026-08-15 | Hash 文本工具 | 8 算法 × 4 编码；SHA3 用 legacy Keccak 对齐 crypto-js；引入 `x/crypto` 直接依赖（sha3/ripemd160） |
 | 2026-08-15 | 加密/解密工具 | AES/TripleDES/Rabbit/RC4 + EVP KDF + OpenSSL 格式；Rabbit 移植 crypto-js；测试用 crypto-js 向量校验 |
 | 2026-08-15 | 等宽字体 | `@fontsource/cascadia-code`（latin）；ToolTextarea 新增 `monospace` prop |
+| 2026-08-15 | BCrypt 加密工具 | hash/compare 双模式，salt 轮数 4..31（默认 10）；`x/crypto/bcrypt` |
+| 2026-08-15 | UUID 生成器 | NIL/v1/v3/v4/v5 五版本 + 数量；引入 `github.com/google/uuid` 直接依赖 |
+| 2026-08-15 | ULID 生成器 | 数量 + Raw/JSON 格式；自实现（48 位毫秒时间戳 + 80 位随机，编码对齐 oklog/ulid 参考实现） |
+| 2026-08-15 | ToolCodeBlock 组件 | 只读等宽块展示（逐行对齐）；ULID 生成器 JSON 输出用结构化渲染（括号左对齐、ULID 行居中） |
