@@ -165,9 +165,10 @@ npm run build                   # 前端类型检查 + 构建（vue-tsc + vite�
 - **版本**：v0.2.0「El Shaddoll Wendigo」（git tag `v0.2.0` 驱动 CI 发布）。
 - 注册机制：`registry` + JSON string 协议 + `ListTools`/`RunTool` 绑定；注册由 `internal/toolsgen`
   扫描 `internal/tools/` 生成 `internal/app/tools_gen.go`；前端 `import.meta.glob` 按 toolId 动态加载。
-- 已实现工具（26 个）：「转换器」15（Base64、罗马数字、大小写、日期时间、整数基、文本↔ASCII 二进制、
+- 已实现工具（28 个）：「转换器」15（Base64、罗马数字、大小写、日期时间、整数基、文本↔ASCII 二进制、
   文本↔Unicode、列表、Markdown→HTML、TOML↔JSON/YAML、XML↔JSON、YAML→JSON/TOML）；「加密」10
-  （Token、Hash 文本、加密/解密、BCrypt、UUID、ULID、BIP39、HMAC、RSA 密钥对、密码强度分析）；「Web」1（URL 编码/解码）。
+  （Token、Hash 文本、加密/解密、BCrypt、UUID、ULID、BIP39、HMAC、RSA 密钥对、密码强度分析）；「Web」3
+  （URL 编码/解码、HTML实体转义、URL 分析器）。
 - 前端 it-tools 风格：亮/暗主题、侧边栏分类菜单、Command Palette、首页网格；通用组件
   `ToolTextarea` / `ToolCodeBlock`；等宽字体 Cascadia Code 随包分发。
 - 品牌标识：`assets/logo.svg` 唯一源 → `build/appicon.png`、`build/windows/icon.ico`、favicon。
@@ -192,3 +193,5 @@ npm run build                   # 前端类型检查 + 构建（vue-tsc + vite�
 | 2026-08-15 | 品牌 logo 重绘 | 齿轮 + 扳手造型（青色齿轮 `#00ADD8` + 白色扳手），同步 favicon/appicon/ico |
 | 2026-08-15 | 文档精简 | SPEC.md 精简为要点式规格；README.md 重写并补充工具清单与发布说明 |
 | 2026-08-15 | URL 编码/解码 | Web 分类首个工具；编码/解码对齐 JS `encodeURIComponent`/`decodeURIComponent`（含 UTF-8 校验），向量单测 |
+| 2026-08-15 | HTML 实体 | 转义/反转义对齐 lodash escape/unescape（5 个字符，单遍替换），向量单测 |
+| 2026-08-15 | URL 分析器 | 解析协议/用户名/密码/主机名/端口/路径/查询参数（有序保留重复键）；要求绝对地址对齐 `new URL()` |

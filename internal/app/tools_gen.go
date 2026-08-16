@@ -12,6 +12,7 @@ import (
 	encryption "it-tools-go/internal/tools/encryption"
 	hashtext "it-tools-go/internal/tools/hash-text"
 	hmacgen "it-tools-go/internal/tools/hmac-generator"
+	htmlentities "it-tools-go/internal/tools/html-entities"
 	radix "it-tools-go/internal/tools/integer-base-converter"
 	jsonxml "it-tools-go/internal/tools/json-to-xml"
 	listconv "it-tools-go/internal/tools/list-converter"
@@ -26,6 +27,7 @@ import (
 	tomlyaml "it-tools-go/internal/tools/toml-to-yaml"
 	ulidgen "it-tools-go/internal/tools/ulid-generator"
 	urlcodec "it-tools-go/internal/tools/url-encoder-decoder"
+	urlparser "it-tools-go/internal/tools/url-parser"
 	uuidgen "it-tools-go/internal/tools/uuid-generator"
 	xmljson "it-tools-go/internal/tools/xml-to-json"
 	yamljson "it-tools-go/internal/tools/yaml-to-json"
@@ -42,6 +44,7 @@ func registerAllTools(reg *registry.Registry) {
 	reg.Register(encryption.Tool(), encryption.Executor{})
 	reg.Register(hashtext.Tool(), hashtext.Executor{})
 	reg.Register(hmacgen.Tool(), hmacgen.Executor{})
+	reg.Register(htmlentities.Tool(), htmlentities.Executor{})
 	reg.Register(radix.Tool(), radix.Executor{})
 	reg.Register(jsonxml.Tool(), jsonxml.Executor{})
 	reg.Register(listconv.Tool(), listconv.Executor{})
@@ -56,6 +59,7 @@ func registerAllTools(reg *registry.Registry) {
 	reg.Register(tomlyaml.Tool(), tomlyaml.Executor{})
 	reg.Register(ulidgen.Tool(), ulidgen.Executor{})
 	reg.Register(urlcodec.Tool(), urlcodec.Executor{})
+	reg.Register(urlparser.Tool(), urlparser.Executor{})
 	reg.Register(uuidgen.Tool(), uuidgen.Executor{})
 	reg.Register(xmljson.Tool(), xmljson.Executor{})
 	reg.Register(yamljson.Tool(), yamljson.Executor{})
