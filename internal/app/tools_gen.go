@@ -25,6 +25,7 @@ import (
 	tomljson "it-tools-go/internal/tools/toml-to-json"
 	tomlyaml "it-tools-go/internal/tools/toml-to-yaml"
 	ulidgen "it-tools-go/internal/tools/ulid-generator"
+	urlcodec "it-tools-go/internal/tools/url-encoder-decoder"
 	uuidgen "it-tools-go/internal/tools/uuid-generator"
 	xmljson "it-tools-go/internal/tools/xml-to-json"
 	yamljson "it-tools-go/internal/tools/yaml-to-json"
@@ -54,6 +55,7 @@ func registerAllTools(reg *registry.Registry) {
 	reg.Register(tomljson.Tool(), tomljson.Executor{})
 	reg.Register(tomlyaml.Tool(), tomlyaml.Executor{})
 	reg.Register(ulidgen.Tool(), ulidgen.Executor{})
+	reg.Register(urlcodec.Tool(), urlcodec.Executor{})
 	reg.Register(uuidgen.Tool(), uuidgen.Executor{})
 	reg.Register(xmljson.Tool(), xmljson.Executor{})
 	reg.Register(yamljson.Tool(), yamljson.Executor{})
