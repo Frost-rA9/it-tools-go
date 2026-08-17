@@ -13,8 +13,11 @@ import (
 	hashtext "it-tools-go/internal/tools/hash-text"
 	hmacgen "it-tools-go/internal/tools/hmac-generator"
 	htmlentities "it-tools-go/internal/tools/html-entities"
+	httpstatuscodes "it-tools-go/internal/tools/http-status-codes"
 	radix "it-tools-go/internal/tools/integer-base-converter"
+	jsondiff "it-tools-go/internal/tools/json-diff"
 	jsonxml "it-tools-go/internal/tools/json-to-xml"
+	jwtparser "it-tools-go/internal/tools/jwt-parser"
 	listconv "it-tools-go/internal/tools/list-converter"
 	markdownhtml "it-tools-go/internal/tools/markdown-to-html"
 	pwdstrength "it-tools-go/internal/tools/password-strength-analyser"
@@ -45,8 +48,11 @@ func registerAllTools(reg *registry.Registry) {
 	reg.Register(hashtext.Tool(), hashtext.Executor{})
 	reg.Register(hmacgen.Tool(), hmacgen.Executor{})
 	reg.Register(htmlentities.Tool(), htmlentities.Executor{})
+	reg.Register(httpstatuscodes.Tool(), httpstatuscodes.Executor{})
 	reg.Register(radix.Tool(), radix.Executor{})
+	reg.Register(jsondiff.Tool(), jsondiff.Executor{})
 	reg.Register(jsonxml.Tool(), jsonxml.Executor{})
+	reg.Register(jwtparser.Tool(), jwtparser.Executor{})
 	reg.Register(listconv.Tool(), listconv.Executor{})
 	reg.Register(markdownhtml.Tool(), markdownhtml.Executor{})
 	reg.Register(pwdstrength.Tool(), pwdstrength.Executor{})
