@@ -27,6 +27,9 @@ import {
   Unlink,
   Hash,
   GitCompare,
+  DeviceDesktop,
+  Browser,
+  DeviceMobile,
 } from '@vicons/tabler'
 
 // 图标名（Go 端 registry.Tool.Icon）→ 组件映射。
@@ -57,6 +60,9 @@ const toolIcons: Record<string, Component> = {
   Unlink,
   Hash,
   GitCompare,
+  DeviceDesktop,
+  Browser,
+  DeviceMobile,
 }
 
 // getToolIcon 返回图标名对应的组件，未找到时返回兜底图标。

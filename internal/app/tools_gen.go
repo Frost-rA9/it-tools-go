@@ -5,10 +5,12 @@ package app
 import (
 	"it-tools-go/internal/registry"
 	base64string "it-tools-go/internal/tools/base64-string-converter"
+	basicauth "it-tools-go/internal/tools/basic-auth-generator"
 	bcrypt "it-tools-go/internal/tools/bcrypt"
 	bip39gen "it-tools-go/internal/tools/bip39-generator"
 	caseconv "it-tools-go/internal/tools/case-converter"
 	datetime "it-tools-go/internal/tools/date-time-converter"
+	deviceinformation "it-tools-go/internal/tools/device-information"
 	encryption "it-tools-go/internal/tools/encryption"
 	hashtext "it-tools-go/internal/tools/hash-text"
 	hmacgen "it-tools-go/internal/tools/hmac-generator"
@@ -20,6 +22,7 @@ import (
 	jwtparser "it-tools-go/internal/tools/jwt-parser"
 	listconv "it-tools-go/internal/tools/list-converter"
 	markdownhtml "it-tools-go/internal/tools/markdown-to-html"
+	otpgen "it-tools-go/internal/tools/otp-generator"
 	pwdstrength "it-tools-go/internal/tools/password-strength-analyser"
 	romannumeral "it-tools-go/internal/tools/roman-numeral-converter"
 	rsakeypair "it-tools-go/internal/tools/rsa-key-pair-generator"
@@ -31,6 +34,7 @@ import (
 	ulidgen "it-tools-go/internal/tools/ulid-generator"
 	urlcodec "it-tools-go/internal/tools/url-encoder-decoder"
 	urlparser "it-tools-go/internal/tools/url-parser"
+	useragentparser "it-tools-go/internal/tools/user-agent-parser"
 	uuidgen "it-tools-go/internal/tools/uuid-generator"
 	xmljson "it-tools-go/internal/tools/xml-to-json"
 	yamljson "it-tools-go/internal/tools/yaml-to-json"
@@ -40,10 +44,12 @@ import (
 // registerAllTools 注册全部工具（顺序为 internal/tools 目录名排序）。
 func registerAllTools(reg *registry.Registry) {
 	reg.Register(base64string.Tool(), base64string.Executor{})
+	reg.Register(basicauth.Tool(), basicauth.Executor{})
 	reg.Register(bcrypt.Tool(), bcrypt.Executor{})
 	reg.Register(bip39gen.Tool(), bip39gen.Executor{})
 	reg.Register(caseconv.Tool(), caseconv.Executor{})
 	reg.Register(datetime.Tool(), datetime.Executor{})
+	reg.Register(deviceinformation.Tool(), deviceinformation.Executor{})
 	reg.Register(encryption.Tool(), encryption.Executor{})
 	reg.Register(hashtext.Tool(), hashtext.Executor{})
 	reg.Register(hmacgen.Tool(), hmacgen.Executor{})
@@ -55,6 +61,7 @@ func registerAllTools(reg *registry.Registry) {
 	reg.Register(jwtparser.Tool(), jwtparser.Executor{})
 	reg.Register(listconv.Tool(), listconv.Executor{})
 	reg.Register(markdownhtml.Tool(), markdownhtml.Executor{})
+	reg.Register(otpgen.Tool(), otpgen.Executor{})
 	reg.Register(pwdstrength.Tool(), pwdstrength.Executor{})
 	reg.Register(romannumeral.Tool(), romannumeral.Executor{})
 	reg.Register(rsakeypair.Tool(), rsakeypair.Executor{})
@@ -66,6 +73,7 @@ func registerAllTools(reg *registry.Registry) {
 	reg.Register(ulidgen.Tool(), ulidgen.Executor{})
 	reg.Register(urlcodec.Tool(), urlcodec.Executor{})
 	reg.Register(urlparser.Tool(), urlparser.Executor{})
+	reg.Register(useragentparser.Tool(), useragentparser.Executor{})
 	reg.Register(uuidgen.Tool(), uuidgen.Executor{})
 	reg.Register(xmljson.Tool(), xmljson.Executor{})
 	reg.Register(yamljson.Tool(), yamljson.Executor{})
