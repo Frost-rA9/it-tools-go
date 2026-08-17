@@ -6,7 +6,7 @@ on:
       - 'v*'
 
 env:
-  RELEASE_NAME: El Shaddoll Wendigo
+  RELEASE_NAME: El Shaddoll Apkallone
 
 permissions:
   contents: write
