@@ -3,63 +3,45 @@
 > 跨平台 IT 工具集桌面应用（参考 [it-tools.tech](https://it-tools.tech/)），Go 后端 + Wails 桌面壳。
 > 本文档为项目唯一权威规格，后续实现以本文为准。
 
----
-
 ## 1. 项目概述
 
 - **形态**：跨平台（Windows / macOS / Linux）桌面 IT 工具集，单二进制分发、离线可用。
 - **定位**：工具业务逻辑全部在 Go 侧（`internal/`），前端仅负责渲染与交互。
-- **参考**：[IT Tools](https://it-tools.tech/)（Vue 3 纯前端 SPA）；本项目以 Go 为核心实现其工具能力。
-- **非目标**：云托管 / i18n / 一次对齐全部 40+ 工具（分阶段扩展）/ 多用户与数据持久化。
+- **参考**：[IT Tools](https://it-tools.tech/)（Vue 3 纯前端 SPA），本项目以 Go 为核心实现其工具能力。
+- **非目标**：云托管 / i18n / 一次对齐全部 40+ 工具 / 多用户与数据持久化。
 
 ## 2. 技术选型
 
-| 维度 | 选型 | 版本 | 说明 |
-|---|---|---|---|
-| 桌面壳 | Wails v2 | 2.14.0 | 单二进制、原生渲染引擎，不内嵌浏览器 |
-| 后端 | Go | 1.26.x | 工具逻辑全部在 Go 侧 |
-| 前端 | Vue 3 + TypeScript + Vite | 3.x / 7.x | 与参考项目同栈 |
-| UI | Naive UI + 自定义主题 | 2.x | 暗色模式、表单密集场景 |
-| 路由 | vue-router | 4.x | 前端 SPA 路由 |
-| 包管理 | pnpm / Go Modules | pnpm 11.x | pnpm 可选，npm 亦可 |
+| 维度 | 选型 | 版本 |
+|---|---|---|
+| 桌面壳 | Wails v2 | 2.14.0 |
+| 后端 | Go | 1.26.x |
+| 前端 | Vue 3 + TypeScript + Vite | 3.x / 7.x |
+| UI | Naive UI + 自定义主题 | 2.x |
+| 路由 | vue-router | 4.x |
+| 包管理 | pnpm / Go Modules | pnpm 11.x |
 
-### 关键架构决策
-
-工具逻辑放在 Go 侧：每个工具在 Go 中实现核心计算（`Execute`），前端经 Wails Binding 调用。
-好处：体现 Go 技术栈、便于单测、逻辑与 UI 解耦、可复用于 CLI/服务端。
+关键决策：工具逻辑放 Go（`Execute`），前端经 Wails Binding 调用——体现 Go 技术栈、便于单测、逻辑与 UI 解耦。
 
 ## 3. 架构与数据流
 
-Wails 双层架构：桌面窗口（原生渲染引擎）承载 `frontend/`（Vue 3），经 Wails Binding（IPC）
-调用 Go 后端（`internal/`：Tool 接口 + registry + `internal/tools/*`）。
+Wails 双层架构：桌面窗口承载 `frontend/`（Vue 3），经 Wails Binding（IPC）调用 Go 后端
+（Tool 接口 + registry + `internal/tools/*`）。
 
 ```
-前端工具表单
-   │ JSON.stringify(input)
-   ▼
-RunTool(id, input) ──Binding──▶ registry 查找工具
-                                   │
-                                   ▼
-                              tool.Execute(input)
-                                   │
-                                   ▼
-前端 ◀──Binding── JSON.stringify(output)
+前端工具表单 --RunTool(id, input)--> registry 查找 --> tool.Execute(input) --> 返回 output
 ```
 
-## 4. 工具注册机制（核心设计）
+传输均为 JSON string。
 
-### Tool 接口
+## 4. 工具注册机制
 
-每个工具实现统一接口（定义于 `internal/registry`）：
+每个工具实现统一接口（`internal/registry`）：
 
 ```go
 type Tool struct {
-    ID          string   `json:"id"`          // 唯一标识，如 "base64-string-converter"
-    Name        string   `json:"name"`        // 展示名称
-    Description string   `json:"description"` // 一句话描述
-    Category    string   `json:"category"`    // 所属分类（见 §6）
-    Keywords    []string `json:"keywords"`    // 搜索关键词
-    Icon        string   `json:"icon"`        // 图标名（对应前端 @vicons/tabler）
+    ID, Name, Description, Category, Icon string
+    Keywords []string
 }
 
 type Executor interface {
@@ -67,69 +49,47 @@ type Executor interface {
 }
 ```
 
-> 传输协议：`Execute` 的 input/output 均为 **JSON 字符串**。前端用原生
-> `JSON.stringify`/`JSON.parse`，Go 用 `encoding/json`，前后端零序列化依赖。
+- 传输协议：input/output 均为 **JSON 字符串**（前端 `JSON.stringify/parse`，Go `encoding/json`）。
+- `internal/app/tools_gen.go` 由代码生成器 `internal/toolsgen` 扫描 `internal/tools/` 生成
+  （按目录名排序，**勿手改**）；新增工具后执行 `go generate ./internal/app` 刷新。
+- 单一 Binding `RunTool(id, input)` 暴露执行入口；前端 `ListTools()` 拉元数据、
+  路由 `/tool/:id` 用 `import.meta.glob('./tools/*.vue')` 按 toolId（文件名）匹配组件。
 
-### registry
-
-- 聚合工具，提供 `List()` / `Get()` / `Execute()`。
-- `internal/app/tools_gen.go` 由代码生成器 `internal/toolsgen` 扫描 `internal/tools/`
-  自动生成（按目录名排序，**勿手改**）；新增工具后执行 `go generate ./internal/app` 刷新。
-- 单一 Wails Binding `RunTool(id, input)` 暴露执行入口。
-
-### 前端动态渲染
-
-- 启动时 `ListTools()` 获取工具元数据，按分类渲染侧边栏与首页。
-- 路由 `/tool/:id` 用 Vite `import.meta.glob('./tools/*.vue')` 按 toolId（文件名）匹配组件。
-
-## 5. 项目目录结构
+## 5. 目录结构
 
 ```
 it-tools-go/
-├── go.mod / go.sum / main.go        # Go 模块 + Wails 入口（embed frontend/dist）
-├── wails.json                       # Wails 构建配置
-├── assets/
-│   └── logo.svg                     # 品牌 logo 唯一设计源（脚本派生各尺寸资产）
+├── main.go / go.mod / go.sum    # Wails 入口 + Go 模块
+├── wails.json / assets/logo.svg # 构建配置 / 品牌 logo 唯一源
 ├── internal/
-│   ├── app/                         # App 结构体 + 生命周期 + 绑定 + tools_gen.go（勿手改）
-│   ├── registry/                    # Tool 接口 + 注册表实现
-│   ├── toolsgen/                    # 工具注册代码生成器（go generate ./internal/app）
-│   └── tools/                       # 各工具实现（每工具一个包，含单测）
+│   ├── app/                     # 绑定 + tools_gen.go（生成，勿改）
+│   ├── registry/                # Tool 接口 + 注册表
+│   ├── toolsgen/                # 注册代码生成器
+│   └── tools/                   # 各工具实现（每包含单测）
 ├── frontend/
-│   ├── scripts/gen-brand.mjs        # 品牌资产生成（SVG→PNG，拷贝 favicon/logo）
-│   ├── public/favicon.svg           # 生成物（源为 assets/logo.svg）
+│   ├── scripts/gen-brand.mjs    # 品牌资产生成（SVG→PNG/favicon/ico）
 │   └── src/
-│       ├── components/              # 通用组件（ToolCard、ToolMenu、ToolTextarea、ToolCodeBlock）
-│       ├── layouts/                 # BaseLayout（侧边栏）+ ToolLayout（工具页）
-│       ├── views/                   # HomeView + ToolView + tools/（按 toolId 命名）
-│       ├── router/ stores/ composables/
-│       ├── assets/                  # 主题资源（logo.svg、Cascadia Code 字体等）
-│       └── wailsjs/                 # Wails 自动生成绑定（勿手改）
-├── build/
-│   ├── bin/                         # wails build 输出（it-tools-go.exe）
-│   └── windows/                     # 图标、Windows 清单、NSIS 安装器
+│       ├── components/ layouts/ views/ router/ stores/ composables/ assets/
+│       └── wailsjs/             # Wails 生成绑定（勿改）
+├── build/                       # 图标 / Windows 资源 / NSIS 安装器
 └── SPEC.md
 ```
 
-> `main.go` 位于根目录的 `package main`（Wails 强制要求），业务代码全部置于 `internal/`。
-
 ## 6. 工具分类
 
-对齐参考项目的分类体系（中文展示，常量定义于 `internal/registry/registry.go`）：
+对齐参考项目分类（常量见 `internal/registry/registry.go`）。当前已实现三类：
 
-| 分类 | 示例工具 |
-|---|---|
-| 加密 | UUID、哈希、Token、BIP39、HMAC、RSA 密钥对、密码强度 |
-| 转换器 | Base64、罗马数字、大小写、日期时间、进制、文本↔二进制/Unicode、列表、Markdown→HTML、TOML/XML/YAML 互转 |
-| Web / 图片 / 开发 / 网络 / 数学 / 测量 / 文本 / 数据 | 后续扩展按此归类 |
+| 分类 | 数量 | 工具 |
+|---|---|---|
+| 加密 | 10 | Token、Hash、加密/解密、BCrypt、UUID、ULID、BIP39、HMAC、RSA 密钥对、密码强度 |
+| 转换器 | 15 | Base64、罗马数字、大小写、日期时间、进制、文本↔二进制/Unicode、列表、Markdown→HTML、TOML/XML/YAML 互转 |
+| Web | 15 | URL 编码/解码、HTML 实体、URL 分析器、JWT、HTTP 状态码、JSON 差异、设备信息、UA 分析、Basic Auth、OTP、OG 元生成、MIME、Slug、SafeLink 解码、按键码 |
 
-## 7. 开发与构建
+其余分类（图片/开发/网络/数学/测量/文本/数据）后续扩展按此归类。
 
-### 环境要求
+## 7. 开发与发布
 
-Go、gcc（mingw）、Node.js、Wails CLI；本机安装细节见全局 AGENTS.md。
-
-### 常用命令
+环境：Go、gcc（mingw）、Node.js、Wails CLI（本机安装细节见全局 AGENTS.md）。
 
 ```bash
 wails dev                       # 热重载开发
@@ -139,36 +99,30 @@ go generate ./internal/app      # 新增工具后刷新注册（tools_gen.go）
 npm run build                   # 前端类型检查 + 构建（vue-tsc + vite）
 ```
 
-### 发布
-
-推送 `v*` 标签自动触发 [GitHub Actions](.github/workflows/release.yml)：
-三平台交叉编译（Windows amd64 / macOS Intel+Silicon / Linux amd64），
-创建 GitHub Release 并附带各平台产物。版本号由 git tag 决定（如 `v0.2.0`）。
+发布：推送 `v*` 标签自动触发 [GitHub Actions](.github/workflows/release.yml) 三平台交叉编译
+（Windows amd64 / macOS Intel+Silicon / Linux amd64）并创建 Release；版本号由 git tag 决定（如 `v0.2.0`）。
 
 ## 8. 测试与质量
 
-- Go：表驱动单测（各工具 + registry）；前端：Vitest + `vue-tsc` 类型检查。
-- 提交遵循 Conventional Commits；Go 用 gofmt/vet，前端 ESLint + Prettier。
+- Go：表驱动单测（各工具 + registry）；前端：`vue-tsc` 类型检查。
+- 提交遵循 Conventional Commits；Go 用 gofmt/vet。
 
 ## 9. 里程碑
 
-| 阶段 | 内容 | 验收标准 |
+| 阶段 | 内容 | 状态 |
 |---|---|---|
-| M0 环境准备 | 安装 Go/gcc/Wails/pnpm | ✅ 已完成 |
-| M1 骨架搭建 | `wails init` + `internal/` 目录结构 | ✅ 已完成 |
-| M2 注册机制 | Tool 接口 + registry + RunTool Binding + 前端动态渲染 | ✅ 已完成 |
-| M3 工具扩展 | 高频工具实现（当前 25 个） | ✅ 各工具均有单测 |
-| M4 打包发布 | 三平台交叉编译 + GitHub Release 流程 | ✅ 已完成（v0.1.0/v0.2.0） |
+| M0 环境准备 | 安装 Go/gcc/Wails/pnpm | ✅ |
+| M1 骨架搭建 | `wails init` + `internal/` 目录结构 | ✅ |
+| M2 注册机制 | Tool 接口 + registry + RunTool Binding + 前端动态渲染 | ✅ |
+| M3 工具扩展 | 高频工具实现（当前 40 个） | ✅ 各工具均有单测 |
+| M4 打包发布 | 三平台交叉编译 + GitHub Release 流程 | ✅（v0.1.0/v0.2.0） |
 
 ## 10. 当前状态
 
 - **版本**：v0.2.0「El Shaddoll Wendigo」（git tag `v0.2.0` 驱动 CI 发布）。
 - 注册机制：`registry` + JSON string 协议 + `ListTools`/`RunTool` 绑定；注册由 `internal/toolsgen`
-  扫描 `internal/tools/` 生成 `internal/app/tools_gen.go`；前端 `import.meta.glob` 按 toolId 动态加载。
-- 已实现工具（40 个）：「转换器」15（Base64、罗马数字、大小写、日期时间、整数基、文本↔ASCII 二进制、
-  文本↔Unicode、列表、Markdown→HTML、TOML↔JSON/YAML、XML↔JSON、YAML→JSON/TOML）；「加密」10
-  （Token、Hash 文本、加密/解密、BCrypt、UUID、ULID、BIP39、HMAC、RSA 密钥对、密码强度分析）；「Web」15
-  （URL 编码/解码、HTML实体转义、URL 分析器、JWT 解析器、HTTP 状态码、JSON 差异比较、设备信息、用户代理分析器、基本身份验证生成器、OTP 代码生成器、开放式图形元生成器、MIME 类型转换器、Slug 化字符串、Outlook 安全链接解码器、按键码信息）。
+  扫描生成 `internal/app/tools_gen.go`；前端 `import.meta.glob` 按 toolId 动态加载。
+- 已实现工具（40 个）：转换器 15 + 加密 10 + Web 15（清单见 §6）。Web 分类已与 it-tools 对齐。
 - 前端 it-tools 风格：亮/暗主题、侧边栏分类菜单、Command Palette、首页网格；通用组件
   `ToolTextarea` / `ToolCodeBlock`；等宽字体 Cascadia Code 随包分发。
 - 品牌标识：`assets/logo.svg` 唯一源 → `build/appicon.png`、`build/windows/icon.ico`、favicon。
@@ -179,31 +133,10 @@ npm run build                   # 前端类型检查 + 构建（vue-tsc + vite�
 
 | 日期 | 变更 | 说明 |
 |---|---|---|
-| 2026-08-14 | 初版 + M1 | 技术选型、架构、目录结构；Wails 骨架 |
-| 2026-08-14 | M2 注册机制 | Tool 接口 / registry / JSON string 协议 / `ListTools`+`RunTool` 绑定 + Base64 工具 |
-| 2026-08-14 | 前端 it-tools 风格 | 亮/暗主题、顶栏 + Command Palette、分类中文化、工具图标、首页网格 |
-| 2026-08-14 | 转换器工具扩展 | 罗马/大小写/日期时间/整数基/文本二进制/文本Unicode/YAML→JSON/YAML→TOML 等 8 个 |
-| 2026-08-14 | 注册重构 | 工具包自持元数据（`Tool()` + `Executor`），集中一行注册 |
-| 2026-08-14 | 转换器补齐 | 列表、Markdown→HTML、TOML↔JSON/YAML、XML↔JSON（引入 goldmark、mxj） |
-| 2026-08-14 | 品牌 logo | `assets/logo.svg` 设计源 + `gen-brand.mjs` 生成链路，接入 appicon/ico/favicon |
-| 2026-08-15 | 加密工具 | Token、Hash（SHA3 legacy Keccak）、加密/解密（AES/TripleDES/Rabbit/RC4）、BCrypt、UUID、ULID |
+| 2026-08-14 | 初版搭建 | M1 骨架 + M2 注册机制（Tool 接口/registry/JSON 协议/RunTool）+ 前端 it-tools 风格 + Base64 首个工具 |
+| 2026-08-14 | 转换器 15 个 | 罗马/大小写/日期时间/进制/文本↔二进制·Unicode/列表/Markdown→HTML/TOML·XML·YAML 互转（goldmark、mxj、yaml.v3、go-toml） |
+| 2026-08-14 | 品牌与注册重构 | `assets/logo.svg` 设计源 + `gen-brand.mjs` 链路；`internal/toolsgen` 代码生成器；`app.go` 精简 |
+| 2026-08-15 | 加密 10 个 | Token/Hash/加密解密/BCrypt/UUID/ULID/BIP39/HMAC/RSA 密钥对/密码强度 |
 | 2026-08-15 | 通用组件 | `ToolTextarea`（可拉伸+monospace）、`ToolCodeBlock`（只读等宽块）；Cascadia Code 随包 |
-| 2026-08-15 | 加密工具扩展 | BIP39（10 语言）、HMAC（8 哈希 × 4 编码）、RSA 密钥对（256–16384 bits）、密码强度分析 |
-| 2026-08-15 | 注册生成器 | `internal/toolsgen` 扫描 `internal/tools/` 自动生成 `tools_gen.go`；`app.go` 精简 |
-| 2026-08-15 | 品牌 logo 重绘 | 齿轮 + 扳手造型（青色齿轮 `#00ADD8` + 白色扳手），同步 favicon/appicon/ico |
-| 2026-08-15 | 文档精简 | SPEC.md 精简为要点式规格；README.md 重写并补充工具清单与发布说明 |
-| 2026-08-15 | URL 编码/解码 | Web 分类首个工具；编码/解码对齐 JS `encodeURIComponent`/`decodeURIComponent`（含 UTF-8 校验），向量单测 |
-| 2026-08-15 | HTML 实体 | 转义/反转义对齐 lodash escape/unescape（5 个字符，单遍替换），向量单测 |
-| 2026-08-15 | URL 分析器 | 解析协议/用户名/密码/主机名/端口/路径/查询参数（有序保留重复键）；要求绝对地址对齐 `new URL()` |
-| 2026-08-15 | JWT 解析器 | 解码 header/payload（base64url，不验签）；IANA claim 描述 + 算法说明 + exp/nbf/iat 本地时间 |
-| 2026-08-15 | HTTP 状态码 | 内置 63 个状态码（移植自 it-tools，分 5 类）；支持 code/name/description/category 搜索 |
-| 2026-08-15 | JSON 差异比较 | 递归 diff 树（added/removed/updated/children-updated）；JSON5 解析（`swaggest/assertjson/json5`）对齐 it-tools |
-| 2026-08-15 | 设备信息 | 纯前端实现（读取 `window.screen`/`navigator`/窗口尺寸）；Go 仅占位注册 |
-| 2026-08-15 | 用户代理分析器 | `uap-go` 解析 browser/os/device；engine/cpu/device.type 由前端 TS 补充（uap-go 无此数据） |
-| 2026-08-15 | 基本身份验证生成器 | 由用户名/密码生成 `Authorization: Basic <base64>` 请求头 |
-| 2026-08-15 | OTP 代码生成器 | TOTP（HMAC-SHA1、6 位、30s，RFC 4226/6238 向量单测）；otpauth URI + 二维码（`yeqown/go-qrcode/v2`） |
-| 2026-08-15 | 开放式图形元生成器 | 动态表单 + 14 schema；oggen 逻辑（flatten/twitter 兼容映射/meta 标签），输出对齐 `@it-tools/oggen` |
-| 2026-08-15 | MIME 类型转换器 | `go:embed` mime-db.json（2522 条）构建双向映射；MIME↔扩展名互查 + 全量表 |
-| 2026-08-15 | Slug 化字符串 | 对齐 @sindresorhus/slugify 默认行为：NFD 音译 + decamelize + lowercase + 缩约处理；引入 `x/text` |
-| 2026-08-15 | Outlook 安全链接解码器 | 校验 `.safelinks.protection.outlook.com` 域名并提取 `url` 参数还原真实 URL |
-| 2026-08-15 | 按键码信息 | 纯前端实现（监听 `keydown` 显示 key/keyCode/code/location/修饰键）；Go 仅占位注册；Web 分类 16 个工具与 it-tools 对齐完成 |
+| 2026-08-15 | Web 15 个 | URL/HTML 实体/URL 分析/JWT/HTTP 状态码/JSON 差异/设备/UA/Basic Auth/OTP/OG 元/MIME/Slug/SafeLink/按键码 —— Web 分类与 it-tools 对齐完成 |
+| 2026-08-15 | 文档精简 | SPEC.md / AGENTS.md 精简为要点式；README.md 重写并补充工具清单与发布说明 |
