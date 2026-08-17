@@ -20,12 +20,17 @@ import (
 	jsondiff "it-tools-go/internal/tools/json-diff"
 	jsonxml "it-tools-go/internal/tools/json-to-xml"
 	jwtparser "it-tools-go/internal/tools/jwt-parser"
+	keycodeinfo "it-tools-go/internal/tools/keycode-info"
 	listconv "it-tools-go/internal/tools/list-converter"
 	markdownhtml "it-tools-go/internal/tools/markdown-to-html"
+	metatag "it-tools-go/internal/tools/meta-tag-generator"
+	mimetypes "it-tools-go/internal/tools/mime-types"
 	otpgen "it-tools-go/internal/tools/otp-generator"
 	pwdstrength "it-tools-go/internal/tools/password-strength-analyser"
 	romannumeral "it-tools-go/internal/tools/roman-numeral-converter"
 	rsakeypair "it-tools-go/internal/tools/rsa-key-pair-generator"
+	safelink "it-tools-go/internal/tools/safelink-decoder"
+	slugify "it-tools-go/internal/tools/slugify-string"
 	textbinary "it-tools-go/internal/tools/text-to-binary"
 	textunicode "it-tools-go/internal/tools/text-to-unicode"
 	tokengen "it-tools-go/internal/tools/token-generator"
@@ -59,12 +64,17 @@ func registerAllTools(reg *registry.Registry) {
 	reg.Register(jsondiff.Tool(), jsondiff.Executor{})
 	reg.Register(jsonxml.Tool(), jsonxml.Executor{})
 	reg.Register(jwtparser.Tool(), jwtparser.Executor{})
+	reg.Register(keycodeinfo.Tool(), keycodeinfo.Executor{})
 	reg.Register(listconv.Tool(), listconv.Executor{})
 	reg.Register(markdownhtml.Tool(), markdownhtml.Executor{})
+	reg.Register(metatag.Tool(), metatag.Executor{})
+	reg.Register(mimetypes.Tool(), mimetypes.Executor{})
 	reg.Register(otpgen.Tool(), otpgen.Executor{})
 	reg.Register(pwdstrength.Tool(), pwdstrength.Executor{})
 	reg.Register(romannumeral.Tool(), romannumeral.Executor{})
 	reg.Register(rsakeypair.Tool(), rsakeypair.Executor{})
+	reg.Register(safelink.Tool(), safelink.Executor{})
+	reg.Register(slugify.Tool(), slugify.Executor{})
 	reg.Register(textbinary.Tool(), textbinary.Executor{})
 	reg.Register(textunicode.Tool(), textunicode.Executor{})
 	reg.Register(tokengen.Tool(), tokengen.Executor{})

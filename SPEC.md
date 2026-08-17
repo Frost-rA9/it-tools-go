@@ -165,10 +165,10 @@ npm run build                   # 前端类型检查 + 构建（vue-tsc + vite�
 - **版本**：v0.2.0「El Shaddoll Wendigo」（git tag `v0.2.0` 驱动 CI 发布）。
 - 注册机制：`registry` + JSON string 协议 + `ListTools`/`RunTool` 绑定；注册由 `internal/toolsgen`
   扫描 `internal/tools/` 生成 `internal/app/tools_gen.go`；前端 `import.meta.glob` 按 toolId 动态加载。
-- 已实现工具（35 个）：「转换器」15（Base64、罗马数字、大小写、日期时间、整数基、文本↔ASCII 二进制、
+- 已实现工具（40 个）：「转换器」15（Base64、罗马数字、大小写、日期时间、整数基、文本↔ASCII 二进制、
   文本↔Unicode、列表、Markdown→HTML、TOML↔JSON/YAML、XML↔JSON、YAML→JSON/TOML）；「加密」10
-  （Token、Hash 文本、加密/解密、BCrypt、UUID、ULID、BIP39、HMAC、RSA 密钥对、密码强度分析）；「Web」10
-  （URL 编码/解码、HTML实体转义、URL 分析器、JWT 解析器、HTTP 状态码、JSON 差异比较、设备信息、用户代理分析器、基本身份验证生成器、OTP 代码生成器）。
+  （Token、Hash 文本、加密/解密、BCrypt、UUID、ULID、BIP39、HMAC、RSA 密钥对、密码强度分析）；「Web」15
+  （URL 编码/解码、HTML实体转义、URL 分析器、JWT 解析器、HTTP 状态码、JSON 差异比较、设备信息、用户代理分析器、基本身份验证生成器、OTP 代码生成器、开放式图形元生成器、MIME 类型转换器、Slug 化字符串、Outlook 安全链接解码器、按键码信息）。
 - 前端 it-tools 风格：亮/暗主题、侧边栏分类菜单、Command Palette、首页网格；通用组件
   `ToolTextarea` / `ToolCodeBlock`；等宽字体 Cascadia Code 随包分发。
 - 品牌标识：`assets/logo.svg` 唯一源 → `build/appicon.png`、`build/windows/icon.ico`、favicon。
@@ -202,3 +202,8 @@ npm run build                   # 前端类型检查 + 构建（vue-tsc + vite�
 | 2026-08-15 | 用户代理分析器 | `uap-go` 解析 browser/os/device；engine/cpu/device.type 由前端 TS 补充（uap-go 无此数据） |
 | 2026-08-15 | 基本身份验证生成器 | 由用户名/密码生成 `Authorization: Basic <base64>` 请求头 |
 | 2026-08-15 | OTP 代码生成器 | TOTP（HMAC-SHA1、6 位、30s，RFC 4226/6238 向量单测）；otpauth URI + 二维码（`yeqown/go-qrcode/v2`） |
+| 2026-08-15 | 开放式图形元生成器 | 动态表单 + 14 schema；oggen 逻辑（flatten/twitter 兼容映射/meta 标签），输出对齐 `@it-tools/oggen` |
+| 2026-08-15 | MIME 类型转换器 | `go:embed` mime-db.json（2522 条）构建双向映射；MIME↔扩展名互查 + 全量表 |
+| 2026-08-15 | Slug 化字符串 | 对齐 @sindresorhus/slugify 默认行为：NFD 音译 + decamelize + lowercase + 缩约处理；引入 `x/text` |
+| 2026-08-15 | Outlook 安全链接解码器 | 校验 `.safelinks.protection.outlook.com` 域名并提取 `url` 参数还原真实 URL |
+| 2026-08-15 | 按键码信息 | 纯前端实现（监听 `keydown` 显示 key/keyCode/code/location/修饰键）；Go 仅占位注册；Web 分类 16 个工具与 it-tools 对齐完成 |

@@ -30,6 +30,11 @@ import {
   DeviceDesktop,
   Browser,
   DeviceMobile,
+  Tags,
+  World,
+  LettersCase,
+  Mailbox,
+  Keyboard,
 } from '@vicons/tabler'
 
 // 图标名（Go 端 registry.Tool.Icon）→ 组件映射。
@@ -63,6 +68,11 @@ const toolIcons: Record<string, Component> = {
   DeviceDesktop,
   Browser,
   DeviceMobile,
+  Tags,
+  World,
+  LettersCase,
+  Mailbox,
+  Keyboard,
 }
 
 // getToolIcon 返回图标名对应的组件，未找到时返回兜底图标。
