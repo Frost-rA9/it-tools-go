@@ -53,7 +53,6 @@ const sections: Section[] = [
 <style scoped>
 .card {
   min-width: 400px;
-  width: 100%;
 }
 
 .information {
