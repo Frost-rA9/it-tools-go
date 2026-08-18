@@ -77,7 +77,7 @@ it-tools-go/
 
 ## 6. 工具分类
 
-对齐参考项目分类（常量见 `internal/registry/registry.go`）。当前已实现四类：
+对齐参考项目分类（常量见 `internal/registry/registry.go`）。当前已实现五类：
 
 | 分类 | 数量 | 工具 |
 |---|---|---|
@@ -85,7 +85,7 @@ it-tools-go/
 | 转换器 | 15 | Base64、罗马数字、大小写、日期时间、进制、文本↔二进制/Unicode、列表、Markdown→HTML、TOML/XML/YAML 互转 |
 | Web | 15 | URL 编码/解码、HTML 实体、URL 分析器、JWT、HTTP 状态码、JSON 差异、设备信息、UA 分析、Basic Auth、OTP、OG 元生成、MIME、Slug、SafeLink 解码、按键码 |
 | 图片和视频 | 3 | 二维码生成器、WiFi 二维码生成器、SVG 占位符生成器 |
-| 开发 | 1 | Git 备忘录 |
+| 开发 | 4 | Git 备忘录、随机端口生成器、Crontab 表达式生成器、Chmod 计算器 |
 
 其余分类（网络/数学/测量/文本/数据）后续扩展按此归类。
 
@@ -102,7 +102,7 @@ npm run build                   # 前端类型检查 + 构建（vue-tsc + vite�
 ```
 
 发布：推送 `v*` 标签自动触发 [GitHub Actions](.github/workflows/release.yml) 三平台交叉编译
-（Windows amd64 / macOS Intel+Silicon / Linux amd64）并创建 Release；版本号由 git tag 决定（如 `v0.2.0`）。
+（Windows amd64 / macOS Intel+Silicon / Linux amd64）并创建 Release；版本号由 git tag 决定（如 `v0.3.0`）。
 
 ## 8. 测试与质量
 
@@ -121,15 +121,15 @@ npm run build                   # 前端类型检查 + 构建（vue-tsc + vite�
 
 ## 10. 当前状态
 
-- **版本**：v0.2.0「El Shaddoll Wendigo」（git tag `v0.2.0` 驱动 CI 发布）。
+- **版本**：最新发布 v0.3.0「El Shaddoll Apkallone」（git tag `v0.3.0`）；main 在 v0.3.0 之后另有 5 个未发布提交（图片和视频 3 个 + 注册图标同步 + Git 备忘录）。
 - 注册机制：`registry` + JSON string 协议 + `ListTools`/`RunTool` 绑定；注册由 `internal/toolsgen`
   扫描生成 `internal/app/tools_gen.go`；前端 `import.meta.glob` 按 toolId 动态加载。
-- 已实现工具（44 个）：转换器 15 + 加密 10 + Web 15 + 图片和视频 3 + 开发 1（清单见 §6）。前三类已与 it-tools 对齐，图片和视频已完成高价值工具。
+- 已实现工具（47 个）：转换器 15 + 加密 10 + Web 15 + 图片和视频 3 + 开发 4（清单见 §6）。前三类已与 it-tools 对齐，图片和视频已完成高价值工具；开发分类正在扩展中。
 - 前端 it-tools 风格：亮/暗主题、侧边栏分类菜单、Command Palette、首页网格；通用组件
   `ToolTextarea` / `ToolCodeBlock`；等宽字体 Cascadia Code 随包分发。
 - 品牌标识：`assets/logo.svg` 唯一源 → `build/appicon.png`、`build/windows/icon.ico`、favicon。
 - 命名规范：目录短杠（toolId）、文件下划线、包名去 `-converter` 后缀拼接。
-- 已验证：`go build/vet/test ./...`、`npm run build`、`wails build` 均通过。
+- 已验证（2026-08-18 复核）：`go build/vet/test ./...`、`vue-tsc --noEmit`、`npm run build` 通过；`wails build` 在 v0.3.0 发布周期通过。
 
 ## 11. 变更记录
 
@@ -142,4 +142,7 @@ npm run build                   # 前端类型检查 + 构建（vue-tsc + vite�
 | 2026-08-15 | 通用组件 | `ToolTextarea`（可拉伸+monospace）、`ToolCodeBlock`（只读等宽块）；Cascadia Code 随包 |
 | 2026-08-15 | Web 15 个 | URL/HTML 实体/URL 分析/JWT/HTTP 状态码/JSON 差异/设备/UA/Basic Auth/OTP/OG 元/MIME/Slug/SafeLink/按键码 —— Web 分类与 it-tools 对齐完成 |
 | 2026-08-15 | 文档精简 | SPEC.md / AGENTS.md 精简为要点式；README.md 重写并补充工具清单与发布说明 |
-| 2026-08-15 | Git 备忘录 | 开发分类首个工具；纯静态 Git 命令速查页，用于验证长文本展示布局 |
+| 2026-08-18 | 图片和视频 3 个 | 二维码生成器、WiFi 二维码生成器、SVG 占位符生成器（go-qrcode v2）；同步注册、图标与文档 |
+| 2026-08-18 | Git 备忘录 | 开发分类首个工具；纯静态 Git 命令速查页，用于验证长文本展示布局 |
+| 2026-08-18 | 开发 3 个 | 随机端口生成器、Crontab 表达式生成器、Chmod 计算器（math/rand/v2、标准库）；工具总数 44→47，开发分类 1→4 |
+| 2026-08-18 | crontab 增强 | 新增表达式直接解析（Go 侧自研解析器：*/步长/范围/列表/@简写/秒字段/名称别名）+ it-tools 风格帮助表格与描述区 |

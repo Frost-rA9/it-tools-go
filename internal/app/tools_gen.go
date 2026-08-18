@@ -9,6 +9,8 @@ import (
 	bcrypt "it-tools-go/internal/tools/bcrypt"
 	bip39gen "it-tools-go/internal/tools/bip39-generator"
 	caseconv "it-tools-go/internal/tools/case-converter"
+	chmodcalc "it-tools-go/internal/tools/chmod-calculator"
+	crontab "it-tools-go/internal/tools/crontab-generator"
 	datetime "it-tools-go/internal/tools/date-time-converter"
 	deviceinformation "it-tools-go/internal/tools/device-information"
 	encryption "it-tools-go/internal/tools/encryption"
@@ -29,6 +31,7 @@ import (
 	otpgen "it-tools-go/internal/tools/otp-generator"
 	pwdstrength "it-tools-go/internal/tools/password-strength-analyser"
 	qrcodegen "it-tools-go/internal/tools/qr-code-generator"
+	randomport "it-tools-go/internal/tools/random-port-generator"
 	romannumeral "it-tools-go/internal/tools/roman-numeral-converter"
 	rsakeypair "it-tools-go/internal/tools/rsa-key-pair-generator"
 	safelink "it-tools-go/internal/tools/safelink-decoder"
@@ -57,6 +60,8 @@ func registerAllTools(reg *registry.Registry) {
 	reg.Register(bcrypt.Tool(), bcrypt.Executor{})
 	reg.Register(bip39gen.Tool(), bip39gen.Executor{})
 	reg.Register(caseconv.Tool(), caseconv.Executor{})
+	reg.Register(chmodcalc.Tool(), chmodcalc.Executor{})
+	reg.Register(crontab.Tool(), crontab.Executor{})
 	reg.Register(datetime.Tool(), datetime.Executor{})
 	reg.Register(deviceinformation.Tool(), deviceinformation.Executor{})
 	reg.Register(encryption.Tool(), encryption.Executor{})
@@ -77,6 +82,7 @@ func registerAllTools(reg *registry.Registry) {
 	reg.Register(otpgen.Tool(), otpgen.Executor{})
 	reg.Register(pwdstrength.Tool(), pwdstrength.Executor{})
 	reg.Register(qrcodegen.Tool(), qrcodegen.Executor{})
+	reg.Register(randomport.Tool(), randomport.Executor{})
 	reg.Register(romannumeral.Tool(), romannumeral.Executor{})
 	reg.Register(rsakeypair.Tool(), rsakeypair.Executor{})
 	reg.Register(safelink.Tool(), safelink.Executor{})
