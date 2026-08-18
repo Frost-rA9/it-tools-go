@@ -95,6 +95,9 @@ async function copyValue() {
 
 .code-body :deep(code) {
   background: transparent;
+  font-family: inherit;
+  font-size: inherit;
+  line-height: inherit;
 }
 
 .copy-btn {
