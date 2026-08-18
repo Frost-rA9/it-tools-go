@@ -1,11 +1,11 @@
 <script setup lang="ts">
 import { ref, watch } from 'vue'
-import { NButton, NAlert, NSpace, useMessage, useThemeVars } from 'naive-ui'
-import { useDebounceFn, useClipboard } from '@vueuse/core'
+import { NCard, NAlert, useThemeVars } from 'naive-ui'
+import { useDebounceFn } from '@vueuse/core'
 import ToolTextarea from '../../components/ToolTextarea.vue'
+import CodeOutput from '../../components/CodeOutput.vue'
 import { RunTool } from '../../../wailsjs/go/app/App'
 
-const message = useMessage()
 const themeVars = useThemeVars()
 
 const jsonInput = ref('{\n  "name": "it-tools",\n  "version": 2,\n  "active": true\n}')
@@ -38,20 +38,11 @@ async function run() {
 
 const debouncedRun = useDebounceFn(run, 200)
 watch(jsonInput, () => debouncedRun(), { immediate: true })
-
-const copySource = ref('')
-const { copy } = useClipboard({ source: copySource })
-
-async function copyMinified() {
-  copySource.value = minified.value
-  await copy()
-  message.success('压缩结果已复制到剪贴板')
-}
 </script>
 
 <template>
   <n-card title="JSON 压缩 — 输入" class="tool-card">
-    <ToolTextarea v-model:value="jsonInput" label="输入 JSON" :rows="10" placeholder="在此粘贴 JSON…" monospace />
+    <ToolTextarea v-model:value="jsonInput" label="输入 JSON" :rows="20" placeholder="在此粘贴 JSON…" monospace />
 
     <n-alert v-if="errorMessage" type="error" class="error-alert">
       {{ errorMessage }}
@@ -59,7 +50,7 @@ async function copyMinified() {
   </n-card>
 
   <n-card title="JSON 压缩 — 输出" class="tool-card">
-    <ToolTextarea v-model:value="minified" label="压缩结果" :rows="10" placeholder="压缩结果将显示在这里" readonly monospace />
+    <CodeOutput label="压缩结果" :value="minified" language="json" :rows="20" />
 
     <div class="stats-row">
       <span class="stat">原始 {{ originalSize }} B</span>
@@ -67,10 +58,6 @@ async function copyMinified() {
       <span class="stat">节省 {{ saved }} B</span>
       <span class="stat">{{ savedPercent.toFixed(1) }}%</span>
     </div>
-
-    <n-space justify="center">
-      <n-button type="primary" :disabled="!minified" @click="copyMinified">复制结果</n-button>
-    </n-space>
   </n-card>
 </template>
 

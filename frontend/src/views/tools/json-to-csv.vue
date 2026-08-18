@@ -1,11 +1,11 @@
 <script setup lang="ts">
 import { ref, watch } from 'vue'
-import { NSelect, NSwitch, NButton, NAlert, NSpace, useMessage, useThemeVars } from 'naive-ui'
-import { useDebounceFn, useClipboard } from '@vueuse/core'
+import { NSelect, NSwitch, NCard, NAlert, useThemeVars } from 'naive-ui'
+import { useDebounceFn } from '@vueuse/core'
 import ToolTextarea from '../../components/ToolTextarea.vue'
+import CodeOutput from '../../components/CodeOutput.vue'
 import { RunTool } from '../../../wailsjs/go/app/App'
 
-const message = useMessage()
 const themeVars = useThemeVars()
 
 const jsonInput = ref('[{"name":"Alice","age":30,"city":"Beijing"},{"name":"Bob","age":25,"city":"Shanghai"}]')
@@ -43,20 +43,11 @@ async function run() {
 
 const debouncedRun = useDebounceFn(run, 200)
 watch([jsonInput, delimiter, includeHeader], () => debouncedRun(), { immediate: true })
-
-const copySource = ref('')
-const { copy } = useClipboard({ source: copySource })
-
-async function copyCsv() {
-  copySource.value = csvOutput.value
-  await copy()
-  message.success('CSV 已复制到剪贴板')
-}
 </script>
 
 <template>
   <n-card title="JSON 转 CSV — 输入" class="tool-card">
-    <ToolTextarea v-model:value="jsonInput" label="输入 JSON（对象数组）" :rows="10" placeholder='[{"name":"Alice"}, ...]' monospace />
+    <ToolTextarea v-model:value="jsonInput" label="输入 JSON（对象数组）" :rows="20" placeholder='[{"name":"Alice"}, ...]' monospace />
 
     <div class="options-row">
       <span class="option-label">分隔符</span>
@@ -71,16 +62,12 @@ async function copyCsv() {
   </n-card>
 
   <n-card title="JSON 转 CSV — 输出" class="tool-card">
-    <ToolTextarea v-model:value="csvOutput" label="CSV 结果" :rows="10" placeholder="CSV 结果将显示在这里" readonly monospace />
+    <CodeOutput label="CSV 结果" :value="csvOutput" language="plaintext" :rows="20" />
 
     <div class="stats-row">
       <span class="stat">{{ rows }} 行</span>
       <span class="stat">{{ columns }} 列</span>
     </div>
-
-    <n-space justify="center">
-      <n-button type="primary" :disabled="!csvOutput" @click="copyCsv">复制 CSV</n-button>
-    </n-space>
   </n-card>
 </template>
 

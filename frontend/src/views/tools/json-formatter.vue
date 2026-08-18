@@ -1,11 +1,11 @@
 <script setup lang="ts">
 import { ref, watch } from 'vue'
-import { NSelect, NSwitch, NButton, NAlert, NSpace, useMessage, useThemeVars } from 'naive-ui'
-import { useDebounceFn, useClipboard } from '@vueuse/core'
+import { NSelect, NSwitch, NAlert, NCard, useThemeVars } from 'naive-ui'
+import { useDebounceFn } from '@vueuse/core'
 import ToolTextarea from '../../components/ToolTextarea.vue'
+import CodeOutput from '../../components/CodeOutput.vue'
 import { RunTool } from '../../../wailsjs/go/app/App'
 
-const message = useMessage()
 const themeVars = useThemeVars()
 
 const jsonInput = ref('{"name":"it-tools","version":2,"features":["json","csv"],"active":true}')
@@ -43,20 +43,11 @@ async function run() {
 
 const debouncedRun = useDebounceFn(run, 200)
 watch([jsonInput, indent, sortKeys], () => debouncedRun(), { immediate: true })
-
-const copySource = ref('')
-const { copy } = useClipboard({ source: copySource })
-
-async function copyFormatted() {
-  copySource.value = formatted.value
-  await copy()
-  message.success('格式化结果已复制到剪贴板')
-}
 </script>
 
 <template>
   <n-card title="JSON 格式化 — 输入" class="tool-card">
-    <ToolTextarea v-model:value="jsonInput" label="输入 JSON" :rows="10" placeholder="在此粘贴 JSON…" monospace />
+    <ToolTextarea v-model:value="jsonInput" label="输入 JSON" :rows="20" placeholder="在此粘贴 JSON…" monospace />
 
     <div class="options-row">
       <span class="option-label">缩进</span>
@@ -71,16 +62,12 @@ async function copyFormatted() {
   </n-card>
 
   <n-card title="JSON 格式化 — 输出" class="tool-card">
-    <ToolTextarea v-model:value="formatted" label="格式化结果" :rows="10" placeholder="格式化结果将显示在这里" readonly monospace />
+    <CodeOutput label="格式化结果" :value="formatted" language="json" :rows="20" />
 
     <div class="stats-row">
       <span class="stat">{{ lineCount }} 行</span>
       <span class="stat">{{ charCount }} 字符</span>
     </div>
-
-    <n-space justify="center">
-      <n-button type="primary" :disabled="!formatted" @click="copyFormatted">复制结果</n-button>
-    </n-space>
   </n-card>
 </template>
 

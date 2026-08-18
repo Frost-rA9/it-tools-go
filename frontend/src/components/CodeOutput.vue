@@ -8,6 +8,7 @@ import xml from 'highlight.js/lib/languages/xml'
 import yaml from 'highlight.js/lib/languages/yaml'
 import json from 'highlight.js/lib/languages/json'
 import ini from 'highlight.js/lib/languages/ini'
+import plaintext from 'highlight.js/lib/languages/plaintext'
 import { Copy } from '@vicons/tabler'
 import { useUiStore } from '../stores/ui'
 
@@ -16,6 +17,7 @@ hljs.registerLanguage('xml', xml)
 hljs.registerLanguage('yaml', yaml)
 hljs.registerLanguage('json', json)
 hljs.registerLanguage('ini', ini)
+hljs.registerLanguage('plaintext', plaintext)
 
 const props = withDefaults(
   defineProps<{
