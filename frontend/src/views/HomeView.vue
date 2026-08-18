@@ -33,6 +33,7 @@ const themeVars = useThemeVars()
 .grid {
   display: grid;
   grid-template-columns: repeat(1, 1fr);
+  grid-auto-rows: 180px;
   gap: 12px;
 }
 

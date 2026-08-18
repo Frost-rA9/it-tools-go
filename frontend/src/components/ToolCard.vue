@@ -14,7 +14,7 @@ function go() {
 </script>
 
 <template>
-  <div class="tool-card" @click="go">
+  <div class="tool-card-item" @click="go">
     <n-icon :component="getToolIcon(tool.icon)" size="40" class="tool-card-icon" />
     <div class="tool-card-name">{{ tool.name }}</div>
     <div class="tool-card-desc">{{ tool.description }}</div>
@@ -22,7 +22,7 @@ function go() {
 </template>
 
 <style scoped>
-.tool-card {
+.tool-card-item {
   display: flex;
   flex-direction: column;
   background: v-bind('themeVars.cardColor');
@@ -35,16 +35,20 @@ function go() {
   box-sizing: border-box;
 }
 
-.tool-card:hover {
+.tool-card-item:hover {
   border-color: v-bind('themeVars.primaryColor');
 }
 
-.tool-card-icon {
+.tool-card-item-icon {
+  flex-shrink: 0;
+  width: 40px;
+  height: 40px;
   color: v-bind('themeVars.textColor3');
 }
 
-.tool-card-name {
+.tool-card-item-name {
   font-size: 18px;
+  line-height: 24px; /* 显式行高（18px 字体），消除中英文字体默认行高差异 */
   margin: 5px 0 6px;
   color: v-bind('themeVars.textColor1');
   white-space: nowrap;
@@ -52,12 +56,14 @@ function go() {
   text-overflow: ellipsis;
 }
 
-.tool-card-desc {
+.tool-card-item-desc {
   font-size: 14px;
+  line-height: 1.5;
   color: v-bind('themeVars.textColor3');
   display: -webkit-box;
   -webkit-line-clamp: 2;
   -webkit-box-orient: vertical;
   overflow: hidden;
+  height: 42px; /* 固定两行高度（14px × 1.5 × 2），保证所有卡片等高 */
 }
 </style>
