@@ -82,10 +82,10 @@ it-tools-go/
 | 分类 | 数量 | 工具 |
 |---|---|---|
 | 加密 | 10 | Token、Hash、加密/解密、BCrypt、UUID、ULID、BIP39、HMAC、RSA 密钥对、密码强度 |
-| 转换器 | 15 | Base64、罗马数字、大小写、日期时间、进制、文本↔二进制/Unicode、列表、Markdown→HTML、TOML/XML/YAML 互转 |
+| 转换器 | 17 | Base64、罗马数字、大小写、日期时间、进制、文本↔二进制/Unicode、列表、Markdown→HTML、JSON/TOML/XML/YAML 互转 |
 | Web | 15 | URL 编码/解码、HTML 实体、URL 分析器、JWT、HTTP 状态码、JSON 差异、设备信息、UA 分析、Basic Auth、OTP、OG 元生成、MIME、Slug、SafeLink 解码、按键码 |
 | 图片和视频 | 3 | 二维码生成器、WiFi 二维码生成器、SVG 占位符生成器 |
-| 开发 | 7 | Git 备忘录、随机端口生成器、Crontab 表达式生成器、Chmod 计算器、JSON 格式化、JSON 压缩、JSON 转 CSV |
+| 开发 | 10 | Git 备忘录、随机端口生成器、Crontab 表达式生成器、Chmod 计算器、JSON 格式化、JSON 压缩、JSON 转 CSV、SQL 格式化、XML 格式化、YAML 格式化 |
 
 其余分类（网络/数学/测量/文本）后续扩展按此归类。
 
@@ -124,7 +124,7 @@ npm run build                   # 前端类型检查 + 构建（vue-tsc + vite�
 - **版本**：最新发布 v0.3.0「El Shaddoll Apkallone」（git tag `v0.3.0`）；main 在 v0.3.0 之后另有 5 个未发布提交（图片和视频 3 个 + 注册图标同步 + Git 备忘录）。
 - 注册机制：`registry` + JSON string 协议 + `ListTools`/`RunTool` 绑定；注册由 `internal/toolsgen`
   扫描生成 `internal/app/tools_gen.go`；前端 `import.meta.glob` 按 toolId 动态加载。
-- 已实现工具（50 个）：转换器 15 + 加密 10 + Web 15 + 图片和视频 3 + 开发 7（清单见 §6）。前三类已与 it-tools 对齐；开发分类持续扩展中。
+- 已实现工具（55 个）：转换器 17 + 加密 10 + Web 15 + 图片和视频 3 + 开发 10（清单见 §6）。前三类已与 it-tools 对齐；开发分类持续扩展中。
 - 前端 it-tools 风格：亮/暗主题、侧边栏分类菜单、Command Palette、首页网格；通用组件
   `ToolTextarea` / `ToolCodeBlock`；等宽字体 Cascadia Code 随包分发。
 - 品牌标识：`assets/logo.svg` 唯一源 → `build/appicon.png`、`build/windows/icon.ico`、favicon。
@@ -146,4 +146,6 @@ npm run build                   # 前端类型检查 + 构建（vue-tsc + vite�
 | 2026-08-18 | Git 备忘录 | 开发分类首个工具；纯静态 Git 命令速查页，用于验证长文本展示布局 |
 | 2026-08-18 | 开发 3 个 | 随机端口生成器、Crontab 表达式生成器、Chmod 计算器（math/rand/v2、标准库）；工具总数 44→47，开发分类 1→4 |
 | 2026-08-18 | 开发 JSON 3 个 | JSON 格式化（缩进/排序）、JSON 压缩（大小对比）、JSON 转 CSV（分隔符/表头，encoding/csv 转义）；toolsgen 改为包级契约检查；工具总数 47→50；三工具双卡布局并封装公共 .tool-card 样式 |
+| 2026-08-18 | 格式化 3 个 | SQL 格式化（自研 tokenizer：子句换行/括号缩进/关键字大写）、XML 格式化（encoding/xml Token 流重建）、YAML 格式化（yaml.v3 Node 保留注释）；工具总数 50→53，开发分类 7→10 |
 | 2026-08-18 | crontab 增强 | 新增表达式直接解析（Go 侧自研解析器：*/步长/范围/列表/@简写/秒字段/名称别名）+ it-tools 风格帮助表格与描述区 |
+| 2026-08-18 | JSON 互转 2 个 | JSON 转 YAML、JSON 转 TOML（补齐 it-tools Converter 互转矩阵）；工具总数 53→55，转换器 15→17 |

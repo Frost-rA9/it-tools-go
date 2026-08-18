@@ -24,7 +24,9 @@ import (
 	jsonfmt "it-tools-go/internal/tools/json-formatter"
 	jsonmin "it-tools-go/internal/tools/json-minifier"
 	jsoncsv "it-tools-go/internal/tools/json-to-csv"
+	jsontoml "it-tools-go/internal/tools/json-to-toml"
 	jsonxml "it-tools-go/internal/tools/json-to-xml"
+	jsontoyaml "it-tools-go/internal/tools/json-to-yaml"
 	jwtparser "it-tools-go/internal/tools/jwt-parser"
 	keycodeinfo "it-tools-go/internal/tools/keycode-info"
 	listconv "it-tools-go/internal/tools/list-converter"
@@ -39,6 +41,7 @@ import (
 	rsakeypair "it-tools-go/internal/tools/rsa-key-pair-generator"
 	safelink "it-tools-go/internal/tools/safelink-decoder"
 	slugify "it-tools-go/internal/tools/slugify-string"
+	sqlfmt "it-tools-go/internal/tools/sql-formatter"
 	svgplaceholder "it-tools-go/internal/tools/svg-placeholder-generator"
 	textbinary "it-tools-go/internal/tools/text-to-binary"
 	textunicode "it-tools-go/internal/tools/text-to-unicode"
@@ -51,7 +54,9 @@ import (
 	useragentparser "it-tools-go/internal/tools/user-agent-parser"
 	uuidgen "it-tools-go/internal/tools/uuid-generator"
 	wifiqrcodegen "it-tools-go/internal/tools/wifi-qr-code-generator"
+	xmlfmt "it-tools-go/internal/tools/xml-formatter"
 	xmljson "it-tools-go/internal/tools/xml-to-json"
+	yamlfmt "it-tools-go/internal/tools/yaml-formatter"
 	yamljson "it-tools-go/internal/tools/yaml-to-json"
 	yamltoml "it-tools-go/internal/tools/yaml-to-toml"
 )
@@ -78,7 +83,9 @@ func registerAllTools(reg *registry.Registry) {
 	reg.Register(jsonfmt.Tool(), jsonfmt.Executor{})
 	reg.Register(jsonmin.Tool(), jsonmin.Executor{})
 	reg.Register(jsoncsv.Tool(), jsoncsv.Executor{})
+	reg.Register(jsontoml.Tool(), jsontoml.Executor{})
 	reg.Register(jsonxml.Tool(), jsonxml.Executor{})
+	reg.Register(jsontoyaml.Tool(), jsontoyaml.Executor{})
 	reg.Register(jwtparser.Tool(), jwtparser.Executor{})
 	reg.Register(keycodeinfo.Tool(), keycodeinfo.Executor{})
 	reg.Register(listconv.Tool(), listconv.Executor{})
@@ -93,6 +100,7 @@ func registerAllTools(reg *registry.Registry) {
 	reg.Register(rsakeypair.Tool(), rsakeypair.Executor{})
 	reg.Register(safelink.Tool(), safelink.Executor{})
 	reg.Register(slugify.Tool(), slugify.Executor{})
+	reg.Register(sqlfmt.Tool(), sqlfmt.Executor{})
 	reg.Register(svgplaceholder.Tool(), svgplaceholder.Executor{})
 	reg.Register(textbinary.Tool(), textbinary.Executor{})
 	reg.Register(textunicode.Tool(), textunicode.Executor{})
@@ -105,7 +113,9 @@ func registerAllTools(reg *registry.Registry) {
 	reg.Register(useragentparser.Tool(), useragentparser.Executor{})
 	reg.Register(uuidgen.Tool(), uuidgen.Executor{})
 	reg.Register(wifiqrcodegen.Tool(), wifiqrcodegen.Executor{})
+	reg.Register(xmlfmt.Tool(), xmlfmt.Executor{})
 	reg.Register(xmljson.Tool(), xmljson.Executor{})
+	reg.Register(yamlfmt.Tool(), yamlfmt.Executor{})
 	reg.Register(yamljson.Tool(), yamljson.Executor{})
 	reg.Register(yamltoml.Tool(), yamltoml.Executor{})
 }
