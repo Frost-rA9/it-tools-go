@@ -60,7 +60,7 @@ async function copyArabicResult() {
 
 <template>
   
-    <n-card title="阿拉伯数字转罗马数字" class="card">
+    <n-card title="阿拉伯数字转罗马数字" class="tool-card">
       <div class="field">
         <div class="field-label">阿拉伯数字（1 - 3999）</div>
         <n-input-number v-model:value="arabicInput" :min="1" :show-button="false" style="width: 100%" />
@@ -76,7 +76,7 @@ async function copyArabicResult() {
       </div>
     </n-card>
 
-    <n-card title="罗马数字转阿拉伯数字" class="card">
+    <n-card title="罗马数字转阿拉伯数字" class="tool-card">
       <div class="field">
         <div class="field-label">罗马数字</div>
         <n-input v-model:value="romanInput" placeholder="在此输入罗马数字，如 XLII…" />
@@ -94,9 +94,6 @@ async function copyArabicResult() {
 </template>
 
 <style scoped>
-.card {
-  min-width: 360px;
-}
 
 .field {
   margin-bottom: 16px;

@@ -134,7 +134,7 @@ const helpers = [
 </script>
 
 <template>
-  <n-card title="Crontab 表达式生成器" class="card">
+  <n-card title="Crontab 表达式生成器" class="tool-card">
       <div class="field-row" v-for="m in fieldsMeta" :key="m.key">
         <div class="field-label">{{ m.label }}</div>
         <div class="field-controls">
@@ -184,7 +184,7 @@ const helpers = [
       </n-alert>
     </n-card>
 
-    <n-card title="Cron 语法说明" class="card">
+    <n-card title="Cron 语法说明" class="tool-card">
       <pre class="cron-diagram">
 ┌─────────── [可选] 秒 (0 - 59)
 | ┌───────── 分钟 (0 - 59)
@@ -217,9 +217,6 @@ const helpers = [
 </template>
 
 <style scoped>
-.card {
-  min-width: 400px;
-}
 
 .field-row {
   display: flex;

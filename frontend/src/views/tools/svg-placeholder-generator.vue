@@ -57,7 +57,7 @@ function download() {
 </script>
 
 <template>
-  <n-card title="参数与输出" class="card">
+  <n-card title="参数与输出" class="tool-card">
     <n-form label-placement="left" label-width="110">
       <div class="form-row">
         <n-form-item label="宽度 (px)">
@@ -98,7 +98,7 @@ function download() {
     </div>
   </n-card>
 
-  <n-card title="预览" class="card">
+  <n-card title="预览" class="tool-card">
     <div class="preview">
       <img v-if="base64" :src="base64" alt="SVG placeholder preview" />
     </div>
@@ -106,13 +106,4 @@ function download() {
 </template>
 
 <style scoped>
-.card { min-width: 400px; }
-.form-row { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; }
-.form-row :deep(.n-input-number), .form-row :deep(.n-input) { width: 100%; }
-.actions { display: flex; justify-content: center; gap: 12px; flex-wrap: wrap; margin-top: 16px; }
-.preview { display: flex; justify-content: center; overflow: auto; }
-.preview img { max-width: 100%; border: 1px solid #ddd; }
-@media (max-width: 700px) {
-  .form-row { grid-template-columns: 1fr; gap: 0; }
-}
 </style>

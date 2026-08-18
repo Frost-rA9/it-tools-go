@@ -51,7 +51,7 @@ onMounted(async () => {
 </script>
 
 <template>
-  <n-card class="card">
+  <n-card class="tool-card">
     <div class="h2">MIME 类型转扩展名</div>
     <div class="sub">查看一个 MIME 类型关联哪些文件扩展名</div>
     <n-select v-model:value="selectedMimeType" :options="mimeOptions" filterable clearable placeholder="选择 MIME 类型… (如 application/pdf)" class="select" />
@@ -66,7 +66,7 @@ onMounted(async () => {
     </div>
   </n-card>
 
-  <n-card class="card">
+  <n-card class="tool-card">
     <div class="h2">扩展名转 MIME 类型</div>
     <div class="sub">查看一个文件扩展名关联的 MIME 类型</div>
     <n-select v-model:value="selectedExtension" :options="extOptions" filterable clearable placeholder="选择扩展名… (如 pdf)" class="select" />
@@ -79,7 +79,7 @@ onMounted(async () => {
     </div>
   </n-card>
 
-  <n-card class="card">
+  <n-card class="tool-card">
     <div class="table-wrap">
       <n-table :bordered="false">
         <thead>
@@ -104,9 +104,6 @@ onMounted(async () => {
 </template>
 
 <style scoped>
-.card {
-  min-width: 400px;
-}
 
 .h2 {
   font-size: 19px;

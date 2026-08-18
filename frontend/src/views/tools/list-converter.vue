@@ -56,7 +56,7 @@ async function copyResult() {
 
 <template>
   
-    <n-card title="转换选项" class="card">
+    <n-card title="转换选项" class="tool-card">
       <div class="options-grid">
         <div class="option-row">
           <span class="option-label">去除重复项</span>
@@ -106,7 +106,7 @@ async function copyResult() {
       </div>
     </n-card>
 
-    <n-card title="列表转换器" class="card">
+    <n-card title="列表转换器" class="tool-card">
       <ToolTextarea v-model:value="inputText" label="输入数据" :rows="6" placeholder="每行一个条目，在此粘贴数据…" />
 
       <ToolTextarea v-model:value="outputText" label="转换结果" :rows="6" readonly placeholder="转换结果将显示在这里" />
@@ -118,9 +118,6 @@ async function copyResult() {
 </template>
 
 <style scoped>
-.card {
-  min-width: 400px;
-}
 
 .options-grid {
   display: grid;

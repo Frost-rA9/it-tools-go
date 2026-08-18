@@ -60,7 +60,7 @@ async function copyTextResult() {
 
 <template>
   
-    <n-card title="文本转 Unicode" class="card">
+    <n-card title="文本转 Unicode" class="tool-card">
       <ToolTextarea v-model:value="textInput" label="输入文本" :rows="4" placeholder="在此输入文本，如 Hello…" />
 
       <ToolTextarea v-model:value="unicodeOutput" label="Unicode 结果" :rows="4" readonly placeholder="文本的 Unicode 表示将显示在这里" />
@@ -70,7 +70,7 @@ async function copyTextResult() {
       </div>
     </n-card>
 
-    <n-card title="Unicode 转文本" class="card">
+    <n-card title="Unicode 转文本" class="tool-card">
       <ToolTextarea v-model:value="unicodeInput" label="输入 Unicode" :rows="4" placeholder="在此输入 Unicode，如 &amp;#72;&amp;#105;…" />
 
       <ToolTextarea v-model:value="textOutput" label="文本结果" :rows="4" readonly placeholder="Unicode 对应的文本将显示在这里" />
@@ -82,9 +82,6 @@ async function copyTextResult() {
 </template>
 
 <style scoped>
-.card {
-  min-width: 400px;
-}
 
 .copy-row {
   display: flex;

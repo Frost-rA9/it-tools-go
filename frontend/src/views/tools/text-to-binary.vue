@@ -60,7 +60,7 @@ async function copyTextResult() {
 
 <template>
   
-    <n-card title="文本转 ASCII 二进制" class="card">
+    <n-card title="文本转 ASCII 二进制" class="tool-card">
       <ToolTextarea v-model:value="textInput" label="输入文本" :rows="4" placeholder="在此输入文本，如 Hello world…" />
 
       <ToolTextarea v-model:value="binaryOutput" label="二进制结果" :rows="4" readonly placeholder="文本的二进制表示将显示在这里" />
@@ -70,7 +70,7 @@ async function copyTextResult() {
       </div>
     </n-card>
 
-    <n-card title="ASCII 二进制转文本" class="card">
+    <n-card title="ASCII 二进制转文本" class="tool-card">
       <ToolTextarea v-model:value="binaryInput" label="输入二进制" :rows="4" placeholder="在此输入二进制，如 01001000 01101001…" />
 
       <ToolTextarea v-model:value="textOutput" label="文本结果" :rows="4" readonly placeholder="二进制对应的文本将显示在这里" />
@@ -82,9 +82,6 @@ async function copyTextResult() {
 </template>
 
 <style scoped>
-.card {
-  min-width: 400px;
-}
 
 .copy-row {
   display: flex;

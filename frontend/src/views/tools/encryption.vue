@@ -63,7 +63,7 @@ watch([decryptText, decryptSecret, decryptAlgo], () => debouncedDecrypt(), { imm
 
 <template>
   
-    <n-card title="加密" class="card">
+    <n-card title="加密" class="tool-card">
       <div class="side-grid">
         <ToolTextarea
           v-model:value="encryptText"
@@ -94,7 +94,7 @@ watch([decryptText, decryptSecret, decryptAlgo], () => debouncedDecrypt(), { imm
       />
     </n-card>
 
-    <n-card title="解密" class="card">
+    <n-card title="解密" class="tool-card">
       <div class="side-grid">
         <ToolTextarea
           v-model:value="decryptText"
@@ -129,9 +129,6 @@ watch([decryptText, decryptSecret, decryptAlgo], () => debouncedDecrypt(), { imm
 </template>
 
 <style scoped>
-.card {
-  min-width: 520px;
-}
 
 .side-grid {
   display: flex;

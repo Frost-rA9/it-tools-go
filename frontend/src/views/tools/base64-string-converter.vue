@@ -63,7 +63,7 @@ async function copyTextResult() {
 
 <template>
   
-    <n-card title="文本转 Base64" class="card">
+    <n-card title="文本转 Base64" class="tool-card">
       <div class="switch-row">
         <span class="switch-label">URL 安全编码</span>
         <n-switch v-model:value="encodeUrlSafe" />
@@ -78,7 +78,7 @@ async function copyTextResult() {
       </div>
     </n-card>
 
-    <n-card title="Base64 转文本" class="card">
+    <n-card title="Base64 转文本" class="tool-card">
       <div class="switch-row">
         <span class="switch-label">URL 安全解码</span>
         <n-switch v-model:value="decodeUrlSafe" />
@@ -95,9 +95,6 @@ async function copyTextResult() {
 </template>
 
 <style scoped>
-.card {
-  min-width: 400px;
-}
 
 .switch-row {
   display: flex;

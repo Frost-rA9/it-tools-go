@@ -36,19 +36,16 @@ watch(bits, () => debouncedRun(), { immediate: true })
     <n-button type="primary" @click="run">重新生成</n-button>
   </div>
 
-  <n-card title="公钥（Public key）" class="card">
+  <n-card title="公钥（Public key）" class="tool-card">
     <ToolCodeBlock :value="publicKeyPem" copyable />
   </n-card>
 
-  <n-card title="私钥（Private key）" class="card">
+  <n-card title="私钥（Private key）" class="tool-card">
     <ToolCodeBlock :value="privateKeyPem" copyable />
   </n-card>
 </template>
 
 <style scoped>
-.card {
-  min-width: 400px;
-}
 
 .bits-row {
   display: flex;

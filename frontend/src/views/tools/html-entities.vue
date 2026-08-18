@@ -54,7 +54,7 @@ async function copyUnescapedResult() {
 </script>
 
 <template>
-  <n-card title="转义 HTML 实体" class="card">
+  <n-card title="转义 HTML 实体" class="tool-card">
     <ToolTextarea v-model:value="escapeInput" label="待转义字符串" :rows="3" placeholder="要转义的字符串…" />
 
     <ToolTextarea v-model:value="escapeOutput" label="转义后的字符串" :rows="3" readonly placeholder="转义后的字符串将显示在这里" />
@@ -64,7 +64,7 @@ async function copyUnescapedResult() {
     </div>
   </n-card>
 
-  <n-card title="反转义 HTML 实体" class="card">
+  <n-card title="反转义 HTML 实体" class="tool-card">
     <ToolTextarea v-model:value="unescapeInput" label="待反转义字符串" :rows="3" placeholder="要反转义的字符串…" />
 
     <ToolTextarea v-model:value="unescapeOutput" label="反转义后的字符串" :rows="3" readonly placeholder="反转义后的字符串将显示在这里" />
@@ -76,9 +76,6 @@ async function copyUnescapedResult() {
 </template>
 
 <style scoped>
-.card {
-  min-width: 400px;
-}
 
 .copy-row {
   display: flex;

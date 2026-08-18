@@ -60,7 +60,7 @@ async function copyDecodedResult() {
 </script>
 
 <template>
-  <n-card title="文本转 URL 编码" class="card">
+  <n-card title="文本转 URL 编码" class="tool-card">
     <ToolTextarea v-model:value="textInput" label="待编码文本" :rows="5" placeholder="在此输入文本…" />
 
     <ToolTextarea v-model:value="urlEncodedOutput" label="URL 编码结果" :rows="5" readonly placeholder="文本的 URL 编码将显示在这里" />
@@ -70,7 +70,7 @@ async function copyDecodedResult() {
     </div>
   </n-card>
 
-  <n-card title="URL 编码转文本" class="card">
+  <n-card title="URL 编码转文本" class="tool-card">
     <ToolTextarea v-model:value="urlInput" label="待解码 URL" :rows="5" placeholder="在此输入 URL 编码字符串…" />
 
     <ToolTextarea v-model:value="textOutput" label="解码结果" :rows="5" readonly placeholder="解码后的文本将显示在这里" />
@@ -82,9 +82,6 @@ async function copyDecodedResult() {
 </template>
 
 <style scoped>
-.card {
-  min-width: 400px;
-}
 
 .copy-row {
   display: flex;

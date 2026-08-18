@@ -109,7 +109,7 @@ async function copyMeta() {
 <template>
   <div class="layout">
     <div class="left-col">
-      <n-card v-for="section in baseSections" :key="section.name" :title="section.name" class="card">
+      <n-card v-for="section in baseSections" :key="section.name" :title="section.name" class="tool-card">
         <n-input-group v-for="el in section.elements" :key="el.key" class="field">
           <n-input-group-label class="field-label">{{ el.label }}</n-input-group-label>
 
@@ -135,7 +135,7 @@ async function copyMeta() {
         </n-input-group>
       </n-card>
 
-      <n-card v-if="additionalSection" :title="additionalSection.name" class="card">
+      <n-card v-if="additionalSection" :title="additionalSection.name" class="tool-card">
         <n-input-group v-for="el in additionalSection.elements" :key="el.key" class="field">
           <n-input-group-label class="field-label">{{ el.label }}</n-input-group-label>
 
@@ -189,9 +189,6 @@ async function copyMeta() {
   gap: 16px;
 }
 
-.card {
-  min-width: 0;
-}
 
 .meta-card {
   flex: 1 1 320px;

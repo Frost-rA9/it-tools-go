@@ -124,7 +124,7 @@ const sections = computed<Section[]>(() => {
 </script>
 
 <template>
-  <n-card class="card">
+  <n-card class="tool-card">
     <ToolTextarea v-model:value="rawUa" label="User-Agent 字符串" :rows="2" placeholder="在此输入 User-Agent…" />
 
     <n-grid :x-gap="12" :y-gap="8" cols="1 s:2" responsive="screen">
@@ -158,10 +158,6 @@ const sections = computed<Section[]>(() => {
 </template>
 
 <style scoped>
-.card {
-  min-width: 480px;
-  width: 100%;
-}
 
 .section-card {
   height: 100%;

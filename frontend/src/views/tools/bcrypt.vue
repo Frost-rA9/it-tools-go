@@ -50,7 +50,7 @@ async function copyHash() {
 
 <template>
   
-    <n-card title="BCrypt 加密" class="card">
+    <n-card title="BCrypt 加密" class="tool-card">
       <div class="field">
         <div class="field-label">待加密字符串</div>
         <n-input v-model:value="input" placeholder="输入要加密的字符串…" />
@@ -71,7 +71,7 @@ async function copyHash() {
       </div>
     </n-card>
 
-    <n-card title="对比字符串与哈希" class="card">
+    <n-card title="对比字符串与哈希" class="tool-card">
       <div class="field">
         <div class="field-label">待对比字符串</div>
         <n-input v-model:value="compareString" placeholder="输入要对比的字符串…" />
@@ -92,9 +92,6 @@ async function copyHash() {
 </template>
 
 <style scoped>
-.card {
-  min-width: 360px;
-}
 
 .field {
   margin-bottom: 16px;

@@ -15,3 +15,10 @@ body {
 * {
   box-sizing: border-box;
 }
+
+/* 工具页卡片布局：作为 ToolLayout .tool-content（flex-wrap 容器）的直接子元素使用，
+   多卡片时宽窗口并排、窄窗口自动换行 */
+.tool-card {
+  flex: 0 1 600px;
+  min-width: 400px;
+}
