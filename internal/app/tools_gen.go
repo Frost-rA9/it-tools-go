@@ -21,6 +21,9 @@ import (
 	httpstatuscodes "it-tools-go/internal/tools/http-status-codes"
 	radix "it-tools-go/internal/tools/integer-base-converter"
 	jsondiff "it-tools-go/internal/tools/json-diff"
+	jsonfmt "it-tools-go/internal/tools/json-formatter"
+	jsonmin "it-tools-go/internal/tools/json-minifier"
+	jsoncsv "it-tools-go/internal/tools/json-to-csv"
 	jsonxml "it-tools-go/internal/tools/json-to-xml"
 	jwtparser "it-tools-go/internal/tools/jwt-parser"
 	keycodeinfo "it-tools-go/internal/tools/keycode-info"
@@ -72,6 +75,9 @@ func registerAllTools(reg *registry.Registry) {
 	reg.Register(httpstatuscodes.Tool(), httpstatuscodes.Executor{})
 	reg.Register(radix.Tool(), radix.Executor{})
 	reg.Register(jsondiff.Tool(), jsondiff.Executor{})
+	reg.Register(jsonfmt.Tool(), jsonfmt.Executor{})
+	reg.Register(jsonmin.Tool(), jsonmin.Executor{})
+	reg.Register(jsoncsv.Tool(), jsoncsv.Executor{})
 	reg.Register(jsonxml.Tool(), jsonxml.Executor{})
 	reg.Register(jwtparser.Tool(), jwtparser.Executor{})
 	reg.Register(keycodeinfo.Tool(), keycodeinfo.Executor{})
