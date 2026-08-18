@@ -90,12 +90,14 @@ func run() error {
 
 var pkgRe = regexp.MustCompile(`(?m)^package\s+(\w+)\s*$`)
 
-// detectPackage 读取目录内首个非 _test.go 的 .go 文件，返回其包名并校验 Tool/Executor 契约。
+// detectPackage 读取目录内全部非 _test.go 的 .go 文件，返回包名并校验 Tool/Executor 契约（包级）。
 func detectPackage(dir string) (string, error) {
 	names, err := os.ReadDir(dir)
 	if err != nil {
 		return "", err
 	}
+	var pkgName string
+	hasTool, hasExecutor := false, false
 	for _, n := range names {
 		if n.IsDir() || !strings.HasSuffix(n.Name(), ".go") || strings.HasSuffix(n.Name(), "_test.go") {
 			continue
@@ -108,14 +110,23 @@ func detectPackage(dir string) (string, error) {
 		if m == nil {
 			return "", fmt.Errorf("无法解析 %s 的 package 声明", n.Name())
 		}
+		pkgName = string(m[1])
 		src := string(data)
-		if !strings.Contains(src, "func Tool()") {
-			return "", fmt.Errorf("%s 缺少 func Tool()", n.Name())
+		if strings.Contains(src, "func Tool()") {
+			hasTool = true
 		}
-		if !strings.Contains(src, "type Executor") {
-			return "", fmt.Errorf("%s 缺少 type Executor", n.Name())
+		if strings.Contains(src, "type Executor") {
+			hasExecutor = true
 		}
-		return string(m[1]), nil
 	}
-	return "", fmt.Errorf("目录中无 Go 源文件")
+	if pkgName == "" {
+		return "", fmt.Errorf("目录中无 Go 源文件")
+	}
+	if !hasTool {
+		return "", fmt.Errorf("%s 缺少 func Tool()", pkgName)
+	}
+	if !hasExecutor {
+		return "", fmt.Errorf("%s 缺少 type Executor", pkgName)
+	}
+	return pkgName, nil
 }
