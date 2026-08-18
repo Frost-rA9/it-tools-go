@@ -12,6 +12,7 @@ import (
 	datetime "it-tools-go/internal/tools/date-time-converter"
 	deviceinformation "it-tools-go/internal/tools/device-information"
 	encryption "it-tools-go/internal/tools/encryption"
+	gitmemo "it-tools-go/internal/tools/git-memo"
 	hashtext "it-tools-go/internal/tools/hash-text"
 	hmacgen "it-tools-go/internal/tools/hmac-generator"
 	htmlentities "it-tools-go/internal/tools/html-entities"
@@ -59,6 +60,7 @@ func registerAllTools(reg *registry.Registry) {
 	reg.Register(datetime.Tool(), datetime.Executor{})
 	reg.Register(deviceinformation.Tool(), deviceinformation.Executor{})
 	reg.Register(encryption.Tool(), encryption.Executor{})
+	reg.Register(gitmemo.Tool(), gitmemo.Executor{})
 	reg.Register(hashtext.Tool(), hashtext.Executor{})
 	reg.Register(hmacgen.Tool(), hmacgen.Executor{})
 	reg.Register(htmlentities.Tool(), htmlentities.Executor{})

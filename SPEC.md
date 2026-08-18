@@ -85,8 +85,9 @@ it-tools-go/
 | 转换器 | 15 | Base64、罗马数字、大小写、日期时间、进制、文本↔二进制/Unicode、列表、Markdown→HTML、TOML/XML/YAML 互转 |
 | Web | 15 | URL 编码/解码、HTML 实体、URL 分析器、JWT、HTTP 状态码、JSON 差异、设备信息、UA 分析、Basic Auth、OTP、OG 元生成、MIME、Slug、SafeLink 解码、按键码 |
 | 图片和视频 | 3 | 二维码生成器、WiFi 二维码生成器、SVG 占位符生成器 |
+| 开发 | 1 | Git 备忘录 |
 
-其余分类（图片/开发/网络/数学/测量/文本/数据）后续扩展按此归类。
+其余分类（网络/数学/测量/文本/数据）后续扩展按此归类。
 
 ## 7. 开发与发布
 
@@ -123,7 +124,7 @@ npm run build                   # 前端类型检查 + 构建（vue-tsc + vite�
 - **版本**：v0.2.0「El Shaddoll Wendigo」（git tag `v0.2.0` 驱动 CI 发布）。
 - 注册机制：`registry` + JSON string 协议 + `ListTools`/`RunTool` 绑定；注册由 `internal/toolsgen`
   扫描生成 `internal/app/tools_gen.go`；前端 `import.meta.glob` 按 toolId 动态加载。
-- 已实现工具（43 个）：转换器 15 + 加密 10 + Web 15 + 图片和视频 3（清单见 §6）。前三类已与 it-tools 对齐，图片和视频已完成高价值工具。
+- 已实现工具（44 个）：转换器 15 + 加密 10 + Web 15 + 图片和视频 3 + 开发 1（清单见 §6）。前三类已与 it-tools 对齐，图片和视频已完成高价值工具。
 - 前端 it-tools 风格：亮/暗主题、侧边栏分类菜单、Command Palette、首页网格；通用组件
   `ToolTextarea` / `ToolCodeBlock`；等宽字体 Cascadia Code 随包分发。
 - 品牌标识：`assets/logo.svg` 唯一源 → `build/appicon.png`、`build/windows/icon.ico`、favicon。
@@ -141,3 +142,4 @@ npm run build                   # 前端类型检查 + 构建（vue-tsc + vite�
 | 2026-08-15 | 通用组件 | `ToolTextarea`（可拉伸+monospace）、`ToolCodeBlock`（只读等宽块）；Cascadia Code 随包 |
 | 2026-08-15 | Web 15 个 | URL/HTML 实体/URL 分析/JWT/HTTP 状态码/JSON 差异/设备/UA/Basic Auth/OTP/OG 元/MIME/Slug/SafeLink/按键码 —— Web 分类与 it-tools 对齐完成 |
 | 2026-08-15 | 文档精简 | SPEC.md / AGENTS.md 精简为要点式；README.md 重写并补充工具清单与发布说明 |
+| 2026-08-15 | Git 备忘录 | 开发分类首个工具；纯静态 Git 命令速查页，用于验证长文本展示布局 |
