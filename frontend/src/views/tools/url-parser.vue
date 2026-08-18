@@ -1,7 +1,8 @@
 <script setup lang="ts">
 import { ref, watch } from 'vue'
-import { NCard, NButton, NText, useMessage, useThemeVars } from 'naive-ui'
+import { NCard, NInput, NButton, NDivider, NText, NIcon, useMessage, useThemeVars } from 'naive-ui'
 import { useDebounceFn, useClipboard } from '@vueuse/core'
+import { Copy, ArrowDownRight } from '@vicons/tabler'
 import ToolTextarea from '../../components/ToolTextarea.vue'
 import { RunTool } from '../../../wailsjs/go/app/App'
 
@@ -57,19 +58,37 @@ async function copyValue(label: string, value: string) {
   <n-card class="card">
     <ToolTextarea v-model:value="urlInput" label="要解析的 URL" :rows="2" placeholder="要解析的 URL…" />
 
-    <div class="prop-row" v-for="p in props" :key="p.key">
-      <span class="prop-label">{{ p.label }}</span>
-      <span class="prop-value">{{ parsed?.[p.key] || '—' }}</span>
-      <n-button size="tiny" secondary @click="copyValue(p.label, parsed?.[p.key] ?? '')">复制</n-button>
-    </div>
-
     <n-divider />
 
+    <div class="prop-row" v-for="p in props" :key="p.key">
+      <span class="prop-label">{{ p.label }}</span>
+      <n-input :value="parsed?.[p.key] ?? ''" readonly size="small" class="prop-input" placeholder=" ">
+        <template #suffix>
+          <n-button circle quaternary size="small" @click="copyValue(p.label, parsed?.[p.key] ?? '')">
+            <n-icon :component="Copy" :size="16" />
+          </n-button>
+        </template>
+      </n-input>
+    </div>
+
     <div class="param-row" v-for="(param, i) in parsed?.params ?? []" :key="i">
-      <span class="prop-label">Param {{ i + 1 }}</span>
-      <span class="param-key">{{ param.key }}</span>
-      <span class="prop-value">{{ param.value }}</span>
-      <n-button size="tiny" secondary @click="copyValue(`参数 ${param.key}`, param.value)">复制</n-button>
+      <div class="arrow-col">
+        <n-icon :component="ArrowDownRight" :size="14" class="arrow-icon" />
+      </div>
+      <n-input :value="param.key" readonly size="small" class="param-key-input" placeholder=" ">
+        <template #suffix>
+          <n-button circle quaternary size="small" @click="copyValue(`参数 ${param.key}`, param.key)">
+            <n-icon :component="Copy" :size="16" />
+          </n-button>
+        </template>
+      </n-input>
+      <n-input :value="param.value" readonly size="small" class="prop-input" placeholder=" ">
+        <template #suffix>
+          <n-button circle quaternary size="small" @click="copyValue(`参数 ${param.key}`, param.value)">
+            <n-icon :component="Copy" :size="16" />
+          </n-button>
+        </template>
+      </n-input>
     </div>
 
     <div v-if="!parsed?.params?.length" class="empty">
@@ -84,37 +103,50 @@ async function copyValue(label: string, value: string) {
   width: 100%;
 }
 
-.prop-row,
-.param-row {
+.prop-row {
   display: flex;
   align-items: center;
-  gap: 12px;
-  padding: 6px 0;
+  gap: 8px;
+  margin-bottom: 8px;
 }
 
 .prop-label {
   flex: 0 0 110px;
+  text-align: left;
   font-size: 13px;
   color: v-bind('themeVars.textColor3');
 }
 
-.prop-value {
-  flex: 1 1 auto;
-  font-family: 'Cascadia Code', monospace;
-  font-size: 13px;
-  word-break: break-all;
-  color: v-bind('themeVars.textColor1');
+.prop-input {
+  flex: 1;
 }
 
-.param-key {
-  flex: 0 0 auto;
-  max-width: 180px;
-  font-family: 'Cascadia Code', monospace;
+.prop-input :deep(input),
+.param-key-input :deep(input) {
+  font-family: 'Cascadia Code', Consolas, 'Courier New', monospace;
   font-size: 13px;
-  overflow: hidden;
-  text-overflow: ellipsis;
-  white-space: nowrap;
-  color: v-bind('themeVars.primaryColor');
+}
+
+.param-row {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  margin-bottom: 8px;
+}
+
+.arrow-col {
+  flex: 0 0 110px;
+  display: flex;
+  justify-content: flex-start;
+  padding-left: 2px;
+}
+
+.arrow-icon {
+  color: v-bind('themeVars.textColor2');
+}
+
+.param-key-input {
+  flex: 0 0 180px;
 }
 
 .empty {
