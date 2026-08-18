@@ -13,6 +13,7 @@ import (
 	crontab "it-tools-go/internal/tools/crontab-generator"
 	datetime "it-tools-go/internal/tools/date-time-converter"
 	deviceinformation "it-tools-go/internal/tools/device-information"
+	dockerruncompose "it-tools-go/internal/tools/docker-run-to-docker-compose-converter"
 	encryption "it-tools-go/internal/tools/encryption"
 	gitmemo "it-tools-go/internal/tools/git-memo"
 	hashtext "it-tools-go/internal/tools/hash-text"
@@ -37,6 +38,8 @@ import (
 	pwdstrength "it-tools-go/internal/tools/password-strength-analyser"
 	qrcodegen "it-tools-go/internal/tools/qr-code-generator"
 	randomport "it-tools-go/internal/tools/random-port-generator"
+	regexmemo "it-tools-go/internal/tools/regex-memo"
+	regextester "it-tools-go/internal/tools/regex-tester"
 	romannumeral "it-tools-go/internal/tools/roman-numeral-converter"
 	rsakeypair "it-tools-go/internal/tools/rsa-key-pair-generator"
 	safelink "it-tools-go/internal/tools/safelink-decoder"
@@ -72,6 +75,7 @@ func registerAllTools(reg *registry.Registry) {
 	reg.Register(crontab.Tool(), crontab.Executor{})
 	reg.Register(datetime.Tool(), datetime.Executor{})
 	reg.Register(deviceinformation.Tool(), deviceinformation.Executor{})
+	reg.Register(dockerruncompose.Tool(), dockerruncompose.Executor{})
 	reg.Register(encryption.Tool(), encryption.Executor{})
 	reg.Register(gitmemo.Tool(), gitmemo.Executor{})
 	reg.Register(hashtext.Tool(), hashtext.Executor{})
@@ -96,6 +100,8 @@ func registerAllTools(reg *registry.Registry) {
 	reg.Register(pwdstrength.Tool(), pwdstrength.Executor{})
 	reg.Register(qrcodegen.Tool(), qrcodegen.Executor{})
 	reg.Register(randomport.Tool(), randomport.Executor{})
+	reg.Register(regexmemo.Tool(), regexmemo.Executor{})
+	reg.Register(regextester.Tool(), regextester.Executor{})
 	reg.Register(romannumeral.Tool(), romannumeral.Executor{})
 	reg.Register(rsakeypair.Tool(), rsakeypair.Executor{})
 	reg.Register(safelink.Tool(), safelink.Executor{})

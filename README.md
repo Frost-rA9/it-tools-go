@@ -9,7 +9,7 @@
 - 亮/暗主题、Command Palette、工具按分类组织
 - Go 工具均有单元测试，输出对齐 it-tools / crypto-js / node-forge 等参考实现
 
-## 已实现工具（55）
+## 已实现工具（58）
 
 **加密（10）**：Token 生成器 · Hash 文本 · 加密/解密 · BCrypt · UUID 生成器 · ULID 生成器 · BIP39 密码生成器 · HMAC 生成器 · RSA 密钥对生成器 · 密码强度分析仪
 
@@ -19,7 +19,7 @@
 
 **图片和视频（3）**：二维码生成器 · WiFi 二维码生成器 · SVG 占位符生成器
 
-**开发（10）**：Git 备忘录 · 随机端口生成器 · Crontab 表达式生成器 · Chmod 计算器 · JSON 格式化 · JSON 压缩 · JSON 转 CSV · SQL 格式化 · XML 格式化 · YAML 格式化
+**开发（13）**：Git 备忘录 · 随机端口生成器 · Crontab 表达式生成器 · Chmod 计算器 · JSON 格式化 · JSON 压缩 · JSON 转 CSV · SQL 格式化 · XML 格式化 · YAML 格式化 · Docker Run 转 Compose · Regex 测试器 · 正则表达式速查表
 
 ## 技术栈
 
