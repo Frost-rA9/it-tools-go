@@ -22,3 +22,24 @@ body {
   flex: 0 1 600px;
   min-width: 400px;
 }
+
+/* 代码输出高亮 token 配色（CodeOutput 组件，按主题切换） */
+.code-dark .hljs-keyword,
+.code-dark .hljs-built_in,
+.code-dark .hljs-literal { color: #569cd6; }
+.code-dark .hljs-string,
+.code-dark .hljs-attr { color: #ce9178; }
+.code-dark .hljs-number { color: #b5cea8; }
+.code-dark .hljs-comment { color: #6a9955; font-style: italic; }
+.code-dark .hljs-title,
+.code-dark .hljs-name { color: #dcdcaa; }
+
+.code-light .hljs-keyword,
+.code-light .hljs-built_in,
+.code-light .hljs-literal { color: #0000ff; }
+.code-light .hljs-string,
+.code-light .hljs-attr { color: #a31515; }
+.code-light .hljs-number { color: #098658; }
+.code-light .hljs-comment { color: #008000; font-style: italic; }
+.code-light .hljs-title,
+.code-light .hljs-name { color: #795e26; }
