@@ -9,13 +9,15 @@
 - 亮/暗主题、Command Palette、工具按分类组织
 - Go 工具均有单元测试，输出对齐 it-tools / crypto-js / node-forge 等参考实现
 
-## 已实现工具（40）
+## 已实现工具（43）
 
 **加密（10）**：Token 生成器 · Hash 文本 · 加密/解密 · BCrypt · UUID 生成器 · ULID 生成器 · BIP39 密码生成器 · HMAC 生成器 · RSA 密钥对生成器 · 密码强度分析仪
 
 **转换器（15）**：Base64 · 罗马数字 · 大小写转换 · 日期时间转换 · 整数进制 · 文本↔ASCII 二进制 · 文本↔Unicode · 列表转换 · Markdown→HTML · TOML↔JSON/YAML · XML↔JSON · YAML→JSON/TOML
 
 **Web（15）**：URL 编码/解码 · HTML实体转义 · URL 分析器 · JWT 解析器 · HTTP 状态码 · JSON 差异比较 · 设备信息 · 用户代理分析器 · 基本身份验证生成器 · OTP 代码生成器 · 开放式图形元生成器 · MIME 类型转换器 · Slug 化字符串 · Outlook 安全链接解码器 · 按键码信息
+
+**图片和视频（3）**：二维码生成器 · WiFi 二维码生成器 · SVG 占位符生成器
 
 ## 技术栈
 

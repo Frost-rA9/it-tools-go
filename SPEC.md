@@ -77,13 +77,14 @@ it-tools-go/
 
 ## 6. 工具分类
 
-对齐参考项目分类（常量见 `internal/registry/registry.go`）。当前已实现三类：
+对齐参考项目分类（常量见 `internal/registry/registry.go`）。当前已实现四类：
 
 | 分类 | 数量 | 工具 |
 |---|---|---|
 | 加密 | 10 | Token、Hash、加密/解密、BCrypt、UUID、ULID、BIP39、HMAC、RSA 密钥对、密码强度 |
 | 转换器 | 15 | Base64、罗马数字、大小写、日期时间、进制、文本↔二进制/Unicode、列表、Markdown→HTML、TOML/XML/YAML 互转 |
 | Web | 15 | URL 编码/解码、HTML 实体、URL 分析器、JWT、HTTP 状态码、JSON 差异、设备信息、UA 分析、Basic Auth、OTP、OG 元生成、MIME、Slug、SafeLink 解码、按键码 |
+| 图片和视频 | 3 | 二维码生成器、WiFi 二维码生成器、SVG 占位符生成器 |
 
 其余分类（图片/开发/网络/数学/测量/文本/数据）后续扩展按此归类。
 
@@ -114,7 +115,7 @@ npm run build                   # 前端类型检查 + 构建（vue-tsc + vite�
 | M0 环境准备 | 安装 Go/gcc/Wails/pnpm | ✅ |
 | M1 骨架搭建 | `wails init` + `internal/` 目录结构 | ✅ |
 | M2 注册机制 | Tool 接口 + registry + RunTool Binding + 前端动态渲染 | ✅ |
-| M3 工具扩展 | 高频工具实现（当前 40 个） | ✅ 各工具均有单测 |
+| M3 工具扩展 | 高频工具实现（当前 43 个） | ✅ 各工具均有单测 |
 | M4 打包发布 | 三平台交叉编译 + GitHub Release 流程 | ✅（v0.1.0/v0.2.0） |
 
 ## 10. 当前状态
@@ -122,7 +123,7 @@ npm run build                   # 前端类型检查 + 构建（vue-tsc + vite�
 - **版本**：v0.2.0「El Shaddoll Wendigo」（git tag `v0.2.0` 驱动 CI 发布）。
 - 注册机制：`registry` + JSON string 协议 + `ListTools`/`RunTool` 绑定；注册由 `internal/toolsgen`
   扫描生成 `internal/app/tools_gen.go`；前端 `import.meta.glob` 按 toolId 动态加载。
-- 已实现工具（40 个）：转换器 15 + 加密 10 + Web 15（清单见 §6）。Web 分类已与 it-tools 对齐。
+- 已实现工具（43 个）：转换器 15 + 加密 10 + Web 15 + 图片和视频 3（清单见 §6）。前三类已与 it-tools 对齐，图片和视频已完成高价值工具。
 - 前端 it-tools 风格：亮/暗主题、侧边栏分类菜单、Command Palette、首页网格；通用组件
   `ToolTextarea` / `ToolCodeBlock`；等宽字体 Cascadia Code 随包分发。
 - 品牌标识：`assets/logo.svg` 唯一源 → `build/appicon.png`、`build/windows/icon.ico`、favicon。

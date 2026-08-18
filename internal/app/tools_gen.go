@@ -27,10 +27,12 @@ import (
 	mimetypes "it-tools-go/internal/tools/mime-types"
 	otpgen "it-tools-go/internal/tools/otp-generator"
 	pwdstrength "it-tools-go/internal/tools/password-strength-analyser"
+	qrcodegen "it-tools-go/internal/tools/qr-code-generator"
 	romannumeral "it-tools-go/internal/tools/roman-numeral-converter"
 	rsakeypair "it-tools-go/internal/tools/rsa-key-pair-generator"
 	safelink "it-tools-go/internal/tools/safelink-decoder"
 	slugify "it-tools-go/internal/tools/slugify-string"
+	svgplaceholder "it-tools-go/internal/tools/svg-placeholder-generator"
 	textbinary "it-tools-go/internal/tools/text-to-binary"
 	textunicode "it-tools-go/internal/tools/text-to-unicode"
 	tokengen "it-tools-go/internal/tools/token-generator"
@@ -41,6 +43,7 @@ import (
 	urlparser "it-tools-go/internal/tools/url-parser"
 	useragentparser "it-tools-go/internal/tools/user-agent-parser"
 	uuidgen "it-tools-go/internal/tools/uuid-generator"
+	wifiqrcodegen "it-tools-go/internal/tools/wifi-qr-code-generator"
 	xmljson "it-tools-go/internal/tools/xml-to-json"
 	yamljson "it-tools-go/internal/tools/yaml-to-json"
 	yamltoml "it-tools-go/internal/tools/yaml-to-toml"
@@ -71,10 +74,12 @@ func registerAllTools(reg *registry.Registry) {
 	reg.Register(mimetypes.Tool(), mimetypes.Executor{})
 	reg.Register(otpgen.Tool(), otpgen.Executor{})
 	reg.Register(pwdstrength.Tool(), pwdstrength.Executor{})
+	reg.Register(qrcodegen.Tool(), qrcodegen.Executor{})
 	reg.Register(romannumeral.Tool(), romannumeral.Executor{})
 	reg.Register(rsakeypair.Tool(), rsakeypair.Executor{})
 	reg.Register(safelink.Tool(), safelink.Executor{})
 	reg.Register(slugify.Tool(), slugify.Executor{})
+	reg.Register(svgplaceholder.Tool(), svgplaceholder.Executor{})
 	reg.Register(textbinary.Tool(), textbinary.Executor{})
 	reg.Register(textunicode.Tool(), textunicode.Executor{})
 	reg.Register(tokengen.Tool(), tokengen.Executor{})
@@ -85,6 +90,7 @@ func registerAllTools(reg *registry.Registry) {
 	reg.Register(urlparser.Tool(), urlparser.Executor{})
 	reg.Register(useragentparser.Tool(), useragentparser.Executor{})
 	reg.Register(uuidgen.Tool(), uuidgen.Executor{})
+	reg.Register(wifiqrcodegen.Tool(), wifiqrcodegen.Executor{})
 	reg.Register(xmljson.Tool(), xmljson.Executor{})
 	reg.Register(yamljson.Tool(), yamljson.Executor{})
 	reg.Register(yamltoml.Tool(), yamltoml.Executor{})
