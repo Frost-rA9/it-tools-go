@@ -121,7 +121,7 @@ npm run build                   # 前端类型检查 + 构建（vue-tsc + vite�
 
 ## 10. 当前状态
 
-- **版本**：最新发布 v0.3.0「El Shaddoll Apkallone」（git tag `v0.3.0`）；main 在 v0.3.0 之后另有 5 个未发布提交（图片和视频 3 个 + 注册图标同步 + Git 备忘录）。
+- **版本**：最新发布 v0.4.0「El Shaddoll Grysta」（git tag `v0.4.0`）；main 与发布 tag 同步。
 - 注册机制：`registry` + JSON string 协议 + `ListTools`/`RunTool` 绑定；注册由 `internal/toolsgen`
   扫描生成 `internal/app/tools_gen.go`；前端 `import.meta.glob` 按 toolId 动态加载。
 - 已实现工具（58 个）：转换器 17 + 加密 10 + Web 15 + 图片和视频 3 + 开发 13（清单见 §6）。前三类已与 it-tools 对齐；开发分类已完结。
@@ -150,3 +150,4 @@ npm run build                   # 前端类型检查 + 构建（vue-tsc + vite�
 | 2026-08-18 | crontab 增强 | 新增表达式直接解析（Go 侧自研解析器：*/步长/范围/列表/@简写/秒字段/名称别名）+ it-tools 风格帮助表格与描述区 |
 | 2026-08-18 | JSON 互转 2 个 | JSON 转 YAML、JSON 转 TOML（补齐 it-tools Converter 互转矩阵）；工具总数 53→55，转换器 15→17 |
 | 2026-08-18 | 开发收尾 3 个 | Docker Run 转 Compose（自研 shell 分词+参数解析）、Regex 测试器（Go regexp 捕获组/命名组）、正则表达式速查表（静态页）；工具总数 55→58，开发分类 10→13 完结 |
+| 2026-08-18 | 发布 v0.4.0 | 代号 El Shaddoll Grysta；58 个工具（加密 10 / 转换器 17 / Web 15 / 图片和视频 3 / 开发 13），开发分类完结 |
