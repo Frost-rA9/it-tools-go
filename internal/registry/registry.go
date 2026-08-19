@@ -3,7 +3,7 @@ package registry
 
 import "context"
 
-// 工具分类（对齐 SPEC.md §6，中文展示）。
+// 工具分类（中文展示）。
 const (
 	CategoryCrypto       = "加密"
 	CategoryConverter    = "转换器"

@@ -75,26 +75,7 @@ it-tools-go/
 └── SPEC.md
 ```
 
-## 6. 工具分类
-
-对齐参考项目分类（常量见 `internal/registry/registry.go`）。当前已实现十类：
-
-| 分类 | 数量 | 工具 |
-|---|---|---|
-| 加密 | 10 | Token、Hash、加密/解密、BCrypt、UUID、ULID、BIP39、HMAC、RSA 密钥对、密码强度 |
-| 转换器 | 17 | Base64、罗马数字、大小写、日期时间、进制、文本↔二进制/Unicode、列表、Markdown→HTML、JSON/TOML/XML/YAML 互转 |
-| Web | 15 | URL 编码/解码、HTML 实体、URL 分析器、JWT、HTTP 状态码、JSON 差异、设备信息、UA 分析、Basic Auth、OTP、OG 元生成、MIME、Slug、SafeLink 解码、按键码 |
-| 图片和视频 | 3 | 二维码生成器、WiFi 二维码生成器、SVG 占位符生成器 |
-| 开发 | 13 | Git 备忘录、随机端口生成器、Crontab 表达式生成器、Chmod 计算器、JSON 格式化、JSON 压缩、JSON 转 CSV、SQL/XML/YAML 格式化、Docker Run 转 Compose、Regex 测试器、正则表达式速查表 |
-| 网络 | 5 | IPv6 ULA 生成器、IPv4 子网计算器、IPv4 地址转换器、IPv4 范围扩展器、MAC 地址生成器 |
-| 数学 | 3 | 数学表达式求值器、ETA 计算器、百分比计算器 |
-| 测量 | 3 | 秒表、温度转换器、基准测试建构器 |
-| 数据 | 1 | IBAN 验证器和解析器 |
-| 文本 | 6 | Lorem ipsum 生成器、文本统计、字符串混淆器、数字名称生成器、Emoji 选择器、文本比较 |
-
-其余文本分类工具（对齐 it-tools Text 分类）后续扩展：文本差异、ASCII 文字绘制。
-
-## 7. 开发与发布
+## 6. 开发与发布
 
 环境：Go、gcc（mingw）、Node.js、Wails CLI（本机安装细节见全局 AGENTS.md）。
 
@@ -109,67 +90,8 @@ npm run build                   # 前端类型检查 + 构建（vue-tsc + vite�
 发布：推送 `v*` 标签自动触发 [GitHub Actions](.github/workflows/release.yml) 三平台交叉编译
 （Windows amd64 / macOS Intel+Silicon / Linux amd64）并创建 Release；版本号由 git tag 决定（如 `v0.3.0`）。
 
-## 8. 测试与质量
+## 7. 测试与质量
 
 - Go：表驱动单测（各工具 + registry）；前端：`vue-tsc` 类型检查。
 - 提交遵循 Conventional Commits；Go 用 gofmt/vet。
-
-## 9. 里程碑
-
-| 阶段 | 内容 | 状态 |
-|---|---|---|
-| M0 环境准备 | 安装 Go/gcc/Wails/pnpm | ✅ |
-| M1 骨架搭建 | `wails init` + `internal/` 目录结构 | ✅ |
-| M2 注册机制 | Tool 接口 + registry + RunTool Binding + 前端动态渲染 | ✅ |
-| M3 工具扩展 | 高频工具实现（当前 43 个） | ✅ 各工具均有单测 |
-| M4 打包发布 | 三平台交叉编译 + GitHub Release 流程 | ✅（v0.1.0/v0.2.0） |
-
-## 10. 当前状态
-
-- **版本**：最新发布 v0.5.0「El Shaddoll Construct」（git tag `v0.5.0`）；main 与发布 tag 同步。
-- 注册机制：`registry` + JSON string 协议 + `ListTools`/`RunTool` 绑定；注册由 `internal/toolsgen`
-  扫描生成 `internal/app/tools_gen.go`；前端 `import.meta.glob` 按 toolId 动态加载。
-- 已实现工具（76 个）：转换器 17 + 加密 10 + Web 15 + 图片和视频 3 + 开发 13 + 网络 5 + 数学 3 + 测量 3 + 数据 1 + 文本 6（清单见 §6）。前三类已与 it-tools 对齐；开发分类已完结；网络、数学、测量、数据分类均已完结（数据分类当前仅 IBAN）；文本分类扩展中（当前 6 个）。
-- 前端 it-tools 风格：亮/暗主题、侧边栏分类菜单、Command Palette、首页网格；通用组件
-  `ToolTextarea` / `ToolCodeBlock`；等宽字体 Cascadia Code 随包分发。
-- 品牌标识：`assets/logo.svg` 唯一源 → `build/appicon.png`、`build/windows/icon.ico`、favicon。
-- 命名规范：目录短杠（toolId）、文件下划线、包名去 `-converter` 后缀拼接。
-- 已验证（2026-08-18 复核）：`go build/vet/test ./...`、`vue-tsc --noEmit`、`npm run build` 通过；`wails build` 在 v0.3.0 发布周期通过。
-
-## 11. 变更记录
-
-| 日期 | 变更 | 说明 |
-|---|---|---|
-| 2026-08-14 | 初版搭建 | M1 骨架 + M2 注册机制（Tool 接口/registry/JSON 协议/RunTool）+ 前端 it-tools 风格 + Base64 首个工具 |
-| 2026-08-14 | 转换器 15 个 | 罗马/大小写/日期时间/进制/文本↔二进制·Unicode/列表/Markdown→HTML/TOML·XML·YAML 互转（goldmark、mxj、yaml.v3、go-toml） |
-| 2026-08-14 | 品牌与注册重构 | `assets/logo.svg` 设计源 + `gen-brand.mjs` 链路；`internal/toolsgen` 代码生成器；`app.go` 精简 |
-| 2026-08-15 | 加密 10 个 | Token/Hash/加密解密/BCrypt/UUID/ULID/BIP39/HMAC/RSA 密钥对/密码强度 |
-| 2026-08-15 | 通用组件 | `ToolTextarea`（可拉伸+monospace）、`ToolCodeBlock`（只读等宽块）；Cascadia Code 随包 |
-| 2026-08-15 | Web 15 个 | URL/HTML 实体/URL 分析/JWT/HTTP 状态码/JSON 差异/设备/UA/Basic Auth/OTP/OG 元/MIME/Slug/SafeLink/按键码 —— Web 分类与 it-tools 对齐完成 |
-| 2026-08-15 | 文档精简 | SPEC.md / AGENTS.md 精简为要点式；README.md 重写并补充工具清单与发布说明 |
-| 2026-08-18 | 图片和视频 3 个 | 二维码生成器、WiFi 二维码生成器、SVG 占位符生成器（go-qrcode v2）；同步注册、图标与文档 |
-| 2026-08-18 | Git 备忘录 | 开发分类首个工具；纯静态 Git 命令速查页，用于验证长文本展示布局 |
-| 2026-08-18 | 开发 3 个 | 随机端口生成器、Crontab 表达式生成器、Chmod 计算器（math/rand/v2、标准库）；工具总数 44→47，开发分类 1→4 |
-| 2026-08-18 | 开发 JSON 3 个 | JSON 格式化（缩进/排序）、JSON 压缩（大小对比）、JSON 转 CSV（分隔符/表头，encoding/csv 转义）；toolsgen 改为包级契约检查；工具总数 47→50；三工具双卡布局并封装公共 .tool-card 样式 |
-| 2026-08-18 | 格式化 3 个 | SQL 格式化（自研 tokenizer：子句换行/括号缩进/关键字大写）、XML 格式化（encoding/xml Token 流重建）、YAML 格式化（yaml.v3 Node 保留注释）；工具总数 50→53，开发分类 7→10 |
-| 2026-08-18 | crontab 增强 | 新增表达式直接解析（Go 侧自研解析器：*/步长/范围/列表/@简写/秒字段/名称别名）+ it-tools 风格帮助表格与描述区 |
-| 2026-08-18 | JSON 互转 2 个 | JSON 转 YAML、JSON 转 TOML（补齐 it-tools Converter 互转矩阵）；工具总数 53→55，转换器 15→17 |
-| 2026-08-18 | 开发收尾 3 个 | Docker Run 转 Compose（自研 shell 分词+参数解析）、Regex 测试器（Go regexp 捕获组/命名组）、正则表达式速查表（静态页）；工具总数 55→58，开发分类 10→13 完结 |
-| 2026-08-18 | 修复首页布局 | 全局 .tool-card 样式（双卡布局用）误伤主页网格（min-width 400px 撑破列数）；主页卡片类名改为 tool-card-item，样式只作用于工具页卡片 |
-| 2026-08-18 | 统一首页卡片高度 | 描述区 line-clamp 最多两行导致短描述卡片矮一截；固定 line-height 1.5 + min-height 两行，所有工具卡片等高 |
-| 2026-08-18 | 首页卡片等高加固 | 名称区显式 line-height 24px、图标区固定 40×40 + flex-shrink:0、描述区改为固定 height 42px；彻底消除中英文行高/盒子尺寸差异导致的卡片高度不齐 |
-| 2026-08-19 | 统一首页网格行高 | HomeView 网格增加 `grid-auto-rows: 180px`，统一不同行的工具卡片高度 |
-| 2026-08-19 | 网络分类启动 | IPv6 ULA 生成器（RFC 4193 方法 1：时间戳+MAC→SHA1→低 40 bits 构造 fd/48 前缀，派生/64 块）；工具总数 58→59，网络分类 0→1；前端新增 BuildingFactory 图标 |
-| 2026-08-19 | 网络 IPv4 三件套 | IPv4 子网计算器（CIDR/掩码解析、network/掩码/主机/广播/IP 分类、相邻块 prev-next）、IPv4 地址转换器（十进制/十六进制/二进制/IPv6 映射）、IPv4 范围扩展器（最小覆盖 CIDR，位运算）；工具总数 59→62，网络分类 1→4 |
-| 2026-08-19 | MAC 地址生成器 | 按前缀/大小写/分隔符随机生成 MAC（crypto/rand，前缀最多 6 字节，splitPrefix 对齐 it-tools）；工具总数 62→63，网络分类 4→5 |
-| 2026-08-18 | 发布 v0.4.0 | 代号 El Shaddoll Grysta；58 个工具（加密 10 / 转换器 17 / Web 15 / 图片和视频 3 / 开发 13），开发分类完结 |
-| 2026-08-19 | 数学分类 3 个 | 数学表达式求值器（自研递归下降解析器：四则/幂右结合/一元负号/34 个内置函数/pi·e 常量）、ETA 计算器（持续时间+结束时间中文描述）、百分比计算器（三模式：占比/求值/增减）；工具总数 63→66，数学分类 0→3 完结，与 it-tools Math 分类对齐 |
-| 2026-08-19 | 测量分类 3 个 | 秒表（纯前端 rAF 计时 + [H:]MM:SS.mmm 格式化，git-memo 先例）、温度转换器（8 温标表驱动换算，开尔文中间量，两位小数）、基准测试建构器（均值/总体方差/升序排序/与最佳对比 delta·ratio，生成 Markdown 表格与缩进列表）；工具总数 66→69，测量分类 0→3 完结，与 it-tools Measurement 分类对齐 |
-| 2026-08-19 | 数据分类 IBAN 1 个 | IBAN 验证器和解析器（自研零依赖：MOD-97 + 内嵌 102 国规格表的 BBAN 长度/格式校验 + 瑞士 QR-IBAN 识别 + 每 4 位分组友好格式）；工具总数 69→70，数据分类 0→1；电话号码分析器和格式化程序原定引入 nyaruka/phonenumbers（依赖含 protobuf，体量过大）遂放弃实现 |
-| 2026-08-19 | 文本分类启动 1 个 | Lorem ipsum 生成器（约 200 词拉丁词表；段落/每段句数/每句词数范围随机、固定首句开关、HTML 模式，math/rand/v2）；工具总数 70→71，文本分类 0→1 |
-| 2026-08-19 | 文本分类 3 个 | 文本统计（字符 UTF-16 计数对齐 JS length/词·行·字节 + formatBytes 格式化）、字符串混淆器（keepFirst/keepLast/keepSpace 遮蔽，rune 计数）、数字名称生成器（首字符+长度-2+末字符，如 i18n）；工具总数 71→74，文本分类 1→4 |
-| 2026-08-19 | Emoji 选择器 | go:embed 内嵌 1914 条 emoji 数据（scripts/gen-emojis.mjs 由 unicode-emoji-json 0.9.0 + emojilib 4.0.3 一次性生成，9 组）；加权搜索（名称/分组/关键词）；前端 n-virtual-list 固定高度按组虚拟化 + EmojiCard 三种复制；工具总数 74→75，文本分类 4→5 |
-| 2026-08-19 | 文本比较 | 自研 LCS 行级 diff（O(n·m) DP，与 Myers 等价）+ 行内精炼（公共前后缀剥离，rune 安全）；分段输出（非索引避免 Unicode 语义差异）；前端双栏 grid 对比视图（删红/增绿/行内标色/行号）；工具总数 75→76，文本分类 5→6 |
-| 2026-08-19 | 发布 v0.5.0 | 代号 El Shaddoll Construct；70 个工具（加密 10 / 转换器 17 / Web 15 / 图片和视频 3 / 开发 13 / 网络 5 / 数学 3 / 测量 3 / 数据 1） |
-| 2026-08-19 | README 重写 | 对齐 it-tools 风格概述（badges/特性/安装/技术栈/开发/发布）；不再维护工具清单，收敛为以 SPEC.md §6 为唯一权威 |
 

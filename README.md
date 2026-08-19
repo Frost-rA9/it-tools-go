@@ -17,7 +17,6 @@
 - 单一可执行文件，跨平台（Windows / macOS / Linux），**无需联网与外部依赖**
 - it-tools 风格界面：亮/暗主题、Command Palette、侧边栏分类导航、首页工具网格
 - 表驱动单元测试，输出对齐 it-tools / crypto-js / node-forge 等参考实现
-- 完整工具清单见 [SPEC.md](SPEC.md) §6（目前 10 个分类）
 
 ## 安装与使用
 
