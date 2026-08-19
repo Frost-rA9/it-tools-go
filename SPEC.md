@@ -86,7 +86,7 @@ it-tools-go/
 | Web | 15 | URL 编码/解码、HTML 实体、URL 分析器、JWT、HTTP 状态码、JSON 差异、设备信息、UA 分析、Basic Auth、OTP、OG 元生成、MIME、Slug、SafeLink 解码、按键码 |
 | 图片和视频 | 3 | 二维码生成器、WiFi 二维码生成器、SVG 占位符生成器 |
 | 开发 | 13 | Git 备忘录、随机端口生成器、Crontab 表达式生成器、Chmod 计算器、JSON 格式化、JSON 压缩、JSON 转 CSV、SQL/XML/YAML 格式化、Docker Run 转 Compose、Regex 测试器、正则表达式速查表 |
-| 网络 | 1 | IPv6 ULA 生成器（时间戳+MAC→SHA1→低 40 bits，RFC 4193） |
+| 网络 | 4 | IPv6 ULA 生成器、IPv4 子网计算器、IPv4 地址转换器、IPv4 范围扩展器 |
 
 其余分类（数学/测量/文本）后续扩展按此归类。
 
@@ -125,7 +125,7 @@ npm run build                   # 前端类型检查 + 构建（vue-tsc + vite�
 - **版本**：最新发布 v0.4.0「El Shaddoll Grysta」（git tag `v0.4.0`）；main 与发布 tag 同步。
 - 注册机制：`registry` + JSON string 协议 + `ListTools`/`RunTool` 绑定；注册由 `internal/toolsgen`
   扫描生成 `internal/app/tools_gen.go`；前端 `import.meta.glob` 按 toolId 动态加载。
-- 已实现工具（59 个）：转换器 17 + 加密 10 + Web 15 + 图片和视频 3 + 开发 13 + 网络 1（清单见 §6）。前三类已与 it-tools 对齐；开发分类已完结；网络分类以 IPv6 ULA 生成器起步。
+- 已实现工具（62 个）：转换器 17 + 加密 10 + Web 15 + 图片和视频 3 + 开发 13 + 网络 4（清单见 §6）。前三类已与 it-tools 对齐；开发分类已完结；网络分类含 IPv6 与 IPv4 三件套。
 - 前端 it-tools 风格：亮/暗主题、侧边栏分类菜单、Command Palette、首页网格；通用组件
   `ToolTextarea` / `ToolCodeBlock`；等宽字体 Cascadia Code 随包分发。
 - 品牌标识：`assets/logo.svg` 唯一源 → `build/appicon.png`、`build/windows/icon.ico`、favicon。
@@ -156,4 +156,5 @@ npm run build                   # 前端类型检查 + 构建（vue-tsc + vite�
 | 2026-08-18 | 首页卡片等高加固 | 名称区显式 line-height 24px、图标区固定 40×40 + flex-shrink:0、描述区改为固定 height 42px；彻底消除中英文行高/盒子尺寸差异导致的卡片高度不齐 |
 | 2026-08-19 | 统一首页网格行高 | HomeView 网格增加 `grid-auto-rows: 180px`，统一不同行的工具卡片高度 |
 | 2026-08-19 | 网络分类启动 | IPv6 ULA 生成器（RFC 4193 方法 1：时间戳+MAC→SHA1→低 40 bits 构造 fd/48 前缀，派生/64 块）；工具总数 58→59，网络分类 0→1；前端新增 BuildingFactory 图标 |
+| 2026-08-19 | 网络 IPv4 三件套 | IPv4 子网计算器（CIDR/掩码解析、network/掩码/主机/广播/IP 分类、相邻块 prev-next）、IPv4 地址转换器（十进制/十六进制/二进制/IPv6 映射）、IPv4 范围扩展器（最小覆盖 CIDR，位运算）；工具总数 59→62，网络分类 1→4 |
 | 2026-08-18 | 发布 v0.4.0 | 代号 El Shaddoll Grysta；58 个工具（加密 10 / 转换器 17 / Web 15 / 图片和视频 3 / 开发 13），开发分类完结 |
