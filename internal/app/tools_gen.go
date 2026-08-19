@@ -39,6 +39,7 @@ import (
 	jwtparser "it-tools-go/internal/tools/jwt-parser"
 	keycodeinfo "it-tools-go/internal/tools/keycode-info"
 	listconv "it-tools-go/internal/tools/list-converter"
+	loremipsum "it-tools-go/internal/tools/lorem-ipsum-generator"
 	macaddressgen "it-tools-go/internal/tools/mac-address-generator"
 	markdownhtml "it-tools-go/internal/tools/markdown-to-html"
 	mathevaluator "it-tools-go/internal/tools/math-evaluator"
@@ -113,6 +114,7 @@ func registerAllTools(reg *registry.Registry) {
 	reg.Register(jwtparser.Tool(), jwtparser.Executor{})
 	reg.Register(keycodeinfo.Tool(), keycodeinfo.Executor{})
 	reg.Register(listconv.Tool(), listconv.Executor{})
+	reg.Register(loremipsum.Tool(), loremipsum.Executor{})
 	reg.Register(macaddressgen.Tool(), macaddressgen.Executor{})
 	reg.Register(markdownhtml.Tool(), markdownhtml.Executor{})
 	reg.Register(mathevaluator.Tool(), mathevaluator.Executor{})
