@@ -21,6 +21,9 @@ import (
 	htmlentities "it-tools-go/internal/tools/html-entities"
 	httpstatuscodes "it-tools-go/internal/tools/http-status-codes"
 	radix "it-tools-go/internal/tools/integer-base-converter"
+	ipv4addressconv "it-tools-go/internal/tools/ipv4-address-converter"
+	ipv4rangeexpander "it-tools-go/internal/tools/ipv4-range-expander"
+	ipv4subnet "it-tools-go/internal/tools/ipv4-subnet-calculator"
 	ipv6ula "it-tools-go/internal/tools/ipv6-ula-generator"
 	jsondiff "it-tools-go/internal/tools/json-diff"
 	jsonfmt "it-tools-go/internal/tools/json-formatter"
@@ -84,6 +87,9 @@ func registerAllTools(reg *registry.Registry) {
 	reg.Register(htmlentities.Tool(), htmlentities.Executor{})
 	reg.Register(httpstatuscodes.Tool(), httpstatuscodes.Executor{})
 	reg.Register(radix.Tool(), radix.Executor{})
+	reg.Register(ipv4addressconv.Tool(), ipv4addressconv.Executor{})
+	reg.Register(ipv4rangeexpander.Tool(), ipv4rangeexpander.Executor{})
+	reg.Register(ipv4subnet.Tool(), ipv4subnet.Executor{})
 	reg.Register(ipv6ula.Tool(), ipv6ula.Executor{})
 	reg.Register(jsondiff.Tool(), jsondiff.Executor{})
 	reg.Register(jsonfmt.Tool(), jsonfmt.Executor{})
