@@ -15,6 +15,7 @@ import (
 	deviceinformation "it-tools-go/internal/tools/device-information"
 	dockerruncompose "it-tools-go/internal/tools/docker-run-to-docker-compose-converter"
 	encryption "it-tools-go/internal/tools/encryption"
+	etacalculator "it-tools-go/internal/tools/eta-calculator"
 	gitmemo "it-tools-go/internal/tools/git-memo"
 	hashtext "it-tools-go/internal/tools/hash-text"
 	hmacgen "it-tools-go/internal/tools/hmac-generator"
@@ -37,10 +38,12 @@ import (
 	listconv "it-tools-go/internal/tools/list-converter"
 	macaddressgen "it-tools-go/internal/tools/mac-address-generator"
 	markdownhtml "it-tools-go/internal/tools/markdown-to-html"
+	mathevaluator "it-tools-go/internal/tools/math-evaluator"
 	metatag "it-tools-go/internal/tools/meta-tag-generator"
 	mimetypes "it-tools-go/internal/tools/mime-types"
 	otpgen "it-tools-go/internal/tools/otp-generator"
 	pwdstrength "it-tools-go/internal/tools/password-strength-analyser"
+	percentagecalculator "it-tools-go/internal/tools/percentage-calculator"
 	qrcodegen "it-tools-go/internal/tools/qr-code-generator"
 	randomport "it-tools-go/internal/tools/random-port-generator"
 	regexmemo "it-tools-go/internal/tools/regex-memo"
@@ -82,6 +85,7 @@ func registerAllTools(reg *registry.Registry) {
 	reg.Register(deviceinformation.Tool(), deviceinformation.Executor{})
 	reg.Register(dockerruncompose.Tool(), dockerruncompose.Executor{})
 	reg.Register(encryption.Tool(), encryption.Executor{})
+	reg.Register(etacalculator.Tool(), etacalculator.Executor{})
 	reg.Register(gitmemo.Tool(), gitmemo.Executor{})
 	reg.Register(hashtext.Tool(), hashtext.Executor{})
 	reg.Register(hmacgen.Tool(), hmacgen.Executor{})
@@ -104,10 +108,12 @@ func registerAllTools(reg *registry.Registry) {
 	reg.Register(listconv.Tool(), listconv.Executor{})
 	reg.Register(macaddressgen.Tool(), macaddressgen.Executor{})
 	reg.Register(markdownhtml.Tool(), markdownhtml.Executor{})
+	reg.Register(mathevaluator.Tool(), mathevaluator.Executor{})
 	reg.Register(metatag.Tool(), metatag.Executor{})
 	reg.Register(mimetypes.Tool(), mimetypes.Executor{})
 	reg.Register(otpgen.Tool(), otpgen.Executor{})
 	reg.Register(pwdstrength.Tool(), pwdstrength.Executor{})
+	reg.Register(percentagecalculator.Tool(), percentagecalculator.Executor{})
 	reg.Register(qrcodegen.Tool(), qrcodegen.Executor{})
 	reg.Register(randomport.Tool(), randomport.Executor{})
 	reg.Register(regexmemo.Tool(), regexmemo.Executor{})
