@@ -87,6 +87,8 @@ async function copyValue() {
 .code-body :deep(pre) {
   margin: 0;
   font-family: 'Cascadia Code', Consolas, 'Courier New', monospace;
+  font-variant-ligatures: none;
+  font-feature-settings: 'liga' 0, 'calt' 0;
   font-size: 13px;
   line-height: 1.6;
   background: transparent;

@@ -56,5 +56,7 @@ withDefaults(
 
 .monospace :deep(textarea) {
   font-family: 'Cascadia Code', Consolas, 'Courier New', monospace;
+  font-variant-ligatures: none;
+  font-feature-settings: 'liga' 0, 'calt' 0;
 }
 </style>
