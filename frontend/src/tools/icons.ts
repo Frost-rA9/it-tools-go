@@ -1,6 +1,7 @@
 import type { Component } from 'vue'
 import {
   AB,
+  MoodSmile,
   FileDigit,
   FileText,
   LetterX,
@@ -56,6 +57,7 @@ import {
 // 图标名（Go 端 registry.Tool.Icon）→ 组件映射。
 const toolIcons: Record<string, Component> = {
   AB,
+  MoodSmile,
   FileDigit,
   FileText,
   LetterX,

@@ -16,6 +16,7 @@ import (
 	datetime "it-tools-go/internal/tools/date-time-converter"
 	deviceinformation "it-tools-go/internal/tools/device-information"
 	dockerruncompose "it-tools-go/internal/tools/docker-run-to-docker-compose-converter"
+	emojipicker "it-tools-go/internal/tools/emoji-picker"
 	encryption "it-tools-go/internal/tools/encryption"
 	etacalculator "it-tools-go/internal/tools/eta-calculator"
 	gitmemo "it-tools-go/internal/tools/git-memo"
@@ -94,6 +95,7 @@ func registerAllTools(reg *registry.Registry) {
 	reg.Register(datetime.Tool(), datetime.Executor{})
 	reg.Register(deviceinformation.Tool(), deviceinformation.Executor{})
 	reg.Register(dockerruncompose.Tool(), dockerruncompose.Executor{})
+	reg.Register(emojipicker.Tool(), emojipicker.Executor{})
 	reg.Register(encryption.Tool(), encryption.Executor{})
 	reg.Register(etacalculator.Tool(), etacalculator.Executor{})
 	reg.Register(gitmemo.Tool(), gitmemo.Executor{})
