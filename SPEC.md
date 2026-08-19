@@ -89,6 +89,7 @@ it-tools-go/
 | 网络 | 5 | IPv6 ULA 生成器、IPv4 子网计算器、IPv4 地址转换器、IPv4 范围扩展器、MAC 地址生成器 |
 | 数学 | 3 | 数学表达式求值器、ETA 计算器、百分比计算器 |
 | 测量 | 3 | 秒表、温度转换器、基准测试建构器 |
+| 数据 | 1 | IBAN 验证器和解析器 |
 
 其余分类（文本）后续扩展按此归类。
 
@@ -127,7 +128,7 @@ npm run build                   # 前端类型检查 + 构建（vue-tsc + vite�
 - **版本**：最新发布 v0.4.0「El Shaddoll Grysta」（git tag `v0.4.0`）；main 与发布 tag 同步。
 - 注册机制：`registry` + JSON string 协议 + `ListTools`/`RunTool` 绑定；注册由 `internal/toolsgen`
   扫描生成 `internal/app/tools_gen.go`；前端 `import.meta.glob` 按 toolId 动态加载。
-- 已实现工具（69 个）：转换器 17 + 加密 10 + Web 15 + 图片和视频 3 + 开发 13 + 网络 5 + 数学 3 + 测量 3（清单见 §6）。前三类已与 it-tools 对齐；开发分类已完结；网络、数学、测量分类均已完结。
+- 已实现工具（70 个）：转换器 17 + 加密 10 + Web 15 + 图片和视频 3 + 开发 13 + 网络 5 + 数学 3 + 测量 3 + 数据 1（清单见 §6）。前三类已与 it-tools 对齐；开发分类已完结；网络、数学、测量、数据分类均已完结（数据分类当前仅 IBAN）。
 - 前端 it-tools 风格：亮/暗主题、侧边栏分类菜单、Command Palette、首页网格；通用组件
   `ToolTextarea` / `ToolCodeBlock`；等宽字体 Cascadia Code 随包分发。
 - 品牌标识：`assets/logo.svg` 唯一源 → `build/appicon.png`、`build/windows/icon.ico`、favicon。
@@ -163,3 +164,4 @@ npm run build                   # 前端类型检查 + 构建（vue-tsc + vite�
 | 2026-08-18 | 发布 v0.4.0 | 代号 El Shaddoll Grysta；58 个工具（加密 10 / 转换器 17 / Web 15 / 图片和视频 3 / 开发 13），开发分类完结 |
 | 2026-08-19 | 数学分类 3 个 | 数学表达式求值器（自研递归下降解析器：四则/幂右结合/一元负号/34 个内置函数/pi·e 常量）、ETA 计算器（持续时间+结束时间中文描述）、百分比计算器（三模式：占比/求值/增减）；工具总数 63→66，数学分类 0→3 完结，与 it-tools Math 分类对齐 |
 | 2026-08-19 | 测量分类 3 个 | 秒表（纯前端 rAF 计时 + [H:]MM:SS.mmm 格式化，git-memo 先例）、温度转换器（8 温标表驱动换算，开尔文中间量，两位小数）、基准测试建构器（均值/总体方差/升序排序/与最佳对比 delta·ratio，生成 Markdown 表格与缩进列表）；工具总数 66→69，测量分类 0→3 完结，与 it-tools Measurement 分类对齐 |
+| 2026-08-19 | 数据分类 IBAN 1 个 | IBAN 验证器和解析器（自研零依赖：MOD-97 + 内嵌 102 国规格表的 BBAN 长度/格式校验 + 瑞士 QR-IBAN 识别 + 每 4 位分组友好格式）；工具总数 69→70，数据分类 0→1；电话号码分析器和格式化程序原定引入 nyaruka/phonenumbers（依赖含 protobuf，体量过大）遂放弃实现 |
