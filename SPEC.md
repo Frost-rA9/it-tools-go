@@ -90,9 +90,9 @@ it-tools-go/
 | 数学 | 3 | 数学表达式求值器、ETA 计算器、百分比计算器 |
 | 测量 | 3 | 秒表、温度转换器、基准测试建构器 |
 | 数据 | 1 | IBAN 验证器和解析器 |
-| 文本 | 1 | Lorem ipsum 生成器 |
+| 文本 | 4 | Lorem ipsum 生成器、文本统计、字符串混淆器、数字名称生成器 |
 
-其余文本分类工具（对齐 it-tools Text 分类）后续扩展：文本统计、Emoji 选择器、字符串混淆、文本差异、数字缩写生成器、ASCII 文字绘制。
+其余文本分类工具（对齐 it-tools Text 分类）后续扩展：Emoji 选择器、文本差异、ASCII 文字绘制。
 
 ## 7. 开发与发布
 
@@ -129,7 +129,7 @@ npm run build                   # 前端类型检查 + 构建（vue-tsc + vite�
 - **版本**：最新发布 v0.5.0「El Shaddoll Construct」（git tag `v0.5.0`）；main 与发布 tag 同步。
 - 注册机制：`registry` + JSON string 协议 + `ListTools`/`RunTool` 绑定；注册由 `internal/toolsgen`
   扫描生成 `internal/app/tools_gen.go`；前端 `import.meta.glob` 按 toolId 动态加载。
-- 已实现工具（71 个）：转换器 17 + 加密 10 + Web 15 + 图片和视频 3 + 开发 13 + 网络 5 + 数学 3 + 测量 3 + 数据 1 + 文本 1（清单见 §6）。前三类已与 it-tools 对齐；开发分类已完结；网络、数学、测量、数据分类均已完结（数据分类当前仅 IBAN）；文本分类启动（当前仅 Lorem ipsum 生成器）。
+- 已实现工具（74 个）：转换器 17 + 加密 10 + Web 15 + 图片和视频 3 + 开发 13 + 网络 5 + 数学 3 + 测量 3 + 数据 1 + 文本 4（清单见 §6）。前三类已与 it-tools 对齐；开发分类已完结；网络、数学、测量、数据分类均已完结（数据分类当前仅 IBAN）；文本分类扩展中（当前 4 个）。
 - 前端 it-tools 风格：亮/暗主题、侧边栏分类菜单、Command Palette、首页网格；通用组件
   `ToolTextarea` / `ToolCodeBlock`；等宽字体 Cascadia Code 随包分发。
 - 品牌标识：`assets/logo.svg` 唯一源 → `build/appicon.png`、`build/windows/icon.ico`、favicon。
@@ -167,5 +167,6 @@ npm run build                   # 前端类型检查 + 构建（vue-tsc + vite�
 | 2026-08-19 | 测量分类 3 个 | 秒表（纯前端 rAF 计时 + [H:]MM:SS.mmm 格式化，git-memo 先例）、温度转换器（8 温标表驱动换算，开尔文中间量，两位小数）、基准测试建构器（均值/总体方差/升序排序/与最佳对比 delta·ratio，生成 Markdown 表格与缩进列表）；工具总数 66→69，测量分类 0→3 完结，与 it-tools Measurement 分类对齐 |
 | 2026-08-19 | 数据分类 IBAN 1 个 | IBAN 验证器和解析器（自研零依赖：MOD-97 + 内嵌 102 国规格表的 BBAN 长度/格式校验 + 瑞士 QR-IBAN 识别 + 每 4 位分组友好格式）；工具总数 69→70，数据分类 0→1；电话号码分析器和格式化程序原定引入 nyaruka/phonenumbers（依赖含 protobuf，体量过大）遂放弃实现 |
 | 2026-08-19 | 文本分类启动 1 个 | Lorem ipsum 生成器（约 200 词拉丁词表；段落/每段句数/每句词数范围随机、固定首句开关、HTML 模式，math/rand/v2）；工具总数 70→71，文本分类 0→1 |
+| 2026-08-19 | 文本分类 3 个 | 文本统计（字符 UTF-16 计数对齐 JS length/词·行·字节 + formatBytes 格式化）、字符串混淆器（keepFirst/keepLast/keepSpace 遮蔽，rune 计数）、数字名称生成器（首字符+长度-2+末字符，如 i18n）；工具总数 71→74，文本分类 1→4 |
 | 2026-08-19 | 发布 v0.5.0 | 代号 El Shaddoll Construct；70 个工具（加密 10 / 转换器 17 / Web 15 / 图片和视频 3 / 开发 13 / 网络 5 / 数学 3 / 测量 3 / 数据 1） |
 
