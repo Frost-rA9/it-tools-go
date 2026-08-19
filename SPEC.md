@@ -171,4 +171,5 @@ npm run build                   # 前端类型检查 + 构建（vue-tsc + vite�
 | 2026-08-19 | Emoji 选择器 | go:embed 内嵌 1914 条 emoji 数据（scripts/gen-emojis.mjs 由 unicode-emoji-json 0.9.0 + emojilib 4.0.3 一次性生成，9 组）；加权搜索（名称/分组/关键词）；前端 n-virtual-list 固定高度按组虚拟化 + EmojiCard 三种复制；工具总数 74→75，文本分类 4→5 |
 | 2026-08-19 | 文本比较 | 自研 LCS 行级 diff（O(n·m) DP，与 Myers 等价）+ 行内精炼（公共前后缀剥离，rune 安全）；分段输出（非索引避免 Unicode 语义差异）；前端双栏 grid 对比视图（删红/增绿/行内标色/行号）；工具总数 75→76，文本分类 5→6 |
 | 2026-08-19 | 发布 v0.5.0 | 代号 El Shaddoll Construct；70 个工具（加密 10 / 转换器 17 / Web 15 / 图片和视频 3 / 开发 13 / 网络 5 / 数学 3 / 测量 3 / 数据 1） |
+| 2026-08-19 | README 重写 | 对齐 it-tools 风格概述（badges/特性/安装/技术栈/开发/发布）；不再维护工具清单，收敛为以 SPEC.md §6 为唯一权威 |
 
