@@ -128,16 +128,16 @@ async function copyBulletList() {
               <n-icon :component="Trash" size="18" />
             </n-button>
           </div>
-          <n-button size="small" dashed block class="add-value" @click="addValue(index)">
+          <n-button size="small" secondary block class="add-value" @click="addValue(index)">
             <n-icon :component="Plus" size="16" />
             添加测量值
           </n-button>
         </div>
         <div class="card-actions">
-          <n-button v-if="suites.length > 1" size="tiny" quaternary type="error" @click="removeSuite(index)">
+          <n-button v-if="suites.length > 1" size="small" secondary @click="removeSuite(index)">
             删除套件
           </n-button>
-          <n-button size="tiny" quaternary @click="addSuite">添加套件</n-button>
+          <n-button size="small" secondary @click="addSuite">添加套件</n-button>
         </div>
       </n-card>
     </div>
@@ -146,7 +146,7 @@ async function copyBulletList() {
       <div class="unit-row">
         <div class="unit-label">单位</div>
         <n-input v-model:value="unit" placeholder="如 ms…" class="unit-input" />
-        <n-button size="small" @click="resetSuites">重置套件</n-button>
+        <n-button size="small" secondary @click="resetSuites">重置套件</n-button>
       </div>
 
       <n-table v-if="results.length" :bordered="true" size="small" class="result-table">
@@ -173,8 +173,8 @@ async function copyBulletList() {
       <div v-else class="empty-hint">暂无数据，请添加测量值。</div>
 
       <div class="copy-row">
-        <n-button size="small" :disabled="!markdown" @click="copyMarkdown">复制为 Markdown 表格</n-button>
-        <n-button size="small" :disabled="!bulletList" @click="copyBulletList">复制为列表</n-button>
+        <n-button size="small" secondary :disabled="!markdown" @click="copyMarkdown">复制为 Markdown 表格</n-button>
+        <n-button size="small" secondary :disabled="!bulletList" @click="copyBulletList">复制为列表</n-button>
       </div>
     </n-card>
   </div>
