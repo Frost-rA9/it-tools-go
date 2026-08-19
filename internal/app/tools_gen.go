@@ -35,6 +35,7 @@ import (
 	jwtparser "it-tools-go/internal/tools/jwt-parser"
 	keycodeinfo "it-tools-go/internal/tools/keycode-info"
 	listconv "it-tools-go/internal/tools/list-converter"
+	macaddressgen "it-tools-go/internal/tools/mac-address-generator"
 	markdownhtml "it-tools-go/internal/tools/markdown-to-html"
 	metatag "it-tools-go/internal/tools/meta-tag-generator"
 	mimetypes "it-tools-go/internal/tools/mime-types"
@@ -101,6 +102,7 @@ func registerAllTools(reg *registry.Registry) {
 	reg.Register(jwtparser.Tool(), jwtparser.Executor{})
 	reg.Register(keycodeinfo.Tool(), keycodeinfo.Executor{})
 	reg.Register(listconv.Tool(), listconv.Executor{})
+	reg.Register(macaddressgen.Tool(), macaddressgen.Executor{})
 	reg.Register(markdownhtml.Tool(), markdownhtml.Executor{})
 	reg.Register(metatag.Tool(), metatag.Executor{})
 	reg.Register(mimetypes.Tool(), mimetypes.Executor{})
