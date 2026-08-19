@@ -6,7 +6,7 @@ on:
       - 'v*'
 
 env:
-  RELEASE_NAME: El Shaddoll Grysta
+  RELEASE_NAME: El Shaddoll Construct
 
 permissions:
   contents: write
