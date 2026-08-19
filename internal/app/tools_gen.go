@@ -7,9 +7,11 @@ import (
 	base64string "it-tools-go/internal/tools/base64-string-converter"
 	basicauth "it-tools-go/internal/tools/basic-auth-generator"
 	bcrypt "it-tools-go/internal/tools/bcrypt"
+	benchmarkbuilder "it-tools-go/internal/tools/benchmark-builder"
 	bip39gen "it-tools-go/internal/tools/bip39-generator"
 	caseconv "it-tools-go/internal/tools/case-converter"
 	chmodcalc "it-tools-go/internal/tools/chmod-calculator"
+	chronometer "it-tools-go/internal/tools/chronometer"
 	crontab "it-tools-go/internal/tools/crontab-generator"
 	datetime "it-tools-go/internal/tools/date-time-converter"
 	deviceinformation "it-tools-go/internal/tools/device-information"
@@ -54,6 +56,7 @@ import (
 	slugify "it-tools-go/internal/tools/slugify-string"
 	sqlfmt "it-tools-go/internal/tools/sql-formatter"
 	svgplaceholder "it-tools-go/internal/tools/svg-placeholder-generator"
+	temperatureconverter "it-tools-go/internal/tools/temperature-converter"
 	textbinary "it-tools-go/internal/tools/text-to-binary"
 	textunicode "it-tools-go/internal/tools/text-to-unicode"
 	tokengen "it-tools-go/internal/tools/token-generator"
@@ -77,9 +80,11 @@ func registerAllTools(reg *registry.Registry) {
 	reg.Register(base64string.Tool(), base64string.Executor{})
 	reg.Register(basicauth.Tool(), basicauth.Executor{})
 	reg.Register(bcrypt.Tool(), bcrypt.Executor{})
+	reg.Register(benchmarkbuilder.Tool(), benchmarkbuilder.Executor{})
 	reg.Register(bip39gen.Tool(), bip39gen.Executor{})
 	reg.Register(caseconv.Tool(), caseconv.Executor{})
 	reg.Register(chmodcalc.Tool(), chmodcalc.Executor{})
+	reg.Register(chronometer.Tool(), chronometer.Executor{})
 	reg.Register(crontab.Tool(), crontab.Executor{})
 	reg.Register(datetime.Tool(), datetime.Executor{})
 	reg.Register(deviceinformation.Tool(), deviceinformation.Executor{})
@@ -124,6 +129,7 @@ func registerAllTools(reg *registry.Registry) {
 	reg.Register(slugify.Tool(), slugify.Executor{})
 	reg.Register(sqlfmt.Tool(), sqlfmt.Executor{})
 	reg.Register(svgplaceholder.Tool(), svgplaceholder.Executor{})
+	reg.Register(temperatureconverter.Tool(), temperatureconverter.Executor{})
 	reg.Register(textbinary.Tool(), textbinary.Executor{})
 	reg.Register(textunicode.Tool(), textunicode.Executor{})
 	reg.Register(tokengen.Tool(), tokengen.Executor{})
