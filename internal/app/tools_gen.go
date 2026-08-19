@@ -23,6 +23,7 @@ import (
 	hmacgen "it-tools-go/internal/tools/hmac-generator"
 	htmlentities "it-tools-go/internal/tools/html-entities"
 	httpstatuscodes "it-tools-go/internal/tools/http-status-codes"
+	ibanvalidator "it-tools-go/internal/tools/iban-validator-and-parser"
 	radix "it-tools-go/internal/tools/integer-base-converter"
 	ipv4addressconv "it-tools-go/internal/tools/ipv4-address-converter"
 	ipv4rangeexpander "it-tools-go/internal/tools/ipv4-range-expander"
@@ -96,6 +97,7 @@ func registerAllTools(reg *registry.Registry) {
 	reg.Register(hmacgen.Tool(), hmacgen.Executor{})
 	reg.Register(htmlentities.Tool(), htmlentities.Executor{})
 	reg.Register(httpstatuscodes.Tool(), httpstatuscodes.Executor{})
+	reg.Register(ibanvalidator.Tool(), ibanvalidator.Executor{})
 	reg.Register(radix.Tool(), radix.Executor{})
 	reg.Register(ipv4addressconv.Tool(), ipv4addressconv.Executor{})
 	reg.Register(ipv4rangeexpander.Tool(), ipv4rangeexpander.Executor{})
