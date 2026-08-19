@@ -1,6 +1,8 @@
 import type { Component } from 'vue'
 import {
+  AB,
   FileDigit,
+  FileText,
   LetterX,
   LetterCaseToggle,
   Calendar,
@@ -53,7 +55,9 @@ import {
 
 // 图标名（Go 端 registry.Tool.Icon）→ 组件映射。
 const toolIcons: Record<string, Component> = {
+  AB,
   FileDigit,
+  FileText,
   LetterX,
   LetterCaseToggle,
   Calendar,

@@ -45,6 +45,7 @@ import (
 	mathevaluator "it-tools-go/internal/tools/math-evaluator"
 	metatag "it-tools-go/internal/tools/meta-tag-generator"
 	mimetypes "it-tools-go/internal/tools/mime-types"
+	numeronymgen "it-tools-go/internal/tools/numeronym-generator"
 	otpgen "it-tools-go/internal/tools/otp-generator"
 	pwdstrength "it-tools-go/internal/tools/password-strength-analyser"
 	percentagecalculator "it-tools-go/internal/tools/percentage-calculator"
@@ -57,8 +58,10 @@ import (
 	safelink "it-tools-go/internal/tools/safelink-decoder"
 	slugify "it-tools-go/internal/tools/slugify-string"
 	sqlfmt "it-tools-go/internal/tools/sql-formatter"
+	stringobfuscator "it-tools-go/internal/tools/string-obfuscator"
 	svgplaceholder "it-tools-go/internal/tools/svg-placeholder-generator"
 	temperatureconverter "it-tools-go/internal/tools/temperature-converter"
+	textstatistics "it-tools-go/internal/tools/text-statistics"
 	textbinary "it-tools-go/internal/tools/text-to-binary"
 	textunicode "it-tools-go/internal/tools/text-to-unicode"
 	tokengen "it-tools-go/internal/tools/token-generator"
@@ -120,6 +123,7 @@ func registerAllTools(reg *registry.Registry) {
 	reg.Register(mathevaluator.Tool(), mathevaluator.Executor{})
 	reg.Register(metatag.Tool(), metatag.Executor{})
 	reg.Register(mimetypes.Tool(), mimetypes.Executor{})
+	reg.Register(numeronymgen.Tool(), numeronymgen.Executor{})
 	reg.Register(otpgen.Tool(), otpgen.Executor{})
 	reg.Register(pwdstrength.Tool(), pwdstrength.Executor{})
 	reg.Register(percentagecalculator.Tool(), percentagecalculator.Executor{})
@@ -132,8 +136,10 @@ func registerAllTools(reg *registry.Registry) {
 	reg.Register(safelink.Tool(), safelink.Executor{})
 	reg.Register(slugify.Tool(), slugify.Executor{})
 	reg.Register(sqlfmt.Tool(), sqlfmt.Executor{})
+	reg.Register(stringobfuscator.Tool(), stringobfuscator.Executor{})
 	reg.Register(svgplaceholder.Tool(), svgplaceholder.Executor{})
 	reg.Register(temperatureconverter.Tool(), temperatureconverter.Executor{})
+	reg.Register(textstatistics.Tool(), textstatistics.Executor{})
 	reg.Register(textbinary.Tool(), textbinary.Executor{})
 	reg.Register(textunicode.Tool(), textunicode.Executor{})
 	reg.Register(tokengen.Tool(), tokengen.Executor{})
