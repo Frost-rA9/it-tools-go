@@ -8,9 +8,6 @@ it-tools-go.exe
 # Wails dependency cache
 frontend/package.json.md5
 
-# Agent session handoff（不入库）
-HANDOFF.md
-
 # 第三方 Agent Skills（本地配置，不入库，各环境自行安装）
 .agents/skills
 
