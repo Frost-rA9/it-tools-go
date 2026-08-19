@@ -2,6 +2,7 @@ import type { Component } from 'vue'
 import {
   AB,
   MoodSmile,
+  FileDiff,
   FileDigit,
   FileText,
   LetterX,
@@ -58,6 +59,7 @@ import {
 const toolIcons: Record<string, Component> = {
   AB,
   MoodSmile,
+  FileDiff,
   FileDigit,
   FileText,
   LetterX,

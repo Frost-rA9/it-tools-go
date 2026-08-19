@@ -62,6 +62,7 @@ import (
 	stringobfuscator "it-tools-go/internal/tools/string-obfuscator"
 	svgplaceholder "it-tools-go/internal/tools/svg-placeholder-generator"
 	temperatureconverter "it-tools-go/internal/tools/temperature-converter"
+	textdiff "it-tools-go/internal/tools/text-diff"
 	textstatistics "it-tools-go/internal/tools/text-statistics"
 	textbinary "it-tools-go/internal/tools/text-to-binary"
 	textunicode "it-tools-go/internal/tools/text-to-unicode"
@@ -141,6 +142,7 @@ func registerAllTools(reg *registry.Registry) {
 	reg.Register(stringobfuscator.Tool(), stringobfuscator.Executor{})
 	reg.Register(svgplaceholder.Tool(), svgplaceholder.Executor{})
 	reg.Register(temperatureconverter.Tool(), temperatureconverter.Executor{})
+	reg.Register(textdiff.Tool(), textdiff.Executor{})
 	reg.Register(textstatistics.Tool(), textstatistics.Executor{})
 	reg.Register(textbinary.Tool(), textbinary.Executor{})
 	reg.Register(textunicode.Tool(), textunicode.Executor{})
