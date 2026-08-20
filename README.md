@@ -34,14 +34,14 @@
 ## 开发
 
 环境要求：Go、Node.js（npm）与 Wails CLI。C 编译器按平台：Windows 下为 Mingw-w64 gcc；
-Linux（本机为 WSL2 Ubuntu）下为 gcc（`build-essential`）+ webkit2gtk 等依赖
-（`sudo apt install build-essential libgtk-3-dev libwebkit2gtk-4.0-dev \
-libayatana-appindicator3-dev librsvg2-dev pkg-config`，与 CI 一致）；macOS 用 clang。
+Linux 下为 gcc（`build-essential`）+ webkit2gtk：新版发行版（Ubuntu 24.04+）装
+`libwebkit2gtk-4.1-dev` 且构建命令加 `-tags webkit2_41`，旧版（如 CI 的 ubuntu-22.04）装
+`libwebkit2gtk-4.0-dev` 不加 tag；macOS 用 clang。
 Wails CLI 用 `go install github.com/wailsapp/wails/v2/cmd/wails@latest` 安装。
 
 ```sh
-wails dev                   # 热重载开发
-wails build                 # 构建桌面二进制
+wails dev -tags webkit2_41     # 热重载开发（本机 WebKitGTK 4.1；4.0 环境可不带 tag）
+wails build -tags webkit2_41   # 构建桌面二进制
 go test ./...               # Go 单元测试
 go generate ./internal/app  # 新增工具后刷新注册（tools_gen.go）
 npm run build               # 前端类型检查 + 构建（vue-tsc + vite）

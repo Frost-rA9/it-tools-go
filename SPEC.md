@@ -77,12 +77,13 @@ it-tools-go/
 
 ## 6. 开发与发布
 
-环境：Go、Node.js（npm）、C 编译器与 Wails CLI（本机为 WSL2 Ubuntu：Go 与 Node 已装，未装项见
-项目 AGENTS.md「环境要求」；更一般的 PATH/代理说明见全局 AGENTS.md `~/.pi/agent/AGENTS.md`）。
+环境：Go、Node.js（npm）、C 编译器与 Wails CLI（本机为 WSL2 Ubuntu 26.04 LTS，工具链已装齐，
+见项目 AGENTS.md「环境要求」；更一般的 PATH/代理说明见全局 AGENTS.md `~/.pi/agent/AGENTS.md`）。
+本机 WebKitGTK 为 4.1，构建命令带 `-tags webkit2_41`（CI 的 ubuntu-22.04 用 4.0，不带 tag）。
 
 ```bash
-wails dev                       # 热重载开发
-wails build                     # 构建当前平台二进制
+wails dev -tags webkit2_41            # 热重载开发（本机 WebKitGTK 4.1）
+wails build -tags webkit2_41          # 构建当前平台二进制
 go test ./...                   # 后端单测
 go generate ./internal/app      # 新增工具后刷新注册（tools_gen.go）
 npm run build                   # 前端类型检查 + 构建（vue-tsc + vite）

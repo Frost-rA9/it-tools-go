@@ -19,19 +19,19 @@ Wails v2（Go 后端）+ Vue 3 + Naive UI 实现。工具业务逻辑全部在 G
 
 ## 命令
 
-- 开发：`wails dev`（热重载）；构建：`wails build`
+- 开发：`wails dev -tags webkit2_41`（热重载）；构建：`wails build -tags webkit2_41`
 - Go：`go build ./...` / `go test ./...`
 - 前端：`npm run build`（`vue-tsc --noEmit && vite build`）；`npm run dev`（在 `frontend/` 运行）
 - 重新生成工具注册：`go generate ./internal/app`（新增工具后）
 - 重新生成 Wails 绑定：`wails generate module`（后端绑定方法变更后）
 
-## 环境要求（本机为 WSL2 Ubuntu）
+## 环境要求（本机为 WSL2 Ubuntu 26.04 LTS，工具链已装齐）
 
-- Go（`/usr/local/go/bin`）与 Node（nvm、npm）已装；Linux gcc（`build-essential`）与
-  Wails CLI 当前**未装**：
-  - Wails CLI：`go install github.com/wailsapp/wails/v2/cmd/wails@latest`
-  - Linux 构建依赖：`sudo apt install build-essential libgtk-3-dev libwebkit2gtk-4.0-dev \
-    libayatana-appindicator3-dev librsvg2-dev pkg-config`
+- Go（`/usr/local/go/bin`）、Node（nvm、npm）、Wails CLI、Linux gcc 均已装。
+- Linux 构建依赖（apt）：`build-essential libgtk-3-dev libwebkit2gtk-4.1-dev \
+  libayatana-appindicator3-dev librsvg2-dev pkg-config`
+  （本机源只有 WebKitGTK **4.1**；CI 的 ubuntu-22.04 用 `libwebkit2gtk-4.0-dev`，不带 tag）
+- 本机编译/开发命令需加 `-tags webkit2_41`（选用 WebKitGTK 4.1），见上文「命令」节。
 - 显示由 WSLg 提供（`DISPLAY=:0`、`WAYLAND_DISPLAY=wayland-0`），`wails dev` 可直接弹出窗口。
 - 本机 PATH 前缀与（如需要）网络代理配置见全局 AGENTS.md（`~/.pi/agent/AGENTS.md`）。
 
