@@ -21,7 +21,7 @@
 ## 安装与使用
 
 从 [GitHub Releases](https://github.com/Frost-rA9/it-tools-go/releases) 下载对应平台的二进制
-（Windows `.exe` / macOS `.dmg` / Linux `AppImage`），免安装直接运行。
+（Windows `.exe` / macOS `.zip` / Linux 单文件 ELF 二进制），免安装直接运行。
 
 ## 技术栈
 
@@ -33,7 +33,11 @@
 
 ## 开发
 
-环境要求：Go、gcc（Windows 下为 mingw）、Node.js 与 Wails CLI。
+环境要求：Go、Node.js（npm）与 Wails CLI。C 编译器按平台：Windows 下为 Mingw-w64 gcc；
+Linux（本机为 WSL2 Ubuntu）下为 gcc（`build-essential`）+ webkit2gtk 等依赖
+（`sudo apt install build-essential libgtk-3-dev libwebkit2gtk-4.0-dev \
+libayatana-appindicator3-dev librsvg2-dev pkg-config`，与 CI 一致）；macOS 用 clang。
+Wails CLI 用 `go install github.com/wailsapp/wails/v2/cmd/wails@latest` 安装。
 
 ```sh
 wails dev                   # 热重载开发

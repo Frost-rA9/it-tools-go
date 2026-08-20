@@ -19,7 +19,7 @@
 | 前端 | Vue 3 + TypeScript + Vite | 3.x / 7.x |
 | UI | Naive UI + 自定义主题 | 2.x |
 | 路由 | vue-router | 4.x |
-| 包管理 | pnpm / Go Modules | pnpm 11.x |
+| 包管理 | npm / Go Modules | npm（`package-lock.json`） |
 
 关键决策：工具逻辑放 Go（`Execute`），前端经 Wails Binding 调用——体现 Go 技术栈、便于单测、逻辑与 UI 解耦。
 
@@ -77,7 +77,8 @@ it-tools-go/
 
 ## 6. 开发与发布
 
-环境：Go、gcc（mingw）、Node.js、Wails CLI（本机安装细节见全局 AGENTS.md）。
+环境：Go、Node.js（npm）、C 编译器与 Wails CLI（本机为 WSL2 Ubuntu：Go 与 Node 已装，未装项见
+项目 AGENTS.md「环境要求」；更一般的 PATH/代理说明见全局 AGENTS.md `~/.pi/agent/AGENTS.md`）。
 
 ```bash
 wails dev                       # 热重载开发
